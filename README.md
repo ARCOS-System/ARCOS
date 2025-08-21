@@ -24,7 +24,7 @@ It also provides a stable URL base for referencing schemas in XML documents.
 - index.html — Interactive architecture viewer (loads architecture.svg)
 
   <details>
-    <summary>1- Docs (Current) — Overview PDFs & support files</summary>
+    <summary>1- Docs (Current) — Overview PDFs &amp; support files</summary>
 
 ```text
 1- Docs (Current)/
@@ -40,7 +40,7 @@ It also provides a stable URL base for referencing schemas in XML documents.
   </details>
 
   <details>
-    <summary>2- Components — Per-component details and sample XML</summary>
+    <summary>2- Components — Per-component details &amp; sample XML</summary>
 
     <details>
       <summary>Core Related</summary>
@@ -65,7 +65,7 @@ Domain Related/
     </details>
 
     <details>
-      <summary>Samples & fixtures</summary>
+      <summary>Samples &amp; fixtures</summary>
 
 ```text
 (samples & example XML)
@@ -79,7 +79,7 @@ Domain Related/
   </details>
 
   <details>
-    <summary>3- Stable — Published schemas (XSD), versioned & immutable</summary>
+    <summary>3- Stable — Published schemas (XSD), versioned &amp; immutable</summary>
 
     <details>
       <summary>v0.3.1</summary>
@@ -116,4 +116,3 @@ latest/
   </details>
 
 </details>
-
