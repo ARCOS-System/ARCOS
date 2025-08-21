@@ -15,16 +15,16 @@ It also provides a stable URL base for referencing schemas in XML documents.
 ## 📂 Repository Structure
 
 <details>
-  <summary>Directory structure</summary>
+<summary>Directory structure</summary>
 
 **Top-level files**
-- README.md — This file
+- README.md
 - LICENSE
 - CONTRIBUTING.md
-- index.html — Interactive architecture viewer (loads architecture.svg)
+- index.html
 
-  <details>
-    <summary>1- Docs (Current) — Overview PDFs &amp; support files</summary>
+<details>
+<summary>1- Docs (Current) — Overview PDFs & support files</summary>
 
 ```text
 1- Docs (Current)/
@@ -37,23 +37,25 @@ It also provides a stable URL base for referencing schemas in XML documents.
 ├── Domain-Post-Processor.pdf
 └── JPG/, SVG/, PNG/
 ```
-  </details>
 
-  <details>
-    <summary>2- Components — Per-component details &amp; sample XML</summary>
+</details>
 
-    <details>
-      <summary>Core Related</summary>
+<details>
+<summary>2- Components — Per-component details and sample XML</summary>
+
+<details>
+<summary>Core Related</summary>
 
 ```text
 Core Related/
 ├── 1-ARCOS-Orchestrator/
 └── 2-ARCOS-Speculus/
 ```
-    </details>
 
-    <details>
-      <summary>Domain Related</summary>
+</details>
+
+<details>
+<summary>Domain Related</summary>
 
 ```text
 Domain Related/
@@ -62,27 +64,16 @@ Domain Related/
 ├── 5-Domain-Validator/
 └── 6-Domain-Post-Processor/
 ```
-    </details>
 
-    <details>
-      <summary>Samples &amp; fixtures</summary>
+</details>
 
-```text
-(samples & example XML)
-├── Arcos_Project.xml
-├── bleu_inventory_v5_sample.xml
-├── Bleu_Predefined_CRUD_Rules.xml
-└── Domain_Rules.xml
-```
-    </details>
+</details>
 
-  </details>
+<details>
+<summary>3- Stable — Published schemas (XSD), versioned & immutable</summary>
 
-  <details>
-    <summary>3- Stable — Published schemas (XSD), versioned &amp; immutable</summary>
-
-    <details>
-      <summary>v0.3.1</summary>
+<details>
+<summary>v0.3.1</summary>
 
 ```text
 v0.3.1/
@@ -102,17 +93,19 @@ v0.3.1/
 ├── Validator_Response.xsd
 └── bleu_parts_v5.xsd
 ```
-    </details>
 
-  </details>
+</details>
 
-  <details>
-    <summary>latest — Copy of the most recent version (convenience for viewer)</summary>
+</details>
+
+<details>
+<summary>latest — Copy of the most recent version</summary>
 
 ```text
 latest/
-└── v0.3.1/   (symlink or copied contents of the most recent stable)
+└── v0.3.1/  (symlink or copy)
 ```
-  </details>
+
+</details>
 
 </details>
