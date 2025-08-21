@@ -17,6 +17,12 @@ It also provides a stable URL base for referencing schemas in XML documents.
 <details>
   <summary>Directory structure</summary>
 
+**Top-level files**
+- README.md — This file
+- LICENSE
+- CONTRIBUTING.md
+- index.html — Interactive architecture viewer (loads architecture.svg)
+
   <details>
     <summary>1- Docs (Current) — Overview PDFs & support files</summary>
 
@@ -25,7 +31,11 @@ It also provides a stable URL base for referencing schemas in XML documents.
 ├── ARCOS.pdf
 ├── ARCOS-Orchestrator.pdf
 ├── ARCOS-Speculus.pdf
-└── SVG/
+├── Domain-Speculus.pdf
+├── Domain-Producer.pdf
+├── Domain-Validator.pdf
+├── Domain-Post-Processor.pdf
+└── JPG/, SVG/, PNG/
 ```
   </details>
 
@@ -54,6 +64,18 @@ Domain Related/
 ```
     </details>
 
+    <details>
+      <summary>Samples & fixtures</summary>
+
+```text
+(samples & example XML)
+├── Arcos_Project.xml
+├── bleu_inventory_v5_sample.xml
+├── Bleu_Predefined_CRUD_Rules.xml
+└── Domain_Rules.xml
+```
+    </details>
+
   </details>
 
   <details>
@@ -65,22 +87,33 @@ Domain Related/
 ```text
 v0.3.1/
 ├── Arcos_Project.xsd
-├── Maestro_*.xsd
+├── ARCOS_Speculus_Response.xsd
+├── Domain_Rules.xsd
+├── Maestro_ArcosSpeculus_Messaging.xsd
+├── Maestro_DomainSpeculus_Messaging.xsd
+├── Maestro_PostProcessor_Messaging.xsd
+├── Maestro_Producer_Messaging.xsd
+├── Maestro_Validator_Messaging.xsd
+├── PostProcessor_Report.xsd
+├── PostProcessor_Response.xsd
+├── Predefined_Domain_Rules.xsd
 ├── Producer_Response.xsd
-├── Validator_*.xsd
-└── PostProcessor_*.xsd
+├── Validator_Report.xsd
+├── Validator_Response.xsd
+└── bleu_parts_v5.xsd
 ```
     </details>
 
   </details>
 
   <details>
-    <summary>latest — Copy of the most recent version (convenience)</summary>
+    <summary>latest — Copy of the most recent version (convenience for viewer)</summary>
 
 ```text
 latest/
-└── v0.3.1/  (symlink or copy)
+└── v0.3.1/   (symlink or copied contents of the most recent stable)
 ```
   </details>
 
 </details>
+
