@@ -14,6 +14,9 @@ It also provides a stable URL base for referencing schemas in XML documents.
 
 ## 📂 Repository Structure
 
+<details>
+  <summary>ARCOS_Repo/</summary>
+
 ```text
 ARCOS_Repo/
 ├── README.md # This file
@@ -63,3 +66,4 @@ ARCOS_Repo/
 │ ├──
 └── latest/ # Copy of the most recent version (convenience for viewer)
 ```
+</details>
