@@ -22,13 +22,14 @@ ARCOS_Repo/
 ├── index.html # Interactive architecture viewer (loads architecture.svg)
 │
 ├── 1- Docs (Current)/ # Overview PDFs & support files
-│ ├── ARCOS.pdf
-│ ├── ARCOS-Orchestrator.pdf
-│ ├── ARCOS-Speculus.pdf
-│ ├── Domain-Speculus.pdf
-│ ├── Domain-Producer.pdf
-│ ├── Domain-Validator.pdf
-│ ├── Domain-Post-Processor.pdf
+│ ├── 1-ARCOS.pdf
+│ ├── 2-ARCOS-Orchestrator.pdf
+│ ├── 3-ARCOS-Speculus.pdf
+│ ├── 4-Domain-Speculus.pdf
+│ ├── 5-Domain-Producer.pdf
+│ ├── 6-Domain-Validator.pdf
+│ ├── 7-Domain-Post-Processor.pdf
+│ ├── 8-Domain-Filtering-Input.pdf
 │ ├── JPG/, SVG/, PNG/ # Supporting images for docs/viewer
 │
 ├── 2- Components/ # Per-component details and sample XML
