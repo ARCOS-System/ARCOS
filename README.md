@@ -23,13 +23,13 @@ ARCOS_Repo/
 │
 ├── 1- Docs (Current)/ # Overview PDFs & support files
 │ ├── 1-ARCOS.pdf
-│ ├── 2-ARCOS-Orchestrator.pdf
-│ ├── 3-ARCOS-Speculus.pdf
-│ ├── 4-Domain-Speculus.pdf
-│ ├── 5-Domain-Producer.pdf
-│ ├── 6-Domain-Validator.pdf
-│ ├── 7-Domain-Post-Processor.pdf
-│ ├── 8-Domain-Filtering-Input.pdf
+│ ├── 2-ARCOS-Architecture-and-Messaging.pdf
+│ ├── 3-Domain and ARCOS-Speculus Guide.pdf
+│ ├── 4-Domain-Producer Guide.pdf
+│ ├── 5-Domain-Validator Guide.pdf
+│ ├── 6-Domain-Post-Processor Guide.pdf
+│ ├── 7-Domain-Filtering-Input Guide.pdf
+│ ├── 8-ARCOS-Orchestrator Guide.pdf
 │ ├── JPG/, SVG/, PNG/ # Supporting images for docs/viewer
 │
 ├── 2- Components/ # Per-component details and sample XML
