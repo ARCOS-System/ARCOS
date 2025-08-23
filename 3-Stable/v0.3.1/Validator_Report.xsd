@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+			targetNamespace="https://github.com/ARCOS-System/ARCOS/XSD"
+			xmlns="https://github.com/ARCOS-System/ARCOS/XSD"
+			xmlns:common="https://github.com/ARCOS-System/ARCOS/XSD/Common"
+            elementFormDefault="qualified"
+			attributeFormDefault="unqualified"
+            version="0.3.1">
+
+	<xs:annotation>
+	  <xs:documentation>
+		Structure of validation reports produced by Validator agents,
+		including overall result, per-part CRUD and rule status,
+		and optional improvement suggestions.
+	  </xs:documentation>
+	</xs:annotation>
+
+
+  <xs:element name="ValidatorReport">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ProjectID" type="xs:string"/>
+        <xs:element name="ValidationDate" type="xs:dateTime"/>
+        <xs:element name="OverallSuccess" type="xs:boolean"/>
+        <xs:element name="Parts">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Part" maxOccurs="unbounded" type="PartType"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Suggestions" minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Suggestion" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Message" type="xs:string"/>
+                  </xs:sequence>
+                  <xs:attribute name="Target" type="xs:string" use="required"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="PartType">
+    <xs:sequence>
+      <xs:element name="CRUD">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Function" maxOccurs="unbounded" type="CRUDType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Rules" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="RuleStatus" maxOccurs="unbounded" type="RuleStatusType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CRUDType">
+    <xs:attribute name="name" type="xs:string" use="required"/>
+    <xs:attribute name="success" type="xs:boolean" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="RuleStatusType">
+    <xs:attribute name="ruleRef" type="xs:IDREF" use="required"/>
+    <xs:attribute name="success" type="xs:boolean" use="required"/>
+  </xs:complexType>
+</xs:schema>
