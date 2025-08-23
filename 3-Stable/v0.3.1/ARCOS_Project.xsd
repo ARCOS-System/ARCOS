@@ -1,0 +1,181 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="https://github.com/ARCOS-System/ARCOS/XSD"
+           xmlns="https://github.com/ARCOS-System/ARCOS/XSD"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified"
+           version="0.3.1">
+		   
+	<xs:annotation>
+	  <xs:documentation>
+		Defines the ARCOS project configuration, including purpose, domain reference,
+		agents (Speculus, Producer, Validator, Post-Processor, FilterInput),
+		licensing information, and execution constraints.
+	  </xs:documentation>
+	</xs:annotation>
+
+	<xs:element name="ARCOSProject">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ProjectID" type="xs:string" minOccurs="1"/>
+				<xs:element name="Purpose" type="PurposeType" minOccurs="1"/>
+				<xs:element name="DomainReference" type="DomainReferenceType" minOccurs="0"/>
+				<xs:element name="DomainAgents" type="DomainAgentsType" minOccurs="1"/>
+				<xs:element name="Licensing" type="LicensingType" minOccurs="1"/>
+				<xs:element name="Constraints" type="ConstraintsType" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+  
+	<xs:simpleType name="PurposeType">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+  
+	<xs:complexType name="DomainReferenceType">
+		<xs:attribute name="xsd" type="xs:string" use="required"/>
+		<xs:attribute name="version" type="xs:string"/>
+	</xs:complexType>
+    
+	<xs:complexType name="DomainAgentsType">
+	  <xs:sequence>
+		<xs:element name="DomainSpeculus" type="DomainSpeculusAgentType" minOccurs="1" maxOccurs="1"/>
+		<xs:element name="Producer"       type="ProducerAgentType"       minOccurs="1" maxOccurs="1"/>
+		<xs:element name="Validator"      type="ValidatorAgentType"      minOccurs="1" maxOccurs="1"/>
+		<xs:element name="PostProcessor"  type="PostProcessorAgentType"  minOccurs="0" maxOccurs="1"/>
+		<xs:element name="FilterInput"    type="FilterInputAgentType"    minOccurs="0" maxOccurs="1"/>
+	  </xs:sequence>
+	</xs:complexType>
+  
+	<!-- Role types -->
+	<xs:simpleType name="DomainSpeculusRoleType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="DomainSpeculus"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ProducerRoleType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Producer"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ValidatorRoleType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Validator"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PostProcessorRoleType">
+	  <xs:restriction base="xs:string">
+		<xs:enumeration value="PostProcessor"/>
+	  </xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="ExecutionType">
+	  <xs:sequence>
+		<!-- Exactly one of Path (local app) or URL (remote API) -->
+		<xs:choice>
+		  <xs:element name="Path" type="xs:string"/>
+		  <xs:element name="URL"  type="xs:anyURI"/>
+		</xs:choice>
+		<!-- Optional helpers -->
+		<xs:element name="User" type="xs:string" minOccurs="0"/>
+		<xs:element name="Password" type="xs:string" minOccurs="0"/>
+		<xs:element name="Args" type="xs:string" minOccurs="0"/>
+	  </xs:sequence>
+	  <xs:attribute name="type" use="required">
+		<xs:simpleType>
+		  <xs:restriction base="xs:string">
+			<xs:enumeration value="app"/>
+			<xs:enumeration value="api"/>
+		  </xs:restriction>
+		</xs:simpleType>
+	  </xs:attribute>
+	</xs:complexType>
+
+	<xs:complexType name="DomainSpeculusAgentType">
+	  <xs:sequence>
+		<xs:element name="Execution" type="ExecutionType" minOccurs="1"/>
+	  </xs:sequence>
+	  <xs:attribute name="role" type="DomainSpeculusRoleType" use="required" fixed="DomainSpeculus"/>
+	  <xs:attribute name="interactive" type="xs:boolean" use="optional" default="false"/>
+	  <xs:attribute name="name" type="xs:string" use="required"/>
+	</xs:complexType>
+	
+	<xs:complexType name="ProducerAgentType">
+	  <xs:sequence>
+		<xs:element name="Execution" type="ExecutionType" minOccurs="1"/>
+	  </xs:sequence>
+	  <xs:attribute name="role" type="ProducerRoleType" use="required" fixed="Producer"/>
+	  <xs:attribute name="name" type="xs:string" use="required"/>
+	</xs:complexType>
+	
+	<xs:complexType name="ValidatorAgentType">
+	  <xs:sequence>
+		<xs:element name="Execution"  type="ExecutionType" minOccurs="1"/>
+	  </xs:sequence>
+	  <xs:attribute name="role" type="ValidatorRoleType" use="required" fixed="Validator"/>
+	  <xs:attribute name="name" type="xs:string" use="required"/>
+	</xs:complexType>
+	
+	<xs:complexType name="PostProcessorAgentType">
+	  <xs:sequence>
+		<xs:element name="Execution"  type="ExecutionType" minOccurs="1"/>
+	  </xs:sequence>
+	  <xs:attribute name="role" type="PostProcessorRoleType" use="required" fixed="PostProcessor"/>
+	  <xs:attribute name="name" type="xs:string" use="required"/>
+	</xs:complexType>
+	
+	<xs:complexType name="FilterInputAgentType">
+	  <xs:sequence>
+		<xs:element name="Execution" type="ExecutionType" minOccurs="1"/>
+	  </xs:sequence>
+	  <xs:attribute name="role" type="FilterInputRoleType" use="required" fixed="FilterInput"/>
+	  <xs:attribute name="name" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:simpleType name="FilterInputRoleType">
+	  <xs:restriction base="xs:string">
+		<xs:enumeration value="FilterInput"/>
+	  </xs:restriction>
+	</xs:simpleType>
+	
+    <xs:complexType name="LicensingType">
+		<xs:sequence>
+			<xs:element name="Mode" type="xs:string"/>
+			<xs:element name="Validation" type="xs:string"/>
+			<xs:element name="LicenseDuration" type="xs:string"/>
+		</xs:sequence>
+		<xs:attribute name="mode" type="xs:string"/>
+	</xs:complexType>
+  
+	<xs:complexType name="ConstraintsType">
+		<xs:sequence>
+			<xs:element name="Performance" type="PerformanceType" minOccurs="0"/>
+			<xs:element name="Security" type="SecurityType" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="realtime" type="xs:boolean"/>
+		<xs:attribute name="embedded" type="xs:boolean"/>
+		<xs:attribute name="portable" type="xs:boolean"/>
+	</xs:complexType>
+  
+	<xs:complexType name="PerformanceType">
+		<xs:attribute name="level" type="xs:string"/>
+	</xs:complexType>
+  
+	<xs:complexType name="SecurityType">
+		<xs:attribute name="encryption" type="xs:string"/>
+		<xs:attribute name="policy" type="xs:string"/>
+	</xs:complexType>
+  
+</xs:schema>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
