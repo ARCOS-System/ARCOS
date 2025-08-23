@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+		   targetNamespace="https://github.com/ARCOS-System/ARCOS/XSD"
+           xmlns="https://github.com/ARCOS-System/ARCOS/XSD"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified"
+           version="0.3.1">
+
+	<xs:annotation>
+	  <xs:documentation>
+		Specifies the vocabulary for a domain, including entities,
+		attributes, enumerations, measurement units, and user phrases
+		for interpretation by agents.
+	  </xs:documentation>
+	</xs:annotation>
+
+  <xs:element name="Vocabulary">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Entities" type="EntityList" minOccurs="0"/>
+        <xs:element name="Attributes" type="AttributeList" minOccurs="0"/>
+        <xs:element name="Enums" type="EnumList" minOccurs="0"/>
+        <xs:element name="Units" type="UnitList" minOccurs="0"/>
+        <xs:element name="Phrases" type="PhraseList" minOccurs="0"/>
+      </xs:sequence>
+      <xs:attribute name="name" type="xs:string" use="required"/>
+      <xs:attribute name="version" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- Entities and synonyms -->
+  <xs:complexType name="EntityList">
+    <xs:sequence>
+      <xs:element name="Entity" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Synonym" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+          <xs:attribute name="name" type="xs:string" use="required"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Attributes map to rule targets (dot + * notation). Include synonyms. -->
+  <xs:complexType name="AttributeList">
+    <xs:sequence>
+      <xs:element name="Attribute" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Target" type="xs:string" minOccurs="1" maxOccurs="unbounded"/>
+            <xs:element name="Synonym" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+          <xs:attribute name="name" type="xs:string" use="required"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Enumerations used by the domain -->
+  <xs:complexType name="EnumList">
+    <xs:sequence>
+      <xs:element name="Enum" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Value" type="xs:string" maxOccurs="unbounded"/>
+          </xs:sequence>
+          <xs:attribute name="name" type="xs:string" use="required"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Units families (metric/imperial) for normalization -->
+  <xs:complexType name="UnitList">
+    <xs:sequence>
+      <xs:element name="UnitFamily" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Unit" maxOccurs="unbounded">
+              <xs:complexType>
+                <xs:attribute name="name" type="xs:string" use="required"/>
+                <xs:attribute name="abbr" type="xs:string" use="required"/>
+                <xs:attribute name="toBase" type="xs:double" use="required"/> <!-- multiplier to base -->
+                <xs:attribute name="isBase" type="xs:boolean" default="false"/>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+          <xs:attribute name="name" type="xs:string" use="required"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Phrases the agent will match and how to interpret them -->
+  <xs:complexType name="PhraseList">
+    <xs:sequence>
+      <xs:element name="Phrase" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <!-- words to match, optional regex; synonyms allowed -->
+            <xs:element name="Text" type="xs:string" maxOccurs="unbounded"/>
+          </xs:sequence>
+          <!-- Optional direct mapping to rule semantics -->
+          <xs:attribute name="ruleType" type="xs:string"/>   <!-- aligns with RuleTypeEnum -->
+          <xs:attribute name="appliesToTarget" type="xs:string"/> <!-- dot/* selector -->
+          <xs:attribute name="crudOp" type="xs:string"/>     <!-- create/read/update/delete -->
+          <xs:attribute name="scope" type="xs:string"/>      <!-- each/every/any/in Quebec... -->
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>
