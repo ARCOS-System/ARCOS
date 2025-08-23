@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Inventory 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/ARCOS-System/ARCOS/refs/heads/main/SampleDomains/BLEU/v5/BLEU_parts_v5.xsd">
+
+  <Bolt id="bolt001" code="BOLT-M12-40" eco_cert="FSC" replacement="true">
+    <origin>
+		<code>CA-QC</code>
+		<country>Canada</country>
+		<province>QC</province>
+	</origin>
+    <Name>M12 Bolt 40mm</Name>
+    <Description>Zinc-plated bolt for structural use</Description>
+    <Location warehouse="Main" section="A" shelf="1" bin="5"/>
+    <Length>40</Length>
+    <Diameter>12</Diameter>
+    <ThreadType>Metric</ThreadType>
+    <Material>Steel</Material>
+    <HeadType>Hex</HeadType>
+    <DriveType>External</DriveType>
+    <Finish>Zinc</Finish>
+  </Bolt>
+
+  <Nut id="nut001" code="NUT-M12">
+    <origin><code>CA-QC</code><country>Canada</country><province>QC</province></origin>
+    <Name>M12 Hex Nut</Name>
+    <Description>Hex nut for M12 bolts</Description>
+    <Location warehouse="Main" section="A" shelf="1" bin="6"/>
+    <Diameter>12</Diameter>
+    <ThreadType>Metric</ThreadType>
+    <Height>10</Height>
+    <Shape>Hex</Shape>
+    <Material>Steel</Material>
+    <Finish>Zinc</Finish>
+  </Nut>
+
+  <Washer id="washer001" code="WASH-M12">
+    <origin><code>CA-QC</code><country>Canada</country><province>QC</province></origin>
+    <Name>M12 Washer</Name>
+    <Description>Flat washer for M12 bolts</Description>
+    <Location warehouse="Main" section="A" shelf="1" bin="7"/>
+    <InnerDiameter>12</InnerDiameter>
+    <OuterDiameter>24</OuterDiameter>
+    <Thickness>2.5</Thickness>
+    <Material>Steel</Material>
+    <Hardness>Medium</Hardness>
+  </Washer>
+
+  <Bracket id="bracket001" code="BRK-L50">
+    <origin><code>US-NY</code><country>United States</country><province>NY</province></origin>
+    <Name>L-Bracket 50mm</Name>
+    <Description>Angle bracket for mounting hardware</Description>
+    <Location warehouse="Main" section="B" shelf="2" bin="1"/>
+    <Type>L</Type>
+    <Width>50</Width>
+    <Height>50</Height>
+    <Thickness>5</Thickness>
+    <HolePattern>2xM12</HolePattern>
+    <Material>Aluminum</Material>
+    <Finish>Anodized</Finish>
+  </Bracket>
+
+  <PackagedKit id="kit001" code="KIT-M12-MOUNT">
+    <AssemblyOrigin><code>CA-QC</code><country>Canada</country><province>Quebec</province></AssemblyOrigin>
+    <Name>M12 Mounting Kit</Name>
+    <Description>Includes M12 bolt, nut, and washer</Description>
+    <Components>
+      <Component ref="bolt001" quantity="1"/>
+      <Component ref="nut001" quantity="1"/>
+      <Component ref="washer001" quantity="1"/>
+    </Components>
+    <PackagingType>Bag</PackagingType>
+    <Dimensions length="100" width="60" height="30"/>
+    <Weight>150</Weight>
+    <Location warehouse="Main" section="Kits" shelf="Top" bin="B1"/>
+  </PackagedKit>
+</Inventory>

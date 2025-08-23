@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Specification  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+				name="BLEU Custom Rules" 
+				version="5.0" 
+				xsi:noNamespaceSchemaLocation="Domain_Rules.xsd">
+				
+	<ProjectID>BLEU-RUST-INV-001</ProjectID>
+	<Rules>
+		<Rule id="r1" target="Bolt.ThreadType" type="enum" predefined="true">
+			<Description>Thread type for bolts must follow known enumerations.</Description>
+		</Rule>
+		<Rule id="r2" target="Nut.Material" type="required" predefined="false">
+			<Description>Every nut must define its material.</Description>
+			<Origin ref="u1"/>
+		</Rule>
+		
+		<Rule id="r12" target="*.eco_cert" type="required" predefined="false">
+			<Description/>
+			<Origin ref="u1"/>
+		</Rule>
+		<Rule id="r13" target="*.origin.province" type="required" predefined="false">
+			<Description/>
+			<Origin ref="u2"/>
+		</Rule>
+		<Rule id="r14" target="*.origin.country_code" type="required" predefined="false">
+			<Description/>
+			<Origin ref="u2"/>
+		</Rule>
+		<Rule id="r15" target="*.origin.country_name" type="required" predefined="false">
+			<Description/>
+			<Origin ref="u2"/>
+		</Rule>
+		<Rule id="r16" target="*.origin.country_code" type="required" predefined="false">
+			<Description/>
+			<Origin ref="u2"/>
+		</Rule>
+		
+		<Rule id="r17" target="Bolt.ThreadType" type="custom" predefined="false">
+			<Description/>
+			<Origin ref="u3"/>
+		</Rule>
+	</Rules>
+	<Intents>
+		<UserIntent id="u1">
+			<RawText>We want every part to have an eco certification.</RawText>
+			<RuleExtracted>r12</RuleExtracted>
+		</UserIntent>
+		<UserIntent id="u2">
+			<RawText>We need to enforce more detailed origin tracking. We need a country code as an attribute that relates to a country name, with an optional province/state element</RawText>
+			<RuleExtracted>r13</RuleExtracted>
+			<RuleExtracted>r14</RuleExtracted>
+			<RuleExtracted>r15</RuleExtracted>
+			<RuleExtracted>r16</RuleExtracted>
+		</UserIntent>
+		<UserIntent id="u3">
+			<RawText>In Quebec and Ontario, all Offerings must be in both Imperial and Metric, or close alternative.</RawText>
+			<RuleExtracted>r17</RuleExtracted>
+		</UserIntent>
+	</Intents>
+</Specification>
