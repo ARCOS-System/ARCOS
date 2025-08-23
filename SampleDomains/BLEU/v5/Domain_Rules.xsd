@@ -1,8 +1,19 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-		   xmlns:arcos="https://github.com/ARCOS-System/ARCOS/XSD"
-           elementFormDefault="qualified"
-           arcos:version="0.3.1">
+			targetNamespace="https://github.com/ARCOS-System/ARCOS/XSD"
+			xmlns="https://github.com/ARCOS-System/ARCOS/XSD"
+			xmlns:common="https://github.com/ARCOS-System/ARCOS/XSD/Common"
+            elementFormDefault="qualified"
+			attributeFormDefault="unqualified"
+            version="0.3.1">
+
+	<xs:annotation>
+	  <xs:documentation>
+		Schema for project-specific domain rules. Specifies rules,
+		their type, origin, and user intents from which they were
+		derived. Supports both predefined and custom rules.
+	  </xs:documentation>
+	</xs:annotation>
 
   <xs:element name="Specification">
     <xs:complexType>
@@ -15,6 +26,7 @@
       <xs:attribute name="version" type="xs:string"/>
     </xs:complexType>
   </xs:element>
+  
   <xs:complexType name="RuleListType">
     <xs:sequence>
       <xs:element name="Rule" maxOccurs="unbounded">
@@ -31,14 +43,17 @@
       </xs:element>
     </xs:sequence>
   </xs:complexType>
+  
   <xs:complexType name="OriginRefType">
     <xs:attribute name="ref" type="xs:IDREF" use="required"/>
   </xs:complexType>
+  
   <xs:complexType name="UserIntentListType">
     <xs:sequence>
       <xs:element name="UserIntent" type="UserIntentType" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
+  
   <xs:complexType name="UserIntentType">
     <xs:sequence>
       <xs:element name="RawText" type="xs:string"/>
@@ -46,6 +61,7 @@
     </xs:sequence>
     <xs:attribute name="id" type="xs:ID" use="required"/>
   </xs:complexType>
+  
   <xs:simpleType name="RuleTypeEnum">
     <xs:restriction base="xs:string">
       <xs:enumeration value="required"/>
@@ -59,4 +75,5 @@
       <xs:enumeration value="custom"/>
     </xs:restriction>
   </xs:simpleType>
+  
 </xs:schema>
