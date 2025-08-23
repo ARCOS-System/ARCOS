@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- BLEU Vocabulary
+     Version: 1.0
+     Defines canonical entities (Bolt, Nut, Washer, Bracket, PackagedKit),
+     attributes (eco_cert, origin, ThreadType, etc.), enumerations,
+     measurement units, and phrases for intent mapping.
+-->
+<Vocabulary  name="Domain Rules for BLEU" version="5"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xmlns="https://github.com/ARCOS-System/ARCOS/XSD"
+    xsi:schemaLocation="https://github.com/ARCOS-System/ARCOS/XSD
+                        https://raw.githubusercontent.com/ARCOS-System/ARCOS/refs/heads/main/3-Stable/v0.3.1/Domain_Vocabulary.xsd">
+
+  <Entities>
+    <Entity name="Part">
+      <Synonym>item</Synonym><Synonym>product</Synonym><Synonym>component</Synonym>
+    </Entity>
+    <Entity name="Bolt"/>
+    <Entity name="Nut"/>
+    <Entity name="Washer"/>
+    <Entity name="Bracket"/>
+    <Entity name="PackagedKit"><Synonym>kit</Synonym><Synonym>bundle</Synonym></Entity>
+  </Entities>
+
+  <Attributes>
+    <Attribute name="eco_cert">
+      <Target>*.eco_cert</Target>
+      <Synonym>eco certification</Synonym><Synonym>environmental cert</Synonym>
+    </Attribute>
+    <Attribute name="origin">
+      <Target>*.origin.code</Target>
+      <Target>*.origin.name</Target>
+      <Target>*.origin.province</Target>
+      <Synonym>country code</Synonym><Synonym>country name</Synonym><Synonym>state</Synonym>
+    </Attribute>
+    <Attribute name="ThreadType">
+      <Target>Bolt.ThreadType</Target>
+      <Target>Nut.ThreadType</Target>
+      <Synonym>thread</Synonym><Synonym>threading</Synonym>
+    </Attribute>
+    <Attribute name="Location">
+      <Target>*.Location</Target>
+      <Synonym>warehouse spot</Synonym><Synonym>bin</Synonym>
+    </Attribute>
+    <Attribute name="Components">
+      <Target>PackagedKit.Components.Component.ref</Target>
+      <Synonym>kit items</Synonym><Synonym>package contents</Synonym>
+    </Attribute>
+    <Attribute name="Dimensions">
+      <Target>PackagedKit.Dimensions</Target>
+    </Attribute>
+    <Attribute name="Weight">
+      <Target>PackagedKit.Weight</Target>
+    </Attribute>
+    <Attribute name="code">
+      <Target>*.@code</Target>
+      <Synonym>sku</Synonym><Synonym>item code</Synonym>
+    </Attribute>
+    <Attribute name="id">
+      <Target>*.@id</Target>
+    </Attribute>
+  </Attributes>
+
+  <Enums>
+    <Enum name="ThreadType">
+      <Value>UNC</Value><Value>UNF</Value><Value>Metric</Value>
+    </Enum>
+    <Enum name="Bracket.Type">
+      <Value>L</Value><Value>U</Value><Value>Corner</Value>
+    </Enum>
+  </Enums>
+
+  <Units>
+    <UnitFamily name="length">
+      <Unit name="millimeter" abbr="mm" toBase="1" isBase="true"/>
+      <Unit name="inch" abbr="in" toBase="25.4"/>
+    </UnitFamily>
+    <UnitFamily name="mass">
+      <Unit name="gram" abbr="g" toBase="1" isBase="true"/>
+      <Unit name="ounce" abbr="oz" toBase="28.3495"/>
+      <Unit name="pound" abbr="lb" toBase="453.592"/>
+    </UnitFamily>
+  </Units>
+
+  <Phrases>
+    <!-- Rule verbs -->
+    <Phrase ruleType="required"><Text>must have</Text><Text>required</Text><Text>mandatory</Text></Phrase>
+    <Phrase ruleType="unique_global"><Text>unique</Text><Text>no duplicates</Text></Phrase>
+    <Phrase ruleType="enum"><Text>must be one of</Text><Text>allowed values</Text></Phrase>
+    <Phrase ruleType="reference_exists"><Text>must reference existing</Text><Text>must point to</Text></Phrase>
+    <Phrase ruleType="has_components" appliesToTarget="PackagedKit"><Text>must contain components</Text></Phrase>
+
+    <!-- Common intents → targets -->
+    <Phrase ruleType="required" appliesToTarget="*.eco_cert">
+      <Text>every part must have an eco certification</Text>
+    </Phrase>
+    <Phrase ruleType="required" appliesToTarget="*.origin.code">
+      <Text>require a country code</Text><Text>include ISO code</Text>
+    </Phrase>
+    <Phrase ruleType="required" appliesToTarget="*.Location">
+      <Text>must specify location</Text><Text>warehouse location is required</Text>
+    </Phrase>
+
+    <!-- CRUD hints -->
+    <Phrase crudOp="create"><Text>when adding</Text><Text>on create</Text></Phrase>
+    <Phrase crudOp="update"><Text>when modifying</Text><Text>on update</Text></Phrase>
+
+    <!-- Scope & jurisdiction -->
+    <Phrase scope="CA/QC,CA/ON"><Text>in Quebec and Ontario</Text></Phrase>
+    <Phrase scope="ALL"><Text>for all items</Text><Text>for every part</Text></Phrase>
+  </Phrases>
+</Vocabulary>
