@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Manufacturer Vocabulary Starter Template
+     Version: 1.0
+     Provides a template for manufacturers to define their own
+     entities, attributes, enumerations, units, and phrases.
+     To be customized and extended based on specific domain schemas.
+-->
+<Vocabulary name="MANUFACTURER-NAME-Vocab" version="1.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xmlns="https://github.com/ARCOS-System/ARCOS/XSD"
+    xsi:schemaLocation="https://github.com/ARCOS-System/ARCOS/XSD
+                        https://raw.githubusercontent.com/ARCOS-System/ARCOS/refs/heads/main/3-Stable/v0.3.1/Domain_Vocabulary.xsd">
+  <!-- 
+	How to use it
+	Entities → copy from your domain schema (.xsd) root-level product types.
+	
+	Attributes → match schema element paths; use dot (.) for child elements and * for wildcards.
+	
+	Enums → pull directly from schema enumerations (if any).
+	
+	Units → only include what your domain uses; toBase is the multiplier to convert to the base unit.
+	
+	Phrases → write natural-language forms that map to ruleType, appliesToTarget, crudOp, and scope.
+  -->
+  <!-- === Entities: Main product categories === -->
+  <!-- Use canonical names from your schema, and add synonyms a user might say -->
+  <Entities>
+    <Entity name="ProductType1">
+      <Synonym>alt name 1</Synonym>
+      <Synonym>alt name 2</Synonym>
+    </Entity>
+    <Entity name="ProductType2"/>
+    <!-- Add more as needed -->
+  </Entities>
+
+  <!-- === Attributes: Mappable targets in your schema === -->
+  <!-- Targets use dot-notation to match schema paths -->
+  <Attributes>
+    <Attribute name="Attribute1">
+      <Target>*.Attribute1</Target>
+      <Synonym>alt term 1</Synonym>
+    </Attribute>
+    <Attribute name="Attribute2">
+      <Target>ProductType1.SubField</Target>
+    </Attribute>
+    <!-- Add more -->
+  </Attributes>
+
+  <!-- === Enums: Controlled vocabularies from your schema === -->
+  <Enums>
+    <Enum name="EnumName1">
+      <Value>Option1</Value>
+      <Value>Option2</Value>
+    </Enum>
+    <!-- Add more -->
+  </Enums>
+
+  <!-- === Units: Measurement families & conversions === -->
+  <Units>
+    <UnitFamily name="length">
+      <Unit name="millimeter" abbr="mm" toBase="1" isBase="true"/>
+      <Unit name="inch" abbr="in" toBase="25.4"/>
+    </UnitFamily>
+    <!-- Add more as needed -->
+  </Units>
+
+  <!-- === Phrases: Intent triggers mapping to rule types/targets === -->
+  <!-- These connect human language to RuleTypeEnum & CRUD ops -->
+  <Phrases>
+    <!-- Rule verbs -->
+    <Phrase ruleType="required">
+      <Text>must have</Text>
+      <Text>required</Text>
+    </Phrase>
+    <Phrase ruleType="unique_global">
+      <Text>unique</Text>
+      <Text>no duplicates</Text>
+    </Phrase>
+
+    <!-- Domain-specific example -->
+    <Phrase ruleType="required" appliesToTarget="*.Attribute1">
+      <Text>every item must have Attribute1</Text>
+    </Phrase>
+
+    <!-- CRUD hints -->
+    <Phrase crudOp="create">
+      <Text>on create</Text>
+      <Text>when adding</Text>
+    </Phrase>
+    <Phrase crudOp="update">
+      <Text>on update</Text>
+      <Text>when modifying</Text>
+    </Phrase>
+
+    <!-- Scope -->
+    <Phrase scope="ALL">
+      <Text>for all items</Text>
+    </Phrase>
+  </Phrases>
+
+</Vocabulary>
