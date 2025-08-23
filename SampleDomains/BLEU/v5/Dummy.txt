@@ -1,1 +1,0 @@
-To create the SampleDomains and one BLEU directory with a v5 directory
