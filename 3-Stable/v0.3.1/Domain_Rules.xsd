@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+		   targetNamespace="https://github.com/ARCOS-System/ARCOS/XSD"
+           xmlns="https://github.com/ARCOS-System/ARCOS/XSD"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified"
+           version="0.3.1">
+
+
+	<xs:annotation>
+	  <xs:documentation>
+		Schema for defining domain-specific rules and user intents.
+		Captures rule definitions, their type, origin, and mapping to
+		extracted user requirements.
+	  </xs:documentation>
+	</xs:annotation>
+
+  <xs:element name="Specification">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ProjectID" type="xs:string"/>
+        <xs:element name="Rules" type="RuleListType" minOccurs="0"/>
+        <xs:element name="Intents" type="UserIntentListType" minOccurs="0"/>
+      </xs:sequence>
+      <xs:attribute name="name" type="xs:string" use="required"/>
+      <xs:attribute name="version" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="RuleListType">
+    <xs:sequence>
+      <xs:element name="Rule" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Description" type="xs:string"/>
+            <xs:element name="Origin" type="OriginRefType" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+          <xs:attribute name="id" type="xs:ID" use="required"/>
+          <xs:attribute name="target" type="xs:string" use="required"/>
+          <xs:attribute name="type" type="RuleTypeEnum" use="required"/>
+          <xs:attribute name="predefined" type="xs:boolean" use="required"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OriginRefType">
+    <xs:attribute name="ref" type="xs:IDREF" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="UserIntentListType">
+    <xs:sequence>
+      <xs:element name="UserIntent" type="UserIntentType" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="UserIntentType">
+    <xs:sequence>
+      <xs:element name="RawText" type="xs:string"/>
+      <xs:element name="RuleExtracted" type="xs:IDREF" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:ID" use="required"/>
+  </xs:complexType>
+  <xs:simpleType name="RuleTypeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="required"/>
+      <xs:enumeration value="enum"/>
+      <xs:enumeration value="reference_exists"/>
+      <xs:enumeration value="unique_global"/>
+      <xs:enumeration value="has_components"/>
+      <xs:enumeration value="match_pattern"/>
+      <xs:enumeration value="range"/>
+      <xs:enumeration value="equal_to"/>
+      <xs:enumeration value="custom"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

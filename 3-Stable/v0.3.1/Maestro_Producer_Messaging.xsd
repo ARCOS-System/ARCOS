@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+			targetNamespace="https://github.com/ARCOS-System/ARCOS/XSD"
+			xmlns="https://github.com/ARCOS-System/ARCOS/XSD"
+			xmlns:common="https://github.com/ARCOS-System/ARCOS/XSD/Common"
+            elementFormDefault="qualified"
+			attributeFormDefault="unqualified"
+            version="0.3.1">
+
+	<xs:annotation>
+	  <xs:documentation>
+		Outlines requests Maestro sends to Producer agents, supporting initial
+		production and retry production workflows, with associated rules,
+		specifications, and validation/post-processor feedback.
+	  </xs:documentation>
+	</xs:annotation>
+
+	<xs:import 
+		namespace="https://github.com/ARCOS-System/ARCOS/XSD/Common"
+        schemaLocation="Common.xsd"/>
+
+  <xs:element name="ProducerRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="InitialProduction" type="InitialProductionType" minOccurs="0"/>
+        <xs:element name="RetryProduction" type="RetryProductionType" minOccurs="0"/>
+        <xs:element name="Checksum" type="common:SHA256Type"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="InitialProductionType">
+    <xs:sequence>
+      <xs:element name="ProjectID" type="xs:string"/>
+      <xs:element name="ProjectSpec" type="xs:string"/>
+      <xs:element name="DomainSchema" type="xs:string"/>
+      <xs:element name="CustomRules" type="xs:string"/>
+      <xs:element name="PredefinedRules" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RetryProductionType">
+    <xs:sequence>
+      <xs:element name="ProjectID" type="xs:string"/>
+      <xs:element name="ProjectSpec" type="xs:string"/>
+      <xs:element name="DomainSchema" type="xs:string"/>
+      <xs:element name="CustomRules" type="xs:string"/>
+      <xs:element name="PredefinedRules" type="xs:string"/>
+      <xs:choice>
+        <xs:sequence>
+          <xs:element name="ValidationReport" type="xs:string"/>
+          <xs:element name="PreviousOutput" type="xs:string"/>
+        </xs:sequence>
+        <xs:sequence>
+          <xs:element name="PostProcessorReport" type="xs:string"/>
+          <xs:element name="PreviousOutput" type="xs:string"/>
+        </xs:sequence>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

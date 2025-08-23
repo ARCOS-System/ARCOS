@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+		   targetNamespace="https://github.com/ARCOS-System/ARCOS/XSD"
+           xmlns="https://github.com/ARCOS-System/ARCOS/XSD"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified"
+           version="0.3.1">
+
+
+	<xs:annotation>
+	  <xs:documentation>
+		Messaging schema for Maestro to interact with Domain Speculus agents,
+		including new specifications, edits, clarifications for Producer/Validator,
+		and checksum verification.
+	  </xs:documentation>
+	</xs:annotation>
+
+	<xs:import 
+		namespace="https://github.com/ARCOS-System/ARCOS/XSD/Common"
+        schemaLocation="Common.xsd"/>
+
+  <xs:element name="DomainSpeculusMessage">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="NewDomainSpec" type="NewDomainSpecType" minOccurs="0"/>
+        <xs:element name="EditDomainSpec" type="EditDomainSpecType" minOccurs="0"/>
+        <xs:element name="ProducerClarification" type="ClarificationType" minOccurs="0"/>
+        <xs:element name="ValidatorClarification" type="ClarificationType" minOccurs="0"/>
+        <xs:element name="Checksum" type="common:SHA256Type"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="NewDomainSpecType">
+    <xs:sequence>
+      <xs:element name="ProjectID" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="EditDomainSpecType">
+    <xs:sequence>
+      <xs:element name="ProjectID" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ClarificationType">
+    <xs:sequence>
+      <xs:element name="ProjectID" type="xs:string"/>
+      <xs:element name="Question" type="xs:string" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

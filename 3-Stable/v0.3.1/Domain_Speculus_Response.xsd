@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+		   targetNamespace="https://github.com/ARCOS-System/ARCOS/XSD"
+           xmlns="https://github.com/ARCOS-System/ARCOS/XSD"
+           xmlns:common="https://github.com/ARCOS-System/ARCOS/XSD/Common"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified"
+           version="0.3.1">
+
+
+	<xs:annotation>
+	  <xs:documentation>
+		Defines the response from a Domain Speculus agent, indicating whether
+		domain rules were successfully generated/saved or cancelled, with optional
+		rule statistics and timestamp.
+	  </xs:documentation>
+	</xs:annotation>
+
+	<xs:import 
+		namespace="https://github.com/ARCOS-System/ARCOS/XSD/Common"
+        schemaLocation="Common.xsd"/>
+
+  <xs:element name="DomainSpeculusResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice>
+          <xs:element name="Success" type="SuccessType"/>
+          <xs:element name="Cancelled" type="CancelledType"/>
+        </xs:choice>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="SuccessType">
+    <xs:sequence>
+      <xs:element name="ProjectID" type="xs:string"/>
+      <!-- Where the Domain_Rules.xml was saved -->
+      <xs:element name="SavedAt" type="xs:anyURI"/>
+      <xs:element name="Checksum" type="common:SHA256Type"/>
+      <!-- Optional: inline copy of the rules (validates against Domain_Rules.xsd) -->
+      <xs:element name="RulesXML" type="xs:string" minOccurs="0"/>
+      <!-- Optional: quick stats for UI -->
+      <xs:element name="RuleCount" type="xs:int" minOccurs="0"/>
+      <xs:element name="IntentCount" type="xs:int" minOccurs="0"/>
+      <xs:element name="Timestamp" type="xs:dateTime" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="CancelledType">
+    <xs:sequence>
+      <xs:element name="ProjectID" type="xs:string"/>
+      <xs:element name="Reason" type="xs:string" minOccurs="0"/>
+      <xs:element name="Timestamp" type="xs:dateTime" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>

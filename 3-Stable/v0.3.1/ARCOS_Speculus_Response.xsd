@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+		   targetNamespace="https://github.com/ARCOS-System/ARCOS/XSD"
+           xmlns="https://github.com/ARCOS-System/ARCOS/XSD"
+           xmlns:common="https://github.com/ARCOS-System/ARCOS/XSD/Common"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified"
+           version="0.3.1">
+
+	<xs:annotation>
+	  <xs:documentation>
+		Specifies the response structure from the ARCOS Speculus agent,
+		supporting success (with saved XML, checksum, summary) or cancellation.
+	  </xs:documentation>
+	</xs:annotation>
+
+	<xs:import 
+		namespace="https://github.com/ARCOS-System/ARCOS/XSD/Common"
+        schemaLocation="Common.xsd"/>
+
+  <xs:element name="ARCOSSpeculusResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice>
+          <xs:element name="Success" type="SuccessType"/>
+          <xs:element name="Cancelled" type="CancelledType"/>
+        </xs:choice>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="SuccessType">
+    <xs:sequence>
+      <xs:element name="ProjectID" type="xs:string"/>
+      <xs:element name="SavedAt" type="xs:anyURI"/>
+      <xs:element name="Checksum" type="common:SHA256Type"/>
+      <!-- Optional: inline copy of the saved XML (validates against ARCOS_Project.xsd) -->
+      <xs:element name="SpecXML" type="xs:string" minOccurs="0"/>
+      <!-- Optional dashboard-friendly summary -->
+      <xs:element name="Summary" type="xs:string" minOccurs="0"/>
+      <!-- Optional timestamp (ISO 8601) -->
+      <xs:element name="Timestamp" type="xs:dateTime" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="CancelledType">
+    <xs:sequence>
+      <xs:element name="ProjectID" type="xs:string"/>
+      <xs:element name="Reason" type="xs:string" minOccurs="0"/>
+      <xs:element name="Timestamp" type="xs:dateTime" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>

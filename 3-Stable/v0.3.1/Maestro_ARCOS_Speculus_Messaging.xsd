@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+		   targetNamespace="https://github.com/ARCOS-System/ARCOS/XSD"
+           xmlns="https://github.com/ARCOS-System/ARCOS/XSD"
+           xmlns:common="https://github.com/ARCOS-System/ARCOS/XSD/Common"
+		   elementFormDefault="qualified"
+           attributeFormDefault="unqualified"
+           version="0.3.1">
+
+
+	<xs:annotation>
+	  <xs:documentation>
+		Messaging contract between Maestro and the ARCOS Speculus agent,
+		covering new project creation, edits, clarification requests,
+		and integrity checksum.
+	  </xs:documentation>
+	</xs:annotation>
+
+	<xs:import 
+		namespace="https://github.com/ARCOS-System/ARCOS/XSD/Common"
+        schemaLocation="Common.xsd"/>
+
+  <xs:element name="ARCOSSpeculusMessage">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="NewProject" type="NewProjectType" minOccurs="0"/>
+        <xs:element name="EditProject" type="EditProjectType" minOccurs="0"/>
+        <xs:element name="RequestClarification" type="ClarificationType" minOccurs="0"/>
+        <xs:element name="Checksum" type="common:SHA256Type"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="NewProjectType">
+    <xs:sequence>
+      <xs:element name="ProjectID" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="EditProjectType">
+    <xs:sequence>
+      <xs:element name="ProjectID" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ClarificationType">
+    <xs:sequence>
+      <xs:element name="ProjectID" type="xs:string"/>
+      <xs:element name="Question" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

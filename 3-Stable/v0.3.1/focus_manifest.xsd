@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2024 rel. 2 sp1 (x64) (https://www.altova.com) by Michel Trahan (Private) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+		   targetNamespace="https://github.com/ARCOS-System/ARCOS/XSD"
+           xmlns="https://github.com/ARCOS-System/ARCOS/XSD"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified"
+           version="0.3.1">
+
+
+	<xs:annotation>
+	  <xs:documentation>
+		Describes a focus manifest, identifying selected files from reports
+		in validator or post-processor contexts. Supports unique file
+		references and optional metadata.
+	  </xs:documentation>
+	</xs:annotation>
+
+	<!-- Same relative path rule -->
+	<xs:simpleType name="RelPath">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[^/\s][^\s]*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="FocusContext">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="validator"/>
+			<xs:enumeration value="postprocessor"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="FocusManifest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Selections">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="FileRef" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:attribute name="path" type="RelPath" use="required"/>
+									<xs:attribute name="source" type="xs:string" use="optional"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="context" type="FocusContext" use="required"/>
+			<xs:attribute name="reportRef" type="xs:anyURI" use="optional"/>
+			<xs:attribute name="created" type="xs:dateTime" use="optional"/>
+			<xs:anyAttribute processContents="lax"/>
+		</xs:complexType>
+		<!-- Unique references -->
+		<xs:unique name="UniqueFocusRefs">
+			<xs:selector xpath="Selections/FileRef"/>
+			<xs:field xpath="@path"/>
+		</xs:unique>
+	</xs:element>
+</xs:schema>

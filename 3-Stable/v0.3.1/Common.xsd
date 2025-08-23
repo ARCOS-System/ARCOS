@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="https://github.com/ARCOS-System/ARCOS/XSD/Common"
+           xmlns="https://github.com/ARCOS-System/ARCOS/XSD/Common"
+		   elementFormDefault="qualified"
+		   attributeFormDefault="unqualified"
+		   version="0.3.1">
+
+	<xs:annotation>
+	  <xs:documentation>
+		Provides common reusable types across ARCOS schemas. Currently includes
+		the shared SHA-256 hash type used for checksums.
+	  </xs:documentation>
+	</xs:annotation>
+
+  <!-- Shared SHA-256 string type -->
+  <xs:simpleType name="SHA256Type">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[a-f0-9]{64}"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+</xs:schema>
