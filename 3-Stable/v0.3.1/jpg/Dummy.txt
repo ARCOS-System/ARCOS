@@ -1,0 +1,1 @@
+Directory to hold the jpg from the schema graphic view in XMLSpy for schemas only
