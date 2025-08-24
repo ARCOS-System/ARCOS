@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ARCOS Project Definition
+     ProjectID: BLEU-RUST-INV-001
+     Purpose: BLEU v5 CRUD codegen with ARCOS
+     DomainReference: BLEU Parts schema v5
+     Agents: Speculus, Producer, Validator, PostProcessor, FilterInput
+-->
+
+<ARCOSProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  			  xmlns="https://github.com/ARCOS-System/ARCOS/XSD"
+              xsi:schemaLocation="https://github.com/ARCOS-System/ARCOS/XSD
+                                  https://raw.githubusercontent.com/ARCOS-System/ARCOS/refs/heads/main/3-Stable/v0.3.1/ARCOS_Project.xsd">
+
+  <ProjectID>BLEU-RUST-INV-001</ProjectID>
+  <Purpose>BLEU v5 CRUD codegen with ARCOS</Purpose>
+
+  <DomainReference xsd="D:\Domains\BLEU\v5\bleu_parts_v5.xsd" version="5"/>
+
+  <DomainAgents>
+    <!-- Interactive Domain-Speculus (local app) -->
+    <DomainSpeculus role="DomainSpeculus" name="bleu_speculus_v5" interactive="true">
+      <Execution type="app">
+        <Path>D:\ARCOS\Agents\Speculus\BleuSpeculusV5\bleu_speculus_v5.exe</Path>
+        <Args>--session=interactive --ui=console --log=D:\Logs\speculus\bleu_v5.log</Args>
+      </Execution>
+    </DomainSpeculus>
+
+    <!-- Producer = API (to me) with arcos creds -->
+    <Producer role="Producer" name="bleu_rust_producer_v5">
+      <Execution type="api">
+        <URL>https://producer.arcos.system/bleu/v5/run</URL>
+        <User>arcos</User>
+        <Password>@ref:PRODUCER_API_TOKEN</Password>
+        <Args>mode=initial&amp;optimize=true&amp;target=rust</Args>
+      </Execution>
+    </Producer>
+
+    <!-- Validator (local app) -->
+    <Validator role="Validator" name="bleu_validator_v5">
+      <Execution type="app">
+        <Path>D:\ARCOS\Agents\Validator\BleuValidatorV5\bleu_validator_v5.exe</Path>
+        <Args>--strict --report=D:\ARCOS\Reports\Validator\bleu_v5.xml</Args>
+      </Execution>
+    </Validator>
+
+    <!-- Post-Processor (local app) -->
+    <PostProcessor role="PostProcessor" name="rust_compiler_pp_v1">
+      <Execution type="app">
+        <Path>D:\ARCOS\PostProc\RustySqueegee\rusty_squeegee.exe</Path>
+        <Args>--workspace=D:\ARCOS\Builds\BLEU_RUST_INV_001 --opt=O2</Args>
+      </Execution>
+    </PostProcessor>
+
+    <!-- FilterInput (local app) -->
+    <FilterInput role="FilterInput" name="domain_filter_input_v1">
+      <Execution type="app">
+        <Path>D:\ARCOS\Filters\Input\BleuGatekeeper\bleu_gatekeeper.exe</Path>
+        <Args>--allow=BLEU --deny=LEGACY --cache=D:\ARCOS\Cache\filters</Args>
+      </Execution>
+    </FilterInput>
+  </DomainAgents>
+
+  <Licensing mode="corporate">
+    <Mode>hybrid</Mode>
+    <Validation>token</Validation>
+    <LicenseDuration>1y</LicenseDuration>
+  </Licensing>
+
+  <Constraints realtime="false" embedded="true" portable="true">
+    <Performance level="standard"/>
+    <Security encryption="none" policy="public"/>
+  </Constraints>
+</ARCOSProject>
