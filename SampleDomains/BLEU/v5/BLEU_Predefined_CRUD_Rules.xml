@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- BLEU Predefined CRUD Rules
+     Version: 1.0
+     Contains globally enforced fastener rules such as uniqueness of IDs,
+     required locations, packaged kit integrity, and standardized ThreadType
+     and Bracket types.
+-->
+<PredefinedDomainRules name="BLEU Fasteners Base Rules" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xmlns="https://github.com/ARCOS-System/ARCOS/XSD"
+    xsi:schemaLocation="https://github.com/ARCOS-System/ARCOS/XSD
+                        https://raw.githubusercontent.com/ARCOS-System/ARCOS/refs/heads/main/SampleDomains/BLEU/v5/Predefined_Domain_Rules.xsd">
+	<Rules>
+		<!-- Enforce uniqueness of all IDs -->
+		<Rule id="r1" target="id" type="unique_global" predefined="true"/>
+		<!-- Enforce uniqueness of part codes -->
+		<Rule id="r2" target="code" type="unique_global" predefined="true"/>
+		<!-- PackagedKit must contain components -->
+		<Rule id="r3" target="PackagedKit" type="has_components" predefined="true"/>
+		<!-- All component references must exist -->
+		<Rule id="r4" target="PackagedKit.Components.Component.ref" type="reference_exists" predefined="true"/>
+		<!-- All PackagedKit items must define physical characteristics -->
+		<Rule id="r5" target="PackagedKit.Dimensions" type="required" predefined="true"/>
+		<Rule id="r6" target="PackagedKit.Weight" type="required" predefined="true"/>
+		<Rule id="r7" target="PackagedKit.Location" type="required" predefined="true"/>
+		<!-- All parts must declare a location -->
+		<Rule id="r8" target="*.Location" type="required" predefined="true"/>
+		<!-- ThreadType values for Bolt and Nut must follow known types -->
+		<Rule id="r9" target="Bolt.ThreadType" type="enum" predefined="true"/>
+		<Rule id="r10" target="Nut.ThreadType" type="enum" predefined="true"/>
+		<!-- Bracket Type must be categorized -->
+		<Rule id="r11" target="Bracket.Type" type="enum" predefined="true"/>
+	</Rules>
+</PredefinedDomainRules>
