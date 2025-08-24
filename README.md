@@ -63,4 +63,9 @@ ARCOS_Repo/
 │ ├──
 │ ├──
 └── latest/ # Copy of the most recent version (convenience for viewer)
+
+To see the Architecture of ARCOS, type this :
+https://arcos-system.github.io/ARCOS/
+
+and click on links !
 ```
