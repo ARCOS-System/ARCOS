@@ -1,1 +1,0 @@
-have a docs directory to have an html in a page scenario to display it ... not the source code
