@@ -23,10 +23,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # 👇 Change this if your files are NOT in /docs
+      # Prepare the Pages deployment
+      - uses: actions/configure-pages@v5
+
+      # Upload the static site (change path if not using /docs)
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: ./docs
+          path: docs
 
+      # Publish
       - id: deployment
         uses: actions/deploy-pages@v4
