@@ -1,14 +1,32 @@
 # ARCOS – AI Rule-Constrained Orchestration System
 
-ARCOS is a schema-driven framework for orchestrating AI agents under strict 
-specification and validation rules. It defines how a Coordinator (Maestro) 
-interacts with Speculus, Producer, Validator, and Post-Processor agents, 
+ARCOS is a **schema-driven framework** for orchestrating AI agents under strict 
+specification and validation rules. It defines how a Coordinator (*Maestro*) 
+interacts with **Speculus**, **Producer**, **Validator**, and **Post-Processor** agents, 
 with domain-specific schemas providing the business rules.
 
-This repository publishes the **ARCOS schemas (XSD)**, example XML files, 
-documentation PDFs, and diagrams. 
+📦 This repository publishes the **ARCOS schemas (XSD)**, example XML files, 
+documentation PDFs, and architecture diagrams.  
+🔗 It also provides a **stable URL base** for referencing schemas in XML documents.
 
-It also provides a stable URL base for referencing schemas in XML documents.
+---
+
+## ✨ Why ARCOS?
+- **Deterministic AI orchestration** – every interaction is validated against XSD contracts.  
+- **Composable agents** – swap in your own Producers, Validators, or Post-Processors.  
+- **Domain-agnostic** – bring your own schema; ARCOS enforces the rules.  
+- **Fail-fast philosophy** – invalid XML is rejected immediately.  
+
+## 🚀 Quick Links
+- [ARCOS Documentation (.io site)](https://arcos-system.github.io/ARCOS/)  
+- [Schema Directory (XSD)](https://github.com/ARCOS-System/ARCOS/tree/main/3-Stable/v0.3.1)  
+- [Example XML Files](https://github.com/ARCOS-System/ARCOS/tree/main/2-Components)  
+- [ARCOS PDF Overview](https://github.com/ARCOS-System/ARCOS/tree/main/1-Docs%20(Current))  
+
+## 📖 Getting Started
+1. Clone this repo.  
+2. Validate an example XML against its schema with your favorite XSD validator.  
+3. Explore how Maestro coordinates Speculus → Producer → Validator → Post-Processor using the included diagrams.  
 
 ---
 
@@ -64,8 +82,4 @@ ARCOS_Repo/
 │ ├──
 └── latest/ # Copy of the most recent version (convenience for viewer)
 
-To see the Architecture of ARCOS, type this :
-https://arcos-system.github.io/ARCOS/
-
-and click on links !
 ```
