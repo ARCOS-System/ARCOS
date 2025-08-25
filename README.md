@@ -1,5 +1,10 @@
 # ARCOS – AI Rule-Constrained Orchestration System
 
+[![License](https://img.shields.io/github/license/ARCOS-System/ARCOS)](LICENSE)
+[![GitHub issues](https://img.shields.io/github/issues/ARCOS-System/ARCOS)](https://github.com/ARCOS-System/ARCOS/issues)
+[![GitHub stars](https://img.shields.io/github/stars/ARCOS-System/ARCOS)](https://github.com/ARCOS-System/ARCOS/stargazers)
+[![GitHub Pages](https://img.shields.io/badge/docs-online-blue)](https://arcos-system.github.io/ARCOS/)
+
 ARCOS is a **schema-driven framework** for orchestrating AI agents under strict 
 specification and validation rules. It defines how a Coordinator (*Maestro*) 
 interacts with **Speculus**, **Producer**, **Validator**, and **Post-Processor** agents, 
