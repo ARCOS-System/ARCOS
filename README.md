@@ -5,7 +5,7 @@
 [![GitHub stars](https://img.shields.io/github/stars/ARCOS-System/ARCOS)](https://github.com/ARCOS-System/ARCOS/stargazers)
 [![GitHub Pages](https://img.shields.io/badge/docs-online-blue)](https://arcos-system.github.io/ARCOS/)
 
-ARCOS is a **schema-driven framework** for orchestrating AI agents under strict specification and validation rules. It defines how a Coordinator (**Maestro**) interacts with **Speculus**, **Producer**, **Validator**, and **Post-Processor** agents through domain-agnostic XML messaging validated against schemas. Each agent may implement domain-specific logic internally, but all inter-agent communication is standardized, verifiable, and schema-based.
+ARCOS is a **schema-driven framework** for orchestrating AI agents under strict specification and validation rules. It defines how a Coordinator (**Maestro**) interacts with **Speculus**, **Producer**, **Validator**, and **Post-Processor** agents through domain-agnostic XML messaging validated against schemas. Each agent may implement domain-specific logic internally, but all inter-agent communication are standardized, verifiable, and schema-based.
 
 📦 This repository publishes the **ARCOS schemas (XSD)**, example XML files, 
 documentation PDFs, and architecture diagrams.  
