@@ -23,7 +23,7 @@ documentation PDFs, and architecture diagrams.
 - [ARCOS Documentation (.io site)](https://arcos-system.github.io/ARCOS/)  
 - [Schema Directory (XSD)](https://github.com/ARCOS-System/ARCOS/tree/main/3-Stable/v0.3.1)  
 - [Example XML Files](https://github.com/ARCOS-System/ARCOS/tree/main/2-Components)  
-- [ARCOS PDF Overview](https://github.com/ARCOS-System/ARCOS/tree/main/1-Docs%20(Current))  
+- [ARCOS PDF Overview](https://github.com/ARCOS-System/ARCOS/tree/main/1-Docs)  
 
 ## 📖 Getting Started
 1. Clone this repo.  
