@@ -1,1 +1,0 @@
-XSD directory to hold the Index.html and the Architecture.svg to display the different schemas and graphical structure of it
