@@ -33,13 +33,10 @@
     <xs:sequence>
       <xs:element name="ProjectID" type="xs:string"/>
       <xs:element name="SavedAt" type="xs:anyURI"/>
+      <xs:element name="ARCOS_Project" type="xs:string"/>
+      <xs:element name="Summary" type="xs:string" minOccurs="0"/> <!-- Optional dashboard-friendly summary -->
       <xs:element name="Checksum" type="common:SHA256Type"/>
-      <!-- Optional: inline copy of the saved XML (validates against ARCOS_Project.xsd) -->
-      <xs:element name="SpecXML" type="xs:string" minOccurs="0"/>
-      <!-- Optional dashboard-friendly summary -->
-      <xs:element name="Summary" type="xs:string" minOccurs="0"/>
-      <!-- Optional timestamp (ISO 8601) -->
-      <xs:element name="Timestamp" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="Timestamp" type="xs:dateTime"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -47,7 +44,7 @@
     <xs:sequence>
       <xs:element name="ProjectID" type="xs:string"/>
       <xs:element name="Reason" type="xs:string" minOccurs="0"/>
-      <xs:element name="Timestamp" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="Timestamp" type="xs:dateTime" />
     </xs:sequence>
   </xs:complexType>
 
