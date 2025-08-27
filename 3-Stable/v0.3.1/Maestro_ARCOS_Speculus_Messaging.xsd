@@ -39,7 +39,7 @@
 
 	<xs:complexType name="EditProjectType">
 		<xs:sequence>
-			<xs:element name="ProjectID" type="xs:string" minOccurs="0"/>
+			<xs:element name="ARCOSProject" type="common:InlineArtifactType"/>
 		</xs:sequence>
 	</xs:complexType>
 

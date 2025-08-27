@@ -34,11 +34,7 @@
 
   <xs:complexType name="SuccessType">
     <xs:sequence>
-      <xs:element name="ProjectID" type="xs:string"/>
-      <!-- Where the Domain_Rules.xml was saved -->
-      <xs:element name="SavedAt" type="xs:anyURI"/>
-      <!-- Optional: inline copy of the rules (validates against Domain_Rules.xsd) -->
-      <xs:element name="RulesXML" type="xs:string"/>
+      <xs:element name="ARCOSProject" type="common:InlineArtifactType"/>
       <!-- Optional: quick stats for UI -->
       <xs:element name="RuleCount" type="xs:int"/>
       <xs:element name="IntentCount" type="xs:int"/>

@@ -22,13 +22,8 @@
   <xs:element name="ValidatorRequest">
     <xs:complexType>
       <xs:sequence>
-        <xs:element name="ProjectID" type="xs:string"/>
-        <xs:element name="ProjectSpec" type="xs:string"/>
-        <xs:element name="DomainSchema" type="xs:string"/>
-        <xs:element name="PredefinedRules" type="xs:string"/>
-        <xs:element name="CustomRules" type="xs:string"/>
-        <xs:element name="ProducerOutput" type="xs:string"/>
-        <xs:element name="Checksum" type="common:SHA256Type"/>
+        <xs:element name="ARCOSProject" type="common:InlineArtifactType"/>
+        <xs:element name="ProducerOutput" type="common:InlineArtifactType"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>

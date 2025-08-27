@@ -23,19 +23,14 @@
     <xs:complexType>
       <xs:sequence>
         <xs:choice>
-          <xs:element name="ValidationReport" type="ValidationReportType"/>
-          <xs:element name="Clarification" type="ClarificationType"/>
+			<xs:element name="ValidationReport" type="common:InlineArtifactType"/>
+            <xs:element name="Clarification" type="ClarificationType"/>
         </xs:choice>
         <xs:element name="Checksum" type="common:SHA256Type"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:complexType name="ValidationReportType">
-    <xs:sequence>
-      <xs:element name="ProjectID" type="xs:string"/>
-      <xs:element name="ReportXML" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
+  
   <xs:complexType name="ClarificationType">
     <xs:sequence>
       <xs:element name="ProjectID" type="xs:string"/>

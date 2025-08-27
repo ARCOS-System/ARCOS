@@ -22,37 +22,28 @@
   <xs:element name="ProducerRequest">
     <xs:complexType>
       <xs:sequence>
-        <xs:element name="InitialProduction" type="InitialProductionType" minOccurs="0"/>
-        <xs:element name="RetryProduction" type="RetryProductionType" minOccurs="0"/>
-        <xs:element name="Checksum" type="common:SHA256Type"/>
+		<xs:choice>
+		  <xs:element name="InitialProduction" type="InitialProductionType"/>
+		  <xs:element name="RetryProduction" type="RetryProductionType"/>
+        </xs:choice>
+	    <xs:element name="Checksum" type="common:SHA256Type"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  
   <xs:complexType name="InitialProductionType">
     <xs:sequence>
-      <xs:element name="ProjectID" type="xs:string"/>
-      <xs:element name="ProjectSpec" type="xs:string"/>
-      <xs:element name="DomainSchema" type="xs:string"/>
-      <xs:element name="CustomRules" type="xs:string"/>
-      <xs:element name="PredefinedRules" type="xs:string"/>
+      <xs:element name="ARCOSProject" type="common:InlineArtifactType"/>
     </xs:sequence>
   </xs:complexType>
+  
   <xs:complexType name="RetryProductionType">
     <xs:sequence>
-      <xs:element name="ProjectID" type="xs:string"/>
-      <xs:element name="ProjectSpec" type="xs:string"/>
-      <xs:element name="DomainSchema" type="xs:string"/>
-      <xs:element name="CustomRules" type="xs:string"/>
-      <xs:element name="PredefinedRules" type="xs:string"/>
+	  <xs:element name="ARCOSProject" type="common:InlineArtifactType"/>
+	  <xs:element name="OutputZipBase64" type="common:InlineArtifactType"/>      
       <xs:choice>
-        <xs:sequence>
-          <xs:element name="ValidationReport" type="xs:string"/>
-          <xs:element name="PreviousOutput" type="xs:string"/>
-        </xs:sequence>
-        <xs:sequence>
-          <xs:element name="PostProcessorReport" type="xs:string"/>
-          <xs:element name="PreviousOutput" type="xs:string"/>
-        </xs:sequence>
+        <xs:element name="ValidationReport" type="common:InlineArtifactType"/>
+        <xs:element name="PostProcessorReport" type="common:InlineArtifactType"/>
       </xs:choice>
     </xs:sequence>
   </xs:complexType>

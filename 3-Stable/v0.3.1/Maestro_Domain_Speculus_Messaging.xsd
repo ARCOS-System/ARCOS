@@ -41,7 +41,7 @@
 
 	<xs:complexType name="EditDomainSpecType">
 		<xs:sequence>
-			<xs:element name="ProjectID" type="xs:string"/>
+			<xs:element name="ARCOSProject" type="common:InlineArtifactType"/>
 		</xs:sequence>
 	</xs:complexType>
 	
@@ -57,13 +57,12 @@
       <xs:sequence>
 		<xs:element name="ARCOSProject" type="common:InlineArtifactType"/>
         <!-- Last producer output as Base64 (zip) -->
-        <xs:element name="ProducerOutputZipBase64" type="xs:string"/>
+		<xs:element name="ProducerOutputZipBase64" type="common:InlineArtifactType"/>
         <!-- Last available report; could be validator or post-processor report, serialized -->
-        <xs:element name="LastReportXML" type="xs:string"/>
+        <xs:element name="LastReportXML" type="common:InlineArtifactType"/>
         <!-- Optional hint indicating which report type this is: "validator" | "postprocessor" -->
         <xs:element name="LastReportKind" type="xs:string"/>
       </xs:sequence>
     </xs:complexType>		
-	
 	
 </xs:schema>

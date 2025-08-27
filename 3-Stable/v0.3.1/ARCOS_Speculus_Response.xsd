@@ -31,11 +31,8 @@
 
   <xs:complexType name="SuccessType">
     <xs:sequence>
-      <xs:element name="ProjectID" type="xs:string"/>
-      <xs:element name="SavedAt" type="xs:anyURI"/>
-      <xs:element name="ARCOS_Project" type="xs:string"/>
-      <xs:element name="Summary" type="xs:string" minOccurs="0"/> <!-- Optional dashboard-friendly summary -->
-      <xs:element name="Checksum" type="common:SHA256Type"/>
+      <xs:element name="ARCOSProject" type="common:InlineArtifactType"/>
+      <xs:element name="ARCOSDomainAgents" type="common:InlineArtifactType"/>
       <xs:element name="Timestamp" type="xs:dateTime"/>
     </xs:sequence>
   </xs:complexType>

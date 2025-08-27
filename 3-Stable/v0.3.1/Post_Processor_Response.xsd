@@ -39,8 +39,7 @@
 	<xs:complexType name="FailureType">
 		<xs:sequence>
 			<xs:element name="ProjectID" type="xs:string"/>
-			<xs:element name="ReportLink" type="xs:string"/>
-			<xs:element name="Checksum" type="common:SHA256Type"/>
+			<xs:element name="Report" type="common:InlineArtifactType"/>
 			<xs:element name="Summary" type="SummaryType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>

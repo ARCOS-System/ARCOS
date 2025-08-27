@@ -13,9 +13,8 @@
 		   
 	<xs:annotation>
 	  <xs:documentation>
-		Defines the ARCOS project configuration, including purpose, domain reference,
-		agents (Speculus, Producer, Validator, Post-Processor, FilterInput),
-		licensing information, and execution constraints.
+		Defines the ARCOS domain agent configuration, including the list of agents, 
+		execution info, and licensing. Used only by the orchestrator.
 	  </xs:documentation>
 	</xs:annotation>
 
