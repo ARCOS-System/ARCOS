@@ -7,7 +7,6 @@
            attributeFormDefault="unqualified"
            version="0.3.1">
 
-
 	<xs:annotation>
 	  <xs:documentation>
 		Defines the response from a Domain Speculus agent, indicating whether
@@ -27,6 +26,8 @@
           <xs:element name="Success" type="SuccessType"/>
           <xs:element name="Cancelled" type="CancelledType"/>
         </xs:choice>
+		<!-- Always last -->
+		<xs:element name="Checksum" type="common:SHA256Type"/>      
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -36,13 +37,12 @@
       <xs:element name="ProjectID" type="xs:string"/>
       <!-- Where the Domain_Rules.xml was saved -->
       <xs:element name="SavedAt" type="xs:anyURI"/>
-      <xs:element name="Checksum" type="common:SHA256Type"/>
       <!-- Optional: inline copy of the rules (validates against Domain_Rules.xsd) -->
-      <xs:element name="RulesXML" type="xs:string" minOccurs="0"/>
+      <xs:element name="RulesXML" type="xs:string"/>
       <!-- Optional: quick stats for UI -->
-      <xs:element name="RuleCount" type="xs:int" minOccurs="0"/>
-      <xs:element name="IntentCount" type="xs:int" minOccurs="0"/>
-      <xs:element name="Timestamp" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="RuleCount" type="xs:int"/>
+      <xs:element name="IntentCount" type="xs:int"/>
+      <xs:element name="Timestamp" type="xs:dateTime"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -50,7 +50,7 @@
     <xs:sequence>
       <xs:element name="ProjectID" type="xs:string"/>
       <xs:element name="Reason" type="xs:string" minOccurs="0"/>
-      <xs:element name="Timestamp" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="Timestamp" type="xs:dateTime" />
     </xs:sequence>
   </xs:complexType>
 
