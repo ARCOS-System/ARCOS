@@ -11,6 +11,10 @@
 	  <xs:documentation>
 		Captures predefined, globally available domain rules. Each rule is fixed
 		as predefined and can be referenced in project-specific specifications.
+		
+		Rule where target = Entity.Attribute
+			type = RuleTypeEnum
+			predefined = true
 	  </xs:documentation>
 	</xs:annotation>
 

@@ -6,12 +6,22 @@
            attributeFormDefault="unqualified"
            version="0.3.1">
 
-
 	<xs:annotation>
 	  <xs:documentation>
 		Schema for defining domain-specific rules and user intents.
 		Captures rule definitions, their type, origin, and mapping to
 		extracted user requirements.
+		
+		Rules
+			Rule
+				id
+				target = Entity.Attribute
+				type = RuleTypeEnum
+				predefined = false
+		Intents
+			Intent
+					RawText
+					RuleExtracted
 	  </xs:documentation>
 	</xs:annotation>
 
@@ -26,6 +36,7 @@
       <xs:attribute name="version" type="xs:string"/>
     </xs:complexType>
   </xs:element>
+
   <xs:complexType name="RuleListType">
     <xs:sequence>
       <xs:element name="Rule" maxOccurs="unbounded">
@@ -42,14 +53,17 @@
       </xs:element>
     </xs:sequence>
   </xs:complexType>
+
   <xs:complexType name="OriginRefType">
     <xs:attribute name="ref" type="xs:IDREF" use="required"/>
   </xs:complexType>
+
   <xs:complexType name="UserIntentListType">
     <xs:sequence>
       <xs:element name="UserIntent" type="UserIntentType" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
+
   <xs:complexType name="UserIntentType">
     <xs:sequence>
       <xs:element name="RawText" type="xs:string"/>
@@ -57,6 +71,7 @@
     </xs:sequence>
     <xs:attribute name="id" type="xs:ID" use="required"/>
   </xs:complexType>
+  
   <xs:simpleType name="RuleTypeEnum">
     <xs:restriction base="xs:string">
       <xs:enumeration value="required"/>

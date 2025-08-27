@@ -11,6 +11,15 @@
 		Specifies the vocabulary for a domain, including entities,
 		attributes, enumerations, measurement units, and user phrases
 		for interpretation by agents.
+		
+		Entity, with synonyms
+		Attributes where the target is an Entity
+		Enums
+		Units, with base and scaling factors
+		Phrases, where the ruleType is on of the RuleTypeEnum
+				Applies to a target as Entity.Attribute
+				CrudOp = Create
+				Scope is either record or global
 	  </xs:documentation>
 	</xs:annotation>
 
