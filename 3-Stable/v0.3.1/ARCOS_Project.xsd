@@ -2,9 +2,14 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            targetNamespace="https://github.com/ARCOS-System/ARCOS/XSD"
            xmlns="https://github.com/ARCOS-System/ARCOS/XSD"
+		   xmlns:common="https://github.com/ARCOS-System/ARCOS/XSD/Common"
            elementFormDefault="qualified"
            attributeFormDefault="unqualified"
            version="0.3.1">
+
+	<xs:import 
+		namespace="https://github.com/ARCOS-System/ARCOS/XSD/Common"
+        schemaLocation="Common.xsd"/>
 		   
 	<xs:annotation>
 	  <xs:documentation>
@@ -19,7 +24,7 @@
 			<xs:sequence>
 				<xs:element name="ProjectID" type="xs:string" minOccurs="1"/>
 				<xs:element name="Purpose" type="PurposeType" minOccurs="1"/>
-				<xs:element name="DomainReference" type="DomainReferenceType" minOccurs="0"/>
+				<xs:element name="DomainVocabularyAndRules" type="DomainReferenceType" minOccurs="0"/>
 				<xs:element name="DomainAgents" type="DomainAgentsType" minOccurs="1"/>
 				<xs:element name="Licensing" type="LicensingType" minOccurs="1"/>
 				<xs:element name="Constraints" type="ConstraintsType" minOccurs="0"/>
@@ -32,8 +37,20 @@
 	</xs:simpleType>
   
 	<xs:complexType name="DomainReferenceType">
-		<xs:attribute name="xsd" type="xs:string" use="required"/>
-		<xs:attribute name="version" type="xs:string"/>
+	  <xs:sequence>
+		<xs:element name="DomainVocabulary"      type="InlineArtifactType"/>
+		<xs:element name="DomainPredefinedRules" type="InlineArtifactType"/>
+		<xs:element name="CurrentProjectRules"   type="InlineArtifactType"/>
+		<xs:element name="DomainSchema"          type="InlineArtifactType"/>
+	  </xs:sequence>    
+	</xs:complexType>
+    
+    <xs:complexType name="InlineArtifactType">
+	  <xs:sequence>
+		<xs:element name="Content" type="xs:base64Binary"/>
+		<xs:element name="Checksum" type="common:SHA256Type"/>
+	  </xs:sequence>
+	  <xs:attribute name="encoding" type="EncodingEnum" use="required"/>
 	</xs:complexType>
     
 	<xs:complexType name="DomainAgentsType">
@@ -95,7 +112,6 @@
 		<xs:element name="Execution" type="ExecutionType" minOccurs="1"/>
 	  </xs:sequence>
 	  <xs:attribute name="role" type="DomainSpeculusRoleType" use="required" fixed="DomainSpeculus"/>
-	  <xs:attribute name="interactive" type="xs:boolean" use="optional" default="false"/>
 	  <xs:attribute name="name" type="xs:string" use="required"/>
 	</xs:complexType>
 	
@@ -163,7 +179,22 @@
 		<xs:attribute name="encryption" type="xs:string"/>
 		<xs:attribute name="policy" type="xs:string"/>
 	</xs:complexType>
+	
+	<!-- How the artifact bytes are encoded (extensible) -->
+	<xs:simpleType name="EncodingEnum">
+	  <xs:restriction base="xs:string">
+		<xs:enumeration value="base64"/>
+		<xs:enumeration value="gzip+base64"/>
+	  </xs:restriction>
+	</xs:simpleType>
   
+
+
+
+
+
+
+
 </xs:schema>
 
 
