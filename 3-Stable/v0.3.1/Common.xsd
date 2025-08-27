@@ -13,11 +13,27 @@
 	  </xs:documentation>
 	</xs:annotation>
 
-  <!-- Shared SHA-256 string type -->
-  <xs:simpleType name="SHA256Type">
-    <xs:restriction base="xs:string">
-      <xs:pattern value="[a-f0-9]{64}"/>
-    </xs:restriction>
-  </xs:simpleType>
+	<!-- Shared SHA-256 string type -->
+	<xs:simpleType name="SHA256Type">
+  	  <xs:restriction base="xs:string">
+	    <xs:pattern value="[a-f0-9]{64}"/>
+	  </xs:restriction>
+	</xs:simpleType>
+
+	<!-- How the artifact bytes are encoded (extensible) -->
+	<xs:simpleType name="EncodingEnum">
+	  <xs:restriction base="xs:string">
+		<xs:enumeration value="base64"/>
+		<xs:enumeration value="gzip+base64"/>
+	  </xs:restriction>
+	</xs:simpleType>
+
+   <xs:complexType name="InlineArtifactType">
+	  <xs:sequence>
+		<xs:element name="Content" type="xs:base64Binary"/>
+		<xs:element name="Checksum" type="SHA256Type"/>
+	  </xs:sequence>
+	  <xs:attribute name="encoding" type="EncodingEnum" use="required"/>
+	</xs:complexType>
 
 </xs:schema>

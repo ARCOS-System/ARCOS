@@ -1,49 +1,69 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-		   targetNamespace="https://github.com/ARCOS-System/ARCOS/XSD"
-           xmlns="https://github.com/ARCOS-System/ARCOS/XSD"
-           elementFormDefault="qualified"
-           attributeFormDefault="unqualified"
-           version="0.3.1">
-
-
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns="https://github.com/ARCOS-System/ARCOS/XSD" 
+	xmlns:common="https://github.com/ARCOS-System/ARCOS/XSD/Common" 
+	targetNamespace="https://github.com/ARCOS-System/ARCOS/XSD" 
+	elementFormDefault="qualified" 
+	attributeFormDefault="unqualified" 
+	version="0.3.1">
+	
 	<xs:annotation>
-	  <xs:documentation>
+		<xs:documentation>
 		Messaging schema for Maestro to interact with Domain Speculus agents,
 		including new specifications, edits, clarifications for Producer/Validator,
 		and checksum verification.
 	  </xs:documentation>
 	</xs:annotation>
 
-	<xs:import 
-		namespace="https://github.com/ARCOS-System/ARCOS/XSD/Common"
-        schemaLocation="Common.xsd"/>
+	<xs:import namespace="https://github.com/ARCOS-System/ARCOS/XSD/Common" schemaLocation="Common.xsd"/>
+	
+	<xs:element name="DomainSpeculusMessage">
+		<xs:complexType>
+		  <xs:sequence>
+			<xs:choice>
+				<xs:element name="NewDomainSpec" type="NewDomainSpecType"/>
+				<xs:element name="EditDomainSpec" type="EditDomainSpecType"/>
+				<xs:element name="ProducerClarification" type="ClarificationType"/>
+				<xs:element name="ValidatorClarification" type="ClarificationType"/>
+				<xs:element name="GotToMaxTrials" type="MaxTrialsType"/>
+			</xs:choice>
+			<!-- Always last -->
+			<xs:element name="Checksum" type="common:SHA256Type"/>
+		  </xs:sequence>
+		</xs:complexType>
+	</xs:element>
 
-  <xs:element name="DomainSpeculusMessage">
-    <xs:complexType>
+	<xs:complexType name="NewDomainSpecType">
+		<xs:sequence>
+			<xs:element name="ARCOSProject" type="common:InlineArtifactType"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="EditDomainSpecType">
+		<xs:sequence>
+			<xs:element name="ProjectID" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="ClarificationType">
+		<xs:sequence>
+			<xs:element name="ARCOSProject" type="common:InlineArtifactType"/>
+			<xs:element name="Question" type="xs:string" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- Max trials reached: provide inputs so ARCOS-Speculus can close the loop with the user -->
+    <xs:complexType name="MaxTrialsType">
       <xs:sequence>
-        <xs:element name="NewDomainSpec" type="NewDomainSpecType" minOccurs="0"/>
-        <xs:element name="EditDomainSpec" type="EditDomainSpecType" minOccurs="0"/>
-        <xs:element name="ProducerClarification" type="ClarificationType" minOccurs="0"/>
-        <xs:element name="ValidatorClarification" type="ClarificationType" minOccurs="0"/>
-        <xs:element name="Checksum" type="common:SHA256Type"/>
+		<xs:element name="ARCOSProject" type="common:InlineArtifactType"/>
+        <!-- Last producer output as Base64 (zip) -->
+        <xs:element name="ProducerOutputZipBase64" type="xs:string"/>
+        <!-- Last available report; could be validator or post-processor report, serialized -->
+        <xs:element name="LastReportXML" type="xs:string"/>
+        <!-- Optional hint indicating which report type this is: "validator" | "postprocessor" -->
+        <xs:element name="LastReportKind" type="xs:string"/>
       </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:complexType name="NewDomainSpecType">
-    <xs:sequence>
-      <xs:element name="ProjectID" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="EditDomainSpecType">
-    <xs:sequence>
-      <xs:element name="ProjectID" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="ClarificationType">
-    <xs:sequence>
-      <xs:element name="ProjectID" type="xs:string"/>
-      <xs:element name="Question" type="xs:string" maxOccurs="unbounded"/>
-    </xs:sequence>
-  </xs:complexType>
+    </xs:complexType>		
+	
+	
 </xs:schema>
