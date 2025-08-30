@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2024 rel. 2 sp1 (x64) (https://www.altova.com) by Michel Trahan (Private) -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-		   targetNamespace="https://github.com/ARCOS-System/ARCOS/XSD"
-           xmlns="https://github.com/ARCOS-System/ARCOS/XSD"
-           elementFormDefault="qualified"
-           attributeFormDefault="unqualified"
-           version="0.3.1">
-
-
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns="https://github.com/ARCOS-System/ARCOS/XSD" 
+	targetNamespace="https://github.com/ARCOS-System/ARCOS/XSD" 
+	elementFormDefault="qualified" 
+	attributeFormDefault="unqualified" 
+	version="0.3.1">
+	
 	<xs:annotation>
-	  <xs:documentation>
+		<xs:documentation>
 		Defines an artifact manifest describing files produced by a build or process.
 		Tracks relative file paths, optional project-level manifest, and history of
 		events for traceability.
 	  </xs:documentation>
 	</xs:annotation>
-
 	<!-- Simple "relative-ish" path for ZIP entries: no leading "/" and no whitespace -->
 	<xs:simpleType name="RelPath">
 		<xs:restriction base="xs:string">
@@ -40,7 +38,7 @@
 		<xs:complexType>
 			<xs:sequence>
 				<!-- Optional pointer to the project “root manifest” (e.g., Cargo.toml or something else) -->
-				<xs:element name="Manifest" minOccurs="0" maxOccurs="1">
+				<xs:element name="RootManifest" minOccurs="0" maxOccurs="1">
 					<xs:complexType>
 						<xs:attribute name="path" type="RelPath" use="required"/>
 					</xs:complexType>
