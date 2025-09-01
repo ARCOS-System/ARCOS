@@ -346,7 +346,7 @@
       </xs:element>
       <xs:element name="Expr" type="Expression"/>
     </xs:sequence>
-    <xs:attribute name="id"      type="Identifier" use="required"/>
+    <xs:attribute name="id"      type="xs:ID" use="required"/>
     <xs:attribute name="scope"   type="xs:string"  use="optional"/>
     <xs:attribute name="version" type="xs:string"  use="optional"/>
     <xs:attribute name="status"  type="xs:string"  use="optional"/>
