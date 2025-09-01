@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2024 rel. 2 sp1 (x64) (https://www.altova.com) by Michel Trahan (Private) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="https://github.com/ARCOS-System/ARCOS/XSD" targetNamespace="https://github.com/ARCOS-System/ARCOS/XSD" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.3.1">
+	<xs:annotation>
+		<xs:documentation>
+		Specifies the vocabulary for a domain, including entities,
+		attributes, enumerations, measurement units, and user phrases
+		for interpretation by agents.
+		
+		Entity, with synonyms
+		Attributes where the target is an Entity
+		Enums
+		Units, with base and scaling factors
+		Phrases, where the ruleType is on of the RuleTypeEnum
+				Applies to a target as Entity.Attribute
+				CrudOp = Create
+				Scope is either record or global
+	  </xs:documentation>
+	</xs:annotation>
+	<!-- =========
+       Root
+       ========= -->
+	<xs:element name="Vocabulary">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Entities" type="EntitiesType"/>
+				<xs:element name="Synonyms" type="SynonymsType" minOccurs="0"/>
+				<xs:element name="Phrases" type="PhrasesType" minOccurs="0"/>
+				<xs:element name="EnumCatalogue" type="EnumCatalogueType" minOccurs="0"/>
+				<xs:element name="UnitsCatalogue" type="UnitsCatalogueType" minOccurs="0"/>
+				<xs:element name="AtomicCatalogue" type="AtomicCatalogueType"/>
+				<xs:element name="OperatorsIndex" type="OperatorsIndexType"/>
+			</xs:sequence>
+			<xs:attribute name="name" type="xs:string" use="optional"/>
+			<xs:attribute name="version" type="xs:string" use="optional"/>
+		</xs:complexType>
+	</xs:element>
+	<!-- =========
+       Primitives
+       ========= -->
+	<xs:simpleType name="Identifier">
+		<xs:restriction base="xs:NCName"/>
+	</xs:simpleType>
+	<!-- Path to a field. Example: Customer.email or Order.items[].sku -->
+	<xs:simpleType name="FieldPath">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- =========
+       Entities & Vocabulary
+       ========= -->
+	<!-- Extend FieldDef to include Attributes (optional), enumRef, unitRef -->
+	<xs:complexType name="FieldDef">
+		<xs:sequence>
+			<xs:element name="Attributes" type="FieldAttributes" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="name" type="Identifier" use="required"/>
+		<xs:attribute name="type" type="xs:string" use="optional"/>
+		<xs:attribute name="path" type="FieldPath" use="optional"/>
+		<xs:attribute name="enumRef" type="xs:IDREF" use="optional"/>
+		<xs:attribute name="unitRef" type="xs:IDREF" use="optional"/>
+		<!-- string, number, date, etc. -->
+		<!-- link to an EnumSet/@id -->
+		<!-- link to a Unit/@id -->
+	</xs:complexType>
+	<xs:complexType name="EntityDef">
+		<xs:sequence>
+			<xs:element name="Field" type="FieldDef" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="name" type="Identifier" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="EntitiesType">
+		<xs:sequence>
+			<xs:element name="Entity" type="EntityDef" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- Synonyms of entities/fields/phrases to help SGD -->
+	<xs:complexType name="Synonym">
+		<xs:attribute name="text" type="xs:string" use="required"/>
+		<xs:attribute name="ref" type="xs:string" use="required"/>
+		<xs:attribute name="lang" type="xs:language" use="optional"/>
+		<!-- e.g., Entity or Field path -->
+	</xs:complexType>
+	<xs:complexType name="SynonymsType">
+		<xs:sequence>
+			<xs:element name="Synonym" type="Synonym" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- Optional natural phrases that hint SGD (not executable) -->
+	<xs:complexType name="Phrase">
+		<xs:attribute name="text" type="xs:string" use="required"/>
+		<xs:attribute name="hint" type="xs:string" use="optional"/>
+		<xs:attribute name="lang" type="xs:language" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="PhrasesType">
+		<xs:sequence>
+			<xs:element name="Phrase" type="Phrase" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- Scope where an atomic rule naturally applies -->
+	<xs:simpleType name="ScopeEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="field"/>
+			<xs:enumeration value="record"/>
+			<xs:enumeration value="collection"/>
+			<xs:enumeration value="dataset"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Basic parameter kinds for atomic rules -->
+	<xs:simpleType name="ParamTypeEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="string"/>
+			<xs:enumeration value="integer"/>
+			<xs:enumeration value="number"/>
+			<xs:enumeration value="boolean"/>
+			<xs:enumeration value="pattern"/>
+			<xs:enumeration value="enum-set"/>
+			<xs:enumeration value="field-ref"/>
+			<xs:enumeration value="unit-string"/>
+			<xs:enumeration value="duration"/>
+			<xs:enumeration value="json"/>
+			<!-- regex or named pattern -->
+			<!-- set of allowed values -->
+			<!-- reference to another field -->
+			<!-- e.g., 'USD', 'kg' -->
+			<!-- ISO 8601 duration -->
+			<!-- structured blob -->
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- =========
+       Atomic Rule Catalogue
+       ========= -->
+	<xs:complexType name="ParamDef">
+		<xs:attribute name="name" type="Identifier" use="required"/>
+		<xs:attribute name="type" type="ParamTypeEnum" use="required"/>
+		<xs:attribute name="required" type="xs:boolean" use="optional" default="false"/>
+		<xs:attribute name="default" type="xs:string" use="optional"/>
+		<xs:attribute name="description" type="xs:string" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="AtomicTypeDef">
+		<xs:sequence>
+			<xs:element name="Param" type="ParamDef" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Semantics" type="xs:string" minOccurs="0"/>
+			<xs:element name="ValidatorHint" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="id" type="Identifier" use="required"/>
+		<xs:attribute name="label" type="xs:string" use="optional"/>
+		<xs:attribute name="scope" type="ScopeEnum" use="required"/>
+		<!-- e.g., required, range -->
+	</xs:complexType>
+	<xs:complexType name="AtomicCatalogueType">
+		<xs:sequence>
+			<xs:element name="AtomicType" type="AtomicTypeDef" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- =========
+       Operator Index (for the RAE layer)
+       ========= -->
+	<xs:simpleType name="LogicalOpEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AND"/>
+			<xs:enumeration value="OR"/>
+			<xs:enumeration value="NOT"/>
+			<xs:enumeration value="XOR"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="QuantifierOpEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AT_LEAST_N"/>
+			<xs:enumeration value="AT_MOST_N"/>
+			<xs:enumeration value="EXACTLY_N"/>
+			<xs:enumeration value="FOR_EACH"/>
+			<!-- Add more later if needed -->
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- OperatorsIndex is discoverable metadata for UIs/engines -->
+	<xs:complexType name="OperatorsIndexType">
+		<xs:sequence>
+			<xs:element name="Logical" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Op" type="LogicalOpEnum" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Conditional" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Op" type="xs:string" minOccurs="0" maxOccurs="1"/>
+						<!-- IF_THEN_ELSE -->
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Quantifier" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Op" type="QuantifierOpEnum" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- Add inside Domain_Vocabulary_v2.xsd -->
+	<xs:complexType name="FieldAttributes">
+		<xs:attribute name="nullable" type="xs:boolean" use="optional" default="true"/>
+		<xs:attribute name="primaryKey" type="xs:boolean" use="optional" default="false"/>
+		<xs:attribute name="indexed" type="xs:boolean" use="optional" default="false"/>
+		<xs:attribute name="default" type="xs:string" use="optional"/>
+		<xs:attribute name="format" type="xs:string" use="optional"/>
+		<!-- e.g., date-time, email -->
+	</xs:complexType>
+	<!-- Enum catalog -->
+	<xs:complexType name="EnumValue">
+		<xs:attribute name="value" type="xs:string" use="required"/>
+		<xs:attribute name="label" type="xs:string" use="optional"/>
+		<xs:attribute name="description" type="xs:string" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="EnumSet">
+		<xs:sequence>
+			<xs:element name="Value" type="EnumValue" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="id" type="Identifier" use="required"/>
+		<xs:attribute name="label" type="xs:string" use="optional"/>
+		<xs:attribute name="closed" type="xs:boolean" use="optional" default="true"/>
+		<!-- open sets allowed -->
+	</xs:complexType>
+	<xs:complexType name="EnumCatalogueType">
+		<xs:sequence>
+			<xs:element name="EnumSet" type="EnumSet" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- Units -->
+	<xs:complexType name="Dimension">
+		<xs:attribute name="id" type="Identifier" use="required"/>
+		<xs:attribute name="label" type="xs:string" use="optional"/>
+		<!-- e.g., length, mass, currency -->
+	</xs:complexType>
+	<xs:complexType name="Unit">
+		<xs:attribute name="id" type="Identifier" use="required"/>
+		<xs:attribute name="symbol" type="xs:string" use="optional"/>
+		<xs:attribute name="dimension" type="xs:IDREF" use="optional"/>
+		<xs:attribute name="label" type="xs:string" use="optional"/>
+		<!-- e.g., USD, kg, m, ms -->
+		<!-- link to Dimension/@id -->
+	</xs:complexType>
+	<xs:complexType name="UnitsCatalogueType">
+		<xs:sequence>
+			<xs:element name="Dimension" type="Dimension" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Unit" type="Unit" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>
