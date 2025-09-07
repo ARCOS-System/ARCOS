@@ -19,48 +19,58 @@
 	  </xs:documentation>
 	</xs:annotation>
 
-	<xs:element name="ARCOSProject">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element name="ProjectID" type="xs:string" minOccurs="1"/>
-				<xs:element name="Purpose" type="PurposeType" minOccurs="1"/>
-				<xs:element name="DomainVocabularyAndRules" type="DomainReferenceType" minOccurs="1"/>
-				<xs:element name="Constraints" type="ConstraintsType" minOccurs="0"/>
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
-  
-	<xs:simpleType name="PurposeType">
-		<xs:restriction base="xs:string"/>
-	</xs:simpleType>
-  
-	<xs:complexType name="DomainReferenceType">
-	  <xs:sequence>
-		<xs:element name="DomainVocabulary"      type="common:InlineArtifactType"/>
-		<xs:element name="DomainPredefinedRules" type="common:InlineArtifactType"/>
-		<xs:element name="CurrentProjectRules"   type="common:InlineArtifactType"/>
-		<xs:element name="DomainSchema"          type="common:InlineArtifactType"/>
-	  </xs:sequence>    
-	</xs:complexType>
-    
-	<xs:complexType name="ConstraintsType">
-		<xs:sequence>
-			<xs:element name="Performance" type="PerformanceType" minOccurs="0"/>
-			<xs:element name="Security" type="SecurityType" minOccurs="0"/>
-		</xs:sequence>
-		<xs:attribute name="realtime" type="xs:boolean"/>
-		<xs:attribute name="embedded" type="xs:boolean"/>
-		<xs:attribute name="portable" type="xs:boolean"/>
-	</xs:complexType>
-  
-	<xs:complexType name="PerformanceType">
-		<xs:attribute name="level" type="xs:string"/>
-	</xs:complexType>
-  
-	<xs:complexType name="SecurityType">
-		<xs:attribute name="encryption" type="xs:string"/>
-		<xs:attribute name="policy" type="xs:string"/>
-	</xs:complexType>
+ <!-- ========================= Root element ========================= -->
+  <xs:element name="ARCOSProject" type="ARCOSProjectType"/>
+
+  <xs:complexType name="ARCOSProjectType">
+    <xs:sequence>
+      <xs:element name="ProjectID" type="xs:string"/>
+      <xs:element name="Purpose"   type="xs:string"/>
+
+      <!-- The four domain artifacts --> 
+      <xs:element name="DomainReference" type="DomainReferenceType"/>
+
+      <!-- Project-local constraints (optional) -->
+      <xs:element name="Constraints" type="ConstraintsType" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute name="name"    type="xs:string" use="optional"/>
+    <xs:attribute name="version" type="xs:string" use="optional"/>
+  </xs:complexType>
+
+  <!-- =================== Domain reference ================================================= -->
+  <!-- =================== DomainSchema is a ref the others are inline XML ================== -->
+  <xs:complexType name="DomainReferenceType">
+    <xs:sequence>
+      <xs:element name="DomainSchema"          		   type="common:RefArtifactType"/>
+      <xs:element name="DomainVocabularyArtifact"      type="common:InlineArtifactType"/>
+      <xs:element name="PredefinedRulesArtifact" 	   type="common:InlineArtifactType"/>
+      <xs:element name="CurrentProjectRulesArtifact"   type="common:InlineArtifactType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- ========================= Constraints ========================== -->
+  <xs:complexType name="ConstraintsType">
+    <xs:sequence>
+      <xs:element name="Performance" type="PerformanceType" minOccurs="0"/>
+      <xs:element name="Security"    type="SecurityType"    minOccurs="0"/>
+      <xs:element name="Realtime"    type="xs:boolean"      minOccurs="0"/>
+      <xs:element name="Embedded"    type="xs:boolean"      minOccurs="0"/>
+      <xs:element name="Portable"    type="xs:boolean"      minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="PerformanceType">
+    <xs:sequence>
+      <xs:element name="Level" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="SecurityType">
+    <xs:sequence>
+      <xs:element name="Encryption" type="xs:string" minOccurs="0"/>
+      <xs:element name="Policy"     type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
 	
 </xs:schema>
 
