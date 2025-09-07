@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           xmlns="https://github.com/ARCOS-System/ARCOS/XSD"
-           targetNamespace="https://github.com/ARCOS-System/ARCOS/XSD"
-           elementFormDefault="qualified"
-           attributeFormDefault="unqualified"
-           version="0.3.3">
-
-  <!-- ====================================================================
+<xs:schema 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns="https://github.com/ARCOS-System/ARCOS/XSD" 
+	xmlns:common="https://github.com/ARCOS-System/ARCOS/XSD/Common"
+	targetNamespace="https://github.com/ARCOS-System/ARCOS/XSD" 
+	elementFormDefault="qualified" 
+	attributeFormDefault="unqualified" 
+	version="0.3.3">
+	<!-- ====================================================================
        DomainVocabularyAndRules_RAE_SGD.xsd
        Unified schema that merges:
          1) Domain Vocabulary (entities, enums, units, operators)
@@ -19,9 +20,8 @@
          • Schema-Guided Dialog (SGD) hints via Synonyms & Phrases
          • Legacy-friendly Atomic rules still supported
        ==================================================================== -->
-
-  <xs:annotation>
-    <xs:documentation>
+	<xs:annotation>
+		<xs:documentation>
       RAE = Rule-As-Expression.  SGD = Schema-Guided Dialog.
       This unified schema lets producers/validators work from one source:
         - <DomainVocabulary/> defines entities, enums, units, atomics, operators.
@@ -31,441 +31,401 @@
       All references use ID/IDREF within this same XSD instance, eliminating the
       previous typeRef string indirection and avoiding inter-file IDREF issues.
     </xs:documentation>
-  </xs:annotation>
-
-  <!-- ============================ PRIMITIVES ============================ -->
-  <xs:simpleType name="Identifier">
-    <xs:restriction base="xs:NCName"/>
-  </xs:simpleType>
-
-  <xs:simpleType name="FieldPath">
-    <xs:restriction base="xs:string">
-      <xs:minLength value="1"/>
-    </xs:restriction>
-  </xs:simpleType>
-
-  <xs:simpleType name="ScopeEnum">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="field"/>
-      <xs:enumeration value="record"/>
-      <xs:enumeration value="collection"/>
-      <xs:enumeration value="dataset"/>
-    </xs:restriction>
-  </xs:simpleType>
-
-  <xs:simpleType name="ParamTypeEnum">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="string"/>
-      <xs:enumeration value="integer"/>
-      <xs:enumeration value="number"/>
-      <xs:enumeration value="boolean"/>
-      <xs:enumeration value="pattern"/>
-      <xs:enumeration value="enum-set"/>
-      <xs:enumeration value="field-ref"/>
-      <xs:enumeration value="unit-string"/>
-      <xs:enumeration value="duration"/>
-      <xs:enumeration value="json"/>
-    </xs:restriction>
-  </xs:simpleType>
-
-  <xs:simpleType name="LogicalOpEnum">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="AND"/>
-      <xs:enumeration value="OR"/>
-      <xs:enumeration value="NOT"/>
-      <xs:enumeration value="XOR"/>
-    </xs:restriction>
-  </xs:simpleType>
-
-  <xs:simpleType name="QuantifierOpEnum">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="AT_LEAST_N"/>
-      <xs:enumeration value="AT_MOST_N"/>
-      <xs:enumeration value="EXACTLY_N"/>
-      <xs:enumeration value="FOR_EACH"/>
-    </xs:restriction>
-  </xs:simpleType>
-
-
-  <!-- ==================================================================== -->
-  <!-- ==================================================================== -->
-  <!-- ============================ DomainVocabulary ====================== -->
-  <!-- ==================================================================== -->
-  <!-- ==================================================================== -->
-  <xs:element name="DomainVocabulary">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element name="Entities"         type="EntitiesType"/>
-        <xs:element name="Synonyms"         type="SynonymsType"         minOccurs="0"/>
-        <xs:element name="Phrases"          type="PhrasesType"          minOccurs="0"/>
-        <xs:element name="EnumCatalogue"    type="EnumCatalogueType"    minOccurs="0"/>
-        <xs:element name="UnitsCatalogue"   type="UnitsCatalogueType"   minOccurs="0"/>
-        <xs:element name="AtomicCatalogue"  type="AtomicCatalogueType"/>
-        <xs:element name="OperatorsIndex"   type="OperatorsIndexType"/>
-      </xs:sequence>
-      <xs:attribute name="name"    type="xs:string" use="optional"/>
-      <xs:attribute name="version" type="xs:string" use="optional"/>
-    </xs:complexType>
-  </xs:element>
-
-  <xs:complexType name="FieldAttributes">
-    <xs:attribute name="nullable"   type="xs:boolean" use="optional" default="true"/>
-    <xs:attribute name="primaryKey" type="xs:boolean" use="optional" default="false"/>
-    <xs:attribute name="indexed"    type="xs:boolean" use="optional" default="false"/>
-    <xs:attribute name="default"    type="xs:string"  use="optional"/>
-    <xs:attribute name="format"     type="xs:string"  use="optional"/>
-  </xs:complexType>
-
-  <xs:complexType name="FieldDef">
-    <xs:sequence>
-      <xs:element name="Attributes" type="FieldAttributes" minOccurs="0"/>
-    </xs:sequence>
-    <xs:attribute name="name"    type="Identifier" use="required"/>
-    <xs:attribute name="type"    type="xs:string"   use="optional"/>
-    <xs:attribute name="path"    type="FieldPath"   use="optional"/>
-    <xs:attribute name="enumRef" type="xs:IDREF"    use="optional"/>
-    <xs:attribute name="unitRef" type="xs:IDREF"    use="optional"/>
-  </xs:complexType>
-
-  <xs:complexType name="EntityDef">
-    <xs:sequence>
-      <xs:element name="Field" type="FieldDef" maxOccurs="unbounded"/>
-    </xs:sequence>
-    <xs:attribute name="name" type="Identifier" use="required"/>
-  </xs:complexType>
-
-  <xs:complexType name="EntitiesType">
-    <xs:sequence>
-      <xs:element name="Entity" type="EntityDef" maxOccurs="unbounded"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="Synonym">
-    <xs:attribute name="text" type="xs:string"   use="required"/>
-    <xs:attribute name="ref"  type="xs:string"   use="required"/>
-    <xs:attribute name="lang" type="xs:language" use="optional"/>
-  </xs:complexType>
-
-  <xs:complexType name="SynonymsType">
-    <xs:sequence>
-      <xs:element name="Synonym" type="Synonym" maxOccurs="unbounded"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="Phrase">
-    <xs:attribute name="text" type="xs:string"   use="required"/>
-    <xs:attribute name="hint" type="xs:string"   use="optional"/>
-    <xs:attribute name="lang" type="xs:language" use="optional"/>
-  </xs:complexType>
-
-  <xs:complexType name="PhrasesType">
-    <xs:sequence>
-      <xs:element name="Phrase" type="Phrase" maxOccurs="unbounded"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <!-- Enums & Units -->
-  <xs:complexType name="EnumValue">
-    <xs:attribute name="value"       type="xs:string" use="required"/>
-    <xs:attribute name="label"       type="xs:string" use="optional"/>
-    <xs:attribute name="description" type="xs:string" use="optional"/>
-  </xs:complexType>
-
-  <xs:complexType name="EnumSet">
-    <xs:sequence>
-      <xs:element name="Value" type="EnumValue" maxOccurs="unbounded"/>
-    </xs:sequence>
-    <xs:attribute name="id"     type="xs:ID"     use="required"/>
-    <xs:attribute name="label"  type="xs:string" use="optional"/>
-    <xs:attribute name="closed" type="xs:boolean" use="optional" default="true"/>
-  </xs:complexType>
-
-  <xs:complexType name="EnumCatalogueType">
-    <xs:sequence>
-      <xs:element name="EnumSet" type="EnumSet" maxOccurs="unbounded"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="Dimension">
-    <xs:attribute name="id"    type="xs:ID"     use="required"/>
-    <xs:attribute name="label" type="xs:string" use="optional"/>
-  </xs:complexType>
-
-  <xs:complexType name="Unit">
-    <xs:attribute name="id"        type="xs:ID"     use="required"/>
-    <xs:attribute name="symbol"    type="xs:string" use="optional"/>
-    <xs:attribute name="dimension" type="xs:IDREF"  use="optional"/>
-    <xs:attribute name="label"     type="xs:string" use="optional"/>
-  </xs:complexType>
-
-  <xs:complexType name="UnitsCatalogueType">
-    <xs:sequence>
-      <xs:element name="Dimension" type="Dimension" minOccurs="0" maxOccurs="unbounded"/>
-      <xs:element name="Unit"      type="Unit"      maxOccurs="unbounded"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <!-- Atomics & Operators -->
-  <xs:complexType name="ParamDef">
-    <xs:attribute name="name"        type="Identifier"    use="required"/>
-    <xs:attribute name="type"        type="ParamTypeEnum"  use="required"/>
-    <xs:attribute name="required"    type="xs:boolean"     use="optional" default="false"/>
-    <xs:attribute name="default"     type="xs:string"      use="optional"/>
-    <xs:attribute name="description" type="xs:string"      use="optional"/>
-  </xs:complexType>
-
-  <xs:complexType name="AtomicTypeDef">
-    <xs:sequence>
-      <xs:element name="Param"         type="ParamDef"    minOccurs="0" maxOccurs="unbounded"/>
-      <xs:element name="Semantics"     type="xs:string"   minOccurs="0"/>
-      <xs:element name="ValidatorHint" type="xs:string"   minOccurs="0"/>
-    </xs:sequence>
-    <xs:attribute name="id"    type="xs:ID"     use="required"/>
-    <xs:attribute name="label" type="xs:string" use="optional"/>
-    <xs:attribute name="scope" type="ScopeEnum" use="required"/>
-  </xs:complexType>
-
-  <xs:complexType name="AtomicCatalogueType">
-    <xs:sequence>
-      <xs:element name="AtomicType" type="AtomicTypeDef" maxOccurs="unbounded"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="OperatorsIndexType">
-    <xs:sequence>
-      <xs:element name="Logical" minOccurs="0">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element name="Op" type="LogicalOpEnum" maxOccurs="unbounded"/>
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="Conditional" minOccurs="0">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element name="Op" type="xs:string" minOccurs="0" maxOccurs="1"/>
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="Quantifier" minOccurs="0">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element name="Op" type="QuantifierOpEnum" maxOccurs="unbounded"/>
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
-
-
-  <!-- ========================== RAE EXPRESSION NODES ========================== -->
-  <xs:complexType name="Expression">
-    <xs:choice>
-      <xs:element name="Atomic"      type="AtomicNode"/>
-      <xs:element name="Logical"     type="LogicalNode"/>
-      <xs:element name="Conditional" type="ConditionalNode"/>
-      <xs:element name="Quantifier"  type="QuantifierNode"/>
-    </xs:choice>
-  </xs:complexType>
-
-  <xs:complexType name="ParamKV">
-    <xs:attribute name="name"  type="Identifier" use="required"/>
-    <xs:attribute name="value" type="xs:string"   use="required"/>
-    <xs:attribute name="type"  type="xs:string"   use="optional"/>
-  </xs:complexType>
-
-  <xs:complexType name="ParamsType">
-    <xs:sequence>
-      <xs:element name="Param" type="ParamKV" maxOccurs="unbounded"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="AtomicNode">
-    <xs:sequence>
-      <xs:element name="Params"  type="ParamsType" minOccurs="0"/>
-      <xs:element name="Explain" type="xs:string"  minOccurs="0"/>
-    </xs:sequence>
-    <xs:attribute name="typeRef" type="xs:IDREF"   use="required"/> <!-- refs AtomicCatalogue/AtomicType/@id -->
-    <xs:attribute name="target"  type="FieldPath"  use="optional"/>
-  </xs:complexType>
-
-  <xs:complexType name="LogicalNode">
-    <xs:sequence>
-      <xs:element name="Expr" type="Expression" minOccurs="1" maxOccurs="unbounded"/>
-    </xs:sequence>
-    <xs:attribute name="op" type="LogicalOpEnum" use="required"/>
-  </xs:complexType>
-
-  <xs:complexType name="ConditionalNode">
-    <xs:sequence>
-      <xs:element name="Predicate" type="Expression"/>
-      <xs:element name="Then"      type="Expression"/>
-      <xs:element name="Else"      type="Expression" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="QuantifierNode">
-    <xs:sequence>
-      <xs:element name="Expr" type="Expression"/>
-    </xs:sequence>
-    <xs:attribute name="op"     type="QuantifierOpEnum"      use="required"/>
-    <xs:attribute name="n"      type="xs:nonNegativeInteger" use="optional"/>
-    <xs:attribute name="domain" type="FieldPath"              use="optional"/>
-    <xs:attribute name="note"   type="xs:string"              use="optional"/>
-  </xs:complexType>
-
-  <!-- ============================ PREDEFINED LIB ============================ -->
-  <xs:complexType name="PredefinedAtomicRule">
-    <xs:sequence>
-      <xs:element name="Params"  type="ParamsType" minOccurs="0"/>
-      <xs:element name="Explain" type="xs:string"  minOccurs="0"/>
-    </xs:sequence>
-    <xs:attribute name="id"      type="Identifier" use="required"/>
-    <xs:attribute name="label"   type="xs:string"  use="optional"/>
-    <xs:attribute name="typeRef" type="xs:IDREF"   use="required"/>
-    <xs:attribute name="target"  type="FieldPath"  use="optional"/>
-    <xs:attribute name="version" type="xs:string"  use="optional"/>
-  </xs:complexType>
-
-  <xs:complexType name="PredefinedAtomicRules">
-    <xs:sequence>
-      <xs:element name="Rule" type="PredefinedAtomicRule" maxOccurs="unbounded"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="PredefinedExpression">
-    <xs:sequence>
-      <xs:element name="Label"   type="xs:string"  minOccurs="0"/>
-      <xs:element name="Explain" type="xs:string"  minOccurs="0"/>
-      <xs:element name="Targets" minOccurs="0">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element name="Target" type="FieldPath" maxOccurs="unbounded"/>
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="Expr" type="Expression"/>
-    </xs:sequence>
-    <xs:attribute name="id"      type="xs:ID" use="required"/>
-    <xs:attribute name="scope"   type="xs:string"  use="optional"/>
-    <xs:attribute name="version" type="xs:string"  use="optional"/>
-    <xs:attribute name="status"  type="xs:string"  use="optional"/>
-  </xs:complexType>
-
-  <xs:complexType name="PredefinedExpressions">
-    <xs:sequence>
-      <xs:element name="Expression" type="PredefinedExpression" maxOccurs="unbounded"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <!-- ==================================================================== -->
-  <!-- ==================================================================== -->
-  <!-- ============================ PredefinedRules ======================= -->
-  <!-- ==================================================================== -->
-  <!-- ==================================================================== -->
-  <xs:element name="PredefinedRules">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element name="AtomicRules" type="PredefinedAtomicRules" minOccurs="0"/>
-        <xs:element name="Expressions" type="PredefinedExpressions"  minOccurs="0"/>
-      </xs:sequence>
-      <xs:attribute name="name"    type="xs:string" use="optional"/>
-      <xs:attribute name="version" type="xs:string" use="optional"/>
-    </xs:complexType>
-  </xs:element>
-
-  <!-- ============================ SPECIFICATION ============================ -->
-  <xs:simpleType name="RuleTypeEnum">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="required"/>
-      <xs:enumeration value="enum"/>
-      <xs:enumeration value="reference_exists"/>
-      <xs:enumeration value="unique_global"/>
-      <xs:enumeration value="has_components"/>
-      <xs:enumeration value="match_pattern"/>
-      <xs:enumeration value="range"/>
-      <xs:enumeration value="equal_to"/>
-      <xs:enumeration value="custom"/>
-    </xs:restriction>
-  </xs:simpleType>
-
-  <!-- A project rule can be legacy-atomic (type + params) or a full RAE expression.
+	</xs:annotation>
+	<!-- ============================ PRIMITIVES ============================ -->
+	
+	<xs:import 
+		namespace="https://github.com/ARCOS-System/ARCOS/XSD/Common"
+        schemaLocation="Common.xsd"/>
+	
+	<xs:simpleType name="Identifier">
+		<xs:restriction base="xs:NCName"/>
+	</xs:simpleType>
+	<xs:simpleType name="FieldPath">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ScopeEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="field"/>
+			<xs:enumeration value="record"/>
+			<xs:enumeration value="collection"/>
+			<xs:enumeration value="dataset"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ParamTypeEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="string"/>
+			<xs:enumeration value="integer"/>
+			<xs:enumeration value="number"/>
+			<xs:enumeration value="boolean"/>
+			<xs:enumeration value="pattern"/>
+			<xs:enumeration value="enum-set"/>
+			<xs:enumeration value="field-ref"/>
+			<xs:enumeration value="unit-string"/>
+			<xs:enumeration value="duration"/>
+			<xs:enumeration value="json"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="LogicalOpEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AND"/>
+			<xs:enumeration value="OR"/>
+			<xs:enumeration value="NOT"/>
+			<xs:enumeration value="XOR"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="QuantifierOpEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AT_LEAST_N"/>
+			<xs:enumeration value="AT_MOST_N"/>
+			<xs:enumeration value="EXACTLY_N"/>
+			<xs:enumeration value="FOR_EACH"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ==================================================================== -->
+	<!-- ==================================================================== -->
+	<!-- ============================ DomainVocabulary ====================== -->
+	<!-- ==================================================================== -->
+	<!-- ==================================================================== -->
+	<xs:element name="DomainVocabulary">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Entities" type="EntitiesType"/>
+				<xs:element name="Synonyms" type="SynonymsType" minOccurs="0"/>
+				<xs:element name="Phrases" type="PhrasesType" minOccurs="0"/>
+				<xs:element name="EnumCatalogue" type="EnumCatalogueType" minOccurs="0"/>
+				<xs:element name="UnitsCatalogue" type="UnitsCatalogueType" minOccurs="0"/>
+				<xs:element name="AtomicCatalogue" type="AtomicCatalogueType"/>
+				<xs:element name="OperatorsIndex" type="OperatorsIndexType"/>
+			</xs:sequence>
+			<xs:attribute name="name" type="xs:string" use="optional"/>
+			<xs:attribute name="version" type="xs:string" use="optional"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="FieldAttributes">
+		<xs:attribute name="nullable" type="xs:boolean" use="optional" default="true"/>
+		<xs:attribute name="primaryKey" type="xs:boolean" use="optional" default="false"/>
+		<xs:attribute name="indexed" type="xs:boolean" use="optional" default="false"/>
+		<xs:attribute name="default" type="xs:string" use="optional"/>
+		<xs:attribute name="format" type="xs:string" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="FieldDef">
+		<xs:sequence>
+			<xs:element name="Attributes" type="FieldAttributes" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="name" type="Identifier" use="required"/>
+		<xs:attribute name="type" type="xs:string" use="optional"/>
+		<xs:attribute name="path" type="FieldPath" use="optional"/>
+		<xs:attribute name="enumRef" type="xs:IDREF" use="optional"/>
+		<xs:attribute name="unitRef" type="xs:IDREF" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="EntityDef">
+		<xs:sequence>
+			<xs:element name="Field" type="FieldDef" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="name" type="Identifier" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="EntitiesType">
+		<xs:sequence>
+			<xs:element name="Entity" type="EntityDef" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Synonym">
+		<xs:attribute name="text" type="xs:string" use="required"/>
+		<xs:attribute name="ref" type="xs:string" use="required"/>
+		<xs:attribute name="lang" type="xs:language" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="SynonymsType">
+		<xs:sequence>
+			<xs:element name="Synonym" type="Synonym" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Phrase">
+		<xs:attribute name="text" type="xs:string" use="required"/>
+		<xs:attribute name="hint" type="xs:string" use="optional"/>
+		<xs:attribute name="lang" type="xs:language" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="PhrasesType">
+		<xs:sequence>
+			<xs:element name="Phrase" type="Phrase" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- Enums & Units -->
+	<xs:complexType name="EnumValue">
+		<xs:attribute name="value" type="xs:string" use="required"/>
+		<xs:attribute name="label" type="xs:string" use="optional"/>
+		<xs:attribute name="description" type="xs:string" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="EnumSet">
+		<xs:sequence>
+			<xs:element name="Value" type="EnumValue" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="id" type="xs:ID" use="required"/>
+		<xs:attribute name="label" type="xs:string" use="optional"/>
+		<xs:attribute name="closed" type="xs:boolean" use="optional" default="true"/>
+	</xs:complexType>
+	<xs:complexType name="EnumCatalogueType">
+		<xs:sequence>
+			<xs:element name="EnumSet" type="EnumSet" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Dimension">
+		<xs:attribute name="id" type="xs:ID" use="required"/>
+		<xs:attribute name="label" type="xs:string" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="Unit">
+		<xs:attribute name="id" type="xs:ID" use="required"/>
+		<xs:attribute name="symbol" type="xs:string" use="optional"/>
+		<xs:attribute name="dimension" type="xs:IDREF" use="optional"/>
+		<xs:attribute name="label" type="xs:string" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="UnitsCatalogueType">
+		<xs:sequence>
+			<xs:element name="Dimension" type="Dimension" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Unit" type="Unit" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- Atomics & Operators -->
+	<xs:complexType name="ParamDef">
+		<xs:attribute name="name" type="Identifier" use="required"/>
+		<xs:attribute name="type" type="ParamTypeEnum" use="required"/>
+		<xs:attribute name="required" type="xs:boolean" use="optional" default="false"/>
+		<xs:attribute name="default" type="xs:string" use="optional"/>
+		<xs:attribute name="description" type="xs:string" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="AtomicTypeDef">
+		<xs:sequence>
+			<xs:element name="Param" type="ParamDef" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Semantics" type="xs:string" minOccurs="0"/>
+			<xs:element name="ValidatorHint" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="id" type="xs:ID" use="required"/>
+		<xs:attribute name="label" type="xs:string" use="optional"/>
+		<xs:attribute name="scope" type="ScopeEnum" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="AtomicCatalogueType">
+		<xs:sequence>
+			<xs:element name="AtomicType" type="AtomicTypeDef" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OperatorsIndexType">
+		<xs:sequence>
+			<xs:element name="Logical" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Op" type="LogicalOpEnum" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Conditional" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Op" type="xs:string" minOccurs="0" maxOccurs="1"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Quantifier" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Op" type="QuantifierOpEnum" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ========================== RAE EXPRESSION NODES ========================== -->
+	<xs:complexType name="Expression">
+		<xs:choice>
+			<xs:element name="Atomic" type="AtomicNode"/>
+			<xs:element name="Logical" type="LogicalNode"/>
+			<xs:element name="Conditional" type="ConditionalNode"/>
+			<xs:element name="Quantifier" type="QuantifierNode"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="ParamKV">
+		<xs:attribute name="name" type="Identifier" use="required"/>
+		<xs:attribute name="value" type="xs:string" use="required"/>
+		<xs:attribute name="type" type="xs:string" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="ParamsType">
+		<xs:sequence>
+			<xs:element name="Param" type="ParamKV" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AtomicNode">
+		<xs:sequence>
+			<xs:element name="Params" type="ParamsType" minOccurs="0"/>
+			<xs:element name="Explain" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="typeRef" type="xs:IDREF" use="required"/>
+		<xs:attribute name="target" type="FieldPath" use="optional"/>
+		<!-- refs AtomicCatalogue/AtomicType/@id -->
+	</xs:complexType>
+	<xs:complexType name="LogicalNode">
+		<xs:sequence>
+			<xs:element name="Expr" type="Expression" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="op" type="LogicalOpEnum" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="ConditionalNode">
+		<xs:sequence>
+			<xs:element name="Predicate" type="Expression"/>
+			<xs:element name="Then" type="Expression"/>
+			<xs:element name="Else" type="Expression" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="QuantifierNode">
+		<xs:sequence>
+			<xs:element name="Expr" type="Expression"/>
+		</xs:sequence>
+		<xs:attribute name="op" type="QuantifierOpEnum" use="required"/>
+		<xs:attribute name="n" type="xs:nonNegativeInteger" use="optional"/>
+		<xs:attribute name="domain" type="FieldPath" use="optional"/>
+		<xs:attribute name="note" type="xs:string" use="optional"/>
+	</xs:complexType>
+	<!-- ============================ PREDEFINED LIB ============================ -->
+	<xs:complexType name="PredefinedAtomicRule">
+		<xs:sequence>
+			<xs:element name="Params" type="ParamsType" minOccurs="0"/>
+			<xs:element name="Explain" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="id" type="Identifier" use="required"/>
+		<xs:attribute name="label" type="xs:string" use="optional"/>
+		<xs:attribute name="typeRef" type="xs:IDREF" use="required"/>
+		<xs:attribute name="target" type="FieldPath" use="optional"/>
+		<xs:attribute name="version" type="xs:string" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="PredefinedAtomicRules">
+		<xs:sequence>
+			<xs:element name="Rule" type="PredefinedAtomicRule" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PredefinedExpression">
+		<xs:sequence>
+			<xs:element name="Label" type="xs:string" minOccurs="0"/>
+			<xs:element name="Explain" type="xs:string" minOccurs="0"/>
+			<xs:element name="Targets" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Target" type="FieldPath" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Expr" type="Expression"/>
+		</xs:sequence>
+		<xs:attribute name="id" type="xs:ID" use="required"/>
+		<xs:attribute name="scope" type="xs:string" use="optional"/>
+		<xs:attribute name="version" type="xs:string" use="optional"/>
+		<xs:attribute name="status" type="xs:string" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="PredefinedExpressions">
+		<xs:sequence>
+			<xs:element name="Expression" type="PredefinedExpression" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ==================================================================== -->
+	<!-- ==================================================================== -->
+	<!-- ============================ PredefinedRules ======================= -->
+	<!-- ==================================================================== -->
+	<!-- ==================================================================== -->
+	<xs:element name="PredefinedRules">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="AtomicRules" type="PredefinedAtomicRules" minOccurs="0"/>
+				<xs:element name="Expressions" type="PredefinedExpressions" minOccurs="0"/>
+			</xs:sequence>
+			<xs:attribute name="name" type="xs:string" use="optional"/>
+			<xs:attribute name="version" type="xs:string" use="optional"/>
+		</xs:complexType>
+	</xs:element>
+	<!-- ============================ SPECIFICATION ============================ -->
+	<xs:simpleType name="RuleTypeEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="required"/>
+			<xs:enumeration value="enum"/>
+			<xs:enumeration value="reference_exists"/>
+			<xs:enumeration value="unique_global"/>
+			<xs:enumeration value="has_components"/>
+			<xs:enumeration value="match_pattern"/>
+			<xs:enumeration value="range"/>
+			<xs:enumeration value="equal_to"/>
+			<xs:enumeration value="custom"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- A project rule can be legacy-atomic (type + params) or a full RAE expression.
        It may also reference a predefined expression by id. -->
-  <xs:complexType name="ProjectRuleType">
-    <xs:choice>
-      <xs:element name="Atomic"      type="AtomicNode"/>
-      <xs:element name="Expr"        type="Expression"/>
-      <xs:element name="UsePredef"   type="xs:IDREF"/>  <!-- -> PredefinedExpressions/Expression/@id -->
-    </xs:choice>
-    <xs:attribute name="id"        type="xs:ID"        use="required"/>
-    <xs:attribute name="target"    type="FieldPath"    use="optional"/>
-    <xs:attribute name="type"      type="RuleTypeEnum" use="optional"/>
-    <xs:attribute name="predefined" type="xs:boolean"  use="optional" default="false"/>
-  </xs:complexType>
-
-  <xs:complexType name="RuleListType">
-    <xs:sequence>
-      <xs:element name="Rule" type="ProjectRuleType" maxOccurs="unbounded"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="OriginRefType">
-    <xs:attribute name="ref" type="xs:IDREF" use="required"/>
-  </xs:complexType>
-
-  <xs:complexType name="UserIntentType">
-    <xs:sequence>
-      <xs:element name="RawText"       type="xs:string"/>
-      <xs:element name="RuleExtracted" type="xs:IDREF" maxOccurs="unbounded"/>
-    </xs:sequence>
-    <xs:attribute name="id" type="xs:ID" use="required"/>
-  </xs:complexType>
-
-  <xs:complexType name="UserIntentListType">
-    <xs:sequence>
-      <xs:element name="UserIntent" type="UserIntentType" maxOccurs="unbounded"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <!-- ==================================================================== -->
-  <!-- ==================================================================== -->
-  <!-- ====================== CurrentProjectRules ========================= -->
-  <!-- ==================================================================== -->
-  <!-- ==================================================================== -->
-  <xs:element name="CurrentProjectRules">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element name="ProjectID" type="xs:string"/>
-        <xs:element name="Rules"     type="RuleListType"        minOccurs="0"/>
-        <xs:element name="Origins"   minOccurs="0">
-          <xs:complexType>
-            <xs:sequence>
-              <xs:element name="Origin" type="OriginRefType" maxOccurs="unbounded"/>
-            </xs:sequence>
-          </xs:complexType>
-        </xs:element>
-        <xs:element name="Intents"   type="UserIntentListType"  minOccurs="0"/>
-      </xs:sequence>
-      <xs:attribute name="name"    type="xs:string" use="required"/>
-      <xs:attribute name="version" type="xs:string"/>
-    </xs:complexType>
-  </xs:element>
-
-  <!-- ==================================================================== -->
-  <!-- ==================================================================== -->
-  <!-- =============================== ROOT =============================== -->
-  <!-- ==================================================================== -->
-  <!-- ==================================================================== -->
-  <xs:element name="DomainVocabularyAndRules">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element ref="DomainVocabulary"/>
-        <xs:element ref="PredefinedRules"  minOccurs="0"/>
-        <xs:element ref="CurrentProjectRules"/>
-      </xs:sequence>
-      <xs:attribute name="name"    type="xs:string" use="optional"/>
-      <xs:attribute name="version" type="xs:string" use="optional"/>
-    </xs:complexType>
-  </xs:element>
-
+	<xs:complexType name="ProjectRuleType">
+		<xs:choice>
+			<xs:element name="Atomic" type="AtomicNode"/>
+			<xs:element name="Expr" type="Expression"/>
+			<xs:element name="UsePredef" type="xs:IDREF"/>
+			<!-- -> PredefinedExpressions/Expression/@id -->
+		</xs:choice>
+		<xs:attribute name="id" type="xs:ID" use="required"/>
+		<xs:attribute name="target" type="FieldPath" use="optional"/>
+		<xs:attribute name="type" type="RuleTypeEnum" use="optional"/>
+		<xs:attribute name="predefined" type="xs:boolean" use="optional" default="false"/>
+	</xs:complexType>
+	<xs:complexType name="RuleListType">
+		<xs:sequence>
+			<xs:element name="Rule" type="ProjectRuleType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OriginRefType">
+		<xs:attribute name="ref" type="xs:IDREF" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="UserIntentType">
+		<xs:sequence>
+			<xs:element name="RawText" type="xs:string"/>
+			<xs:element name="RuleExtracted" type="xs:IDREF" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="id" type="xs:ID" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="UserIntentListType">
+		<xs:sequence>
+			<xs:element name="UserIntent" type="UserIntentType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ==================================================================== -->
+	<!-- ==================================================================== -->
+	<!-- ====================== CurrentProjectRules ========================= -->
+	<!-- ==================================================================== -->
+	<!-- ==================================================================== -->
+	<xs:element name="CurrentProjectRules">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ProjectID" type="xs:string"/>
+				<xs:element name="Rules" type="RuleListType" minOccurs="0"/>
+				<xs:element name="Origins" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Origin" type="OriginRefType" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Intents" type="UserIntentListType" minOccurs="0"/>
+			</xs:sequence>
+			<xs:attribute name="name" type="xs:string" use="required"/>
+			<xs:attribute name="version" type="xs:string"/>
+		</xs:complexType>
+	</xs:element>
+	<!-- ==================================================================== -->
+	<!-- ==================================================================== -->
+	<!-- =============================== ROOT =============================== -->
+	<!-- ==================================================================== -->
+	<!-- ==================================================================== -->
+	<xs:element name="DomainVocabularyAndRules">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="DomainSchema" type="common:RefArtifactType"/>
+				<xs:element name="DomainVocabulary" type="common:InlineArtifactType"/>
+				<xs:element name="PredefinedRules" type="common:InlineArtifactType"/>
+				<xs:element name="CurrentProjectRules" type="common:InlineArtifactType"/>
+			</xs:sequence>
+			<xs:attribute name="name" type="xs:string" use="optional"/>
+			<xs:attribute name="version" type="xs:string" use="optional"/>
+		</xs:complexType>
+	</xs:element>
 </xs:schema>
