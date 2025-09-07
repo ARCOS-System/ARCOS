@@ -10,8 +10,13 @@
 	  <xs:documentation>
 		Provides common reusable types across ARCOS schemas. Currently includes
 		the shared SHA-256 hash type used for checksums.
+
+		Checksums are AUTHORITATIVE only when computed by Speculus agents
+		(ARCOS Speculus, Domain Speculus). All other agents MUST verify but
+		MUST NOT alter Content or Checksum.
 	  </xs:documentation>
 	</xs:annotation>
+	
 
 	<!-- Shared SHA-256 string type -->
 	<xs:simpleType name="SHA256Type">
