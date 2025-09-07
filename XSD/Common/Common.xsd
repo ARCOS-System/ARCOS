@@ -28,19 +28,32 @@
 	  </xs:restriction>
 	</xs:simpleType>
 
+	<xs:simpleType name="XMLMediaTypeEnum">
+	  <xs:restriction base="xs:string">
+		<xs:enumeration value="application/xml"/>
+	  </xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="XSDMediaTypeEnum">
+	  <xs:restriction base="xs:string">
+		<xs:enumeration value="application/schema+xml"/>
+	  </xs:restriction>
+	</xs:simpleType>
+
    <xs:complexType name="InlineArtifactType">
 	  <xs:sequence>
 		<xs:element name="Content" type="xs:base64Binary"/>
 		<xs:element name="Checksum" type="SHA256Type"/>
 	  </xs:sequence>
 	  <xs:attribute name="encoding" type="EncodingEnum" use="required"/>
+	  <xs:attribute name="mediaType" type="XMLMediaTypeEnum" use="required"/> <!-- application/xml,  text/xml -->
 	</xs:complexType>
 	
 	<xs:complexType name="RefArtifactType">
 	  <xs:attribute name="href" type="xs:anyURI" use="required"/>
 	  <xs:attribute name="version" type="xs:string" use="optional"/>
-	  <xs:attribute name="sha256" type="xs:string" use="optional"/>
+	  <xs:attribute name="sha256" type="SHA256Type" use="required"/>
+	  <xs:attribute name="mediaType" type="XSDMediaTypeEnum" use="required"/> <!-- application/schema+xml,  text/schema+xml -->
 	</xs:complexType>	
 	
-
 </xs:schema>
