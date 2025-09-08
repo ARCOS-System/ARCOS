@@ -105,7 +105,7 @@
 			<rect x="0" y="214.351" width="287.719" height="360" class="st2"/>
 		</g>
 		<g id="shape1-7" transform="translate(296.017,-223.409)">
-			<title>Artefact_Manifest.xsd</title>
+			<title>artefact_manifest.xsd</title>
 			<desc>Artefact Manifest</desc>
 			<LinkPath path="https://raw.githubusercontent.com/ARCOS-System/ARCOS/refs/heads/main/3-Stable/v0.3.1/"/>
 			
