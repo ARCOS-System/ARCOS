@@ -11,7 +11,7 @@
 	<xs:annotation>
 	  <xs:documentation>
 		Defines the Maestro request structure for Post-Processor agents,
-		containing project identifier, producer output, and checksum.
+		containing project's definition, producer output, and checksum.
 	  </xs:documentation>
 	</xs:annotation>
 
@@ -22,8 +22,9 @@
   <xs:element name="PostProcessorRequest">
     <xs:complexType>
       <xs:sequence>
-        <xs:element name="ARCOSProject" type="common:InlineArtifactType"/>
-        <xs:element name="ProducerOutput" type="common:InlineArtifactType"/>
+        <xs:element name="ARCOSProject" type="common:InlineArtefactType"/>
+        <xs:element name="ProducerOutput" type="common:BinaryArtefactType"/>
+        <xs:element name="Checksum" type="common:SHA256Type"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>

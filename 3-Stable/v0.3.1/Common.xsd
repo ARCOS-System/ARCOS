@@ -10,8 +10,13 @@
 	  <xs:documentation>
 		Provides common reusable types across ARCOS schemas. Currently includes
 		the shared SHA-256 hash type used for checksums.
+
+		Checksums are AUTHORITATIVE only when computed by Speculus agents
+		(ARCOS Speculus, Domain Speculus). All other agents MUST verify but
+		MUST NOT alter Content or Checksum.
 	  </xs:documentation>
 	</xs:annotation>
+	
 
 	<!-- Shared SHA-256 string type -->
 	<xs:simpleType name="SHA256Type">
@@ -20,6 +25,7 @@
 	  </xs:restriction>
 	</xs:simpleType>
 
+    <!-- the enums -->
 	<!-- How the artifact bytes are encoded (extensible) -->
 	<xs:simpleType name="EncodingEnum">
 	  <xs:restriction base="xs:string">
@@ -28,12 +34,48 @@
 	  </xs:restriction>
 	</xs:simpleType>
 
-   <xs:complexType name="InlineArtifactType">
+	<xs:simpleType name="XMLMediaTypeEnum">
+	  <xs:restriction base="xs:string">
+		<xs:enumeration value="application/xml"/>
+	  </xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="XSDMediaTypeEnum">
+	  <xs:restriction base="xs:string">
+		<xs:enumeration value="application/schema+xml"/>
+	  </xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="BinaryMediaTypeEnum">
+	  <xs:restriction base="xs:string">
+		<xs:enumeration value="application/zip"/>
+	  </xs:restriction>
+	</xs:simpleType>
+
+   <!-- the types -->
+   <xs:complexType name="InlineArtefactType">
 	  <xs:sequence>
 		<xs:element name="Content" type="xs:base64Binary"/>
 		<xs:element name="Checksum" type="SHA256Type"/>
 	  </xs:sequence>
 	  <xs:attribute name="encoding" type="EncodingEnum" use="required"/>
+	  <xs:attribute name="mediaType" type="XMLMediaTypeEnum" use="required"/> <!-- application/xml,  text/xml -->
+	</xs:complexType>
+	
+	<xs:complexType name="RefArtefactType">
+	  <xs:attribute name="href" type="xs:anyURI" use="required"/>
+	  <xs:attribute name="version" type="xs:string" use="optional"/>
+	  <xs:attribute name="sha256" type="SHA256Type" use="required"/>
+	  <xs:attribute name="mediaType" type="XSDMediaTypeEnum" use="required"/> <!-- application/schema+xml,  text/schema+xml -->
+	</xs:complexType>
+	
+   <xs:complexType name="BinaryArtefactType">
+	  <xs:sequence>
+		<xs:element name="Content" type="xs:base64Binary"/>
+		<xs:element name="Checksum" type="SHA256Type"/>
+	  </xs:sequence>
+	  <xs:attribute name="encoding" type="EncodingEnum" use="required"/>
+	  <xs:attribute name="mediaType" type="BinaryMediaTypeEnum" use="required"/> <!-- application/xml,  text/xml -->
 	</xs:complexType>
 
 </xs:schema>

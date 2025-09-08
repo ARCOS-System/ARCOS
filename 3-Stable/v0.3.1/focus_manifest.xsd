@@ -36,7 +36,7 @@
 						<xs:sequence>
 							<xs:element name="FileRef" maxOccurs="unbounded">
 								<xs:complexType>
-									<xs:attribute name="path" type="RelPath" use="required"/>
+									<xs:attribute name="path" 	type="RelPath" 	 use="required"/>
 									<xs:attribute name="source" type="xs:string" use="optional"/>
 								</xs:complexType>
 							</xs:element>
@@ -44,9 +44,9 @@
 					</xs:complexType>
 				</xs:element>
 			</xs:sequence>
-			<xs:attribute name="context" type="FocusContext" use="required"/>
-			<xs:attribute name="reportRef" type="xs:anyURI" use="optional"/>
-			<xs:attribute name="created" type="xs:dateTime" use="optional"/>
+			<xs:attribute name="context" 	type="FocusContext" use="required"/>
+			<xs:attribute name="reportRef" 	type="xs:anyURI" 	use="optional"/>
+			<xs:attribute name="created" 	type="xs:dateTime" 	use="optional"/>
 			<xs:anyAttribute processContents="lax"/>
 		</xs:complexType>
 		<!-- Unique references -->

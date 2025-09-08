@@ -12,6 +12,7 @@
 		Defines the response format from Validator agents. Contains either a
 		validation report reference or a request for clarification, always
 		accompanied by a checksum.
+		Questions should be actionable, human-readable prompts.
 	  </xs:documentation>
 	</xs:annotation>
 
@@ -23,7 +24,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:choice>
-			<xs:element name="ValidationReport" type="common:InlineArtifactType"/>
+			<xs:element name="ValidationReport" type="common:InlineArtefactType"/>
             <xs:element name="Clarification" type="ClarificationType"/>
         </xs:choice>
         <xs:element name="Checksum" type="common:SHA256Type"/>
@@ -34,6 +35,7 @@
   <xs:complexType name="ClarificationType">
     <xs:sequence>
       <xs:element name="ProjectID" type="xs:string"/>
+      <xs:element name="ARCOSProject" type="common:InlineArtefactType"/>
       <xs:element name="Questions">
         <xs:complexType>
           <xs:sequence>

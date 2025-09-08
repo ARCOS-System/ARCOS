@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="https://github.com/ARCOS-System/ARCOS/XSD"
+           xmlns="https://github.com/ARCOS-System/ARCOS/XSD"
+           xmlns:common="https://github.com/ARCOS-System/ARCOS/XSD/Common"
+           elementFormDefault="qualified" attributeFormDefault="unqualified"
+           version="0.3.1">
+
+  <xs:annotation>
+    <xs:documentation>
+      FocusExtractor → Maestro responses.
+
+      Variants:
+        • Success: result of BuildFocus (returns FocusZipForProducer)
+        • Failure: error with ProjectID, optional reason, and timestamp
+
+      Notes:
+        • Envelope ends with a SHA-256 checksum (Common.SHA256Type).
+    </xs:documentation>
+  </xs:annotation>
+
+  <xs:import namespace="https://github.com/ARCOS-System/ARCOS/XSD/Common" schemaLocation="Common.xsd"/>
+
+  <xs:element name="FocusExtractorResponse" type="FocusExtractorResponseType"/>
+
+  <xs:complexType name="FocusExtractorResponseType">
+    <xs:sequence>
+      <xs:choice>
+        <xs:element name="Success"        type="SuccessType"/>
+        <xs:element name="Failure"        type="FailureType"/>
+      </xs:choice>
+      <xs:element name="Checksum" type="common:SHA256Type"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- For BuildFocus -->
+  <xs:complexType name="SuccessType">
+    <xs:sequence>
+      <xs:element name="ProjectID"     			type="xs:string"/>
+      <xs:element name="FocusZipForProducer" 	type="common:BinaryArtefactType"/>
+      <xs:element name="Timestamp"     			type="xs:dateTime"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="FailureType">
+    <xs:sequence>
+      <xs:element name="ProjectID" type="xs:string"/>
+      <xs:element name="Reason"    type="xs:string"  minOccurs="0"/>
+      <xs:element name="Timestamp" type="xs:dateTime"/>
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>

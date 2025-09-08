@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="https://github.com/ARCOS-System/ARCOS/XSD"
+           xmlns="https://github.com/ARCOS-System/ARCOS/XSD"
+           xmlns:common="https://github.com/ARCOS-System/ARCOS/XSD/Common"
+           elementFormDefault="qualified" attributeFormDefault="unqualified"
+           version="0.3.1">
+
+  <xs:annotation>
+    <xs:documentation>
+      Maestro → ArtefactExtractor requests.
+      Modes:
+        - InitialExtraction: start extraction &amp; history
+        - DeltaExtraction: request subset/superset relative to a prior manifest
+        - RebuildFull: rebuild the entire successful solution into a distributable bundle
+      Uses Common types for inline/binary artifacts and checksum.
+    </xs:documentation>
+  </xs:annotation>
+
+  <xs:import namespace="https://github.com/ARCOS-System/ARCOS/XSD/Common" schemaLocation="Common.xsd"/>
+
+  <xs:element name="ArtefactExtractorRequest" type="ArtefactExtractorRequestType"/>
+
+  <xs:complexType name="ArtefactExtractorRequestType">
+	<xs:sequence>
+      <xs:choice>
+        <xs:element name="InitialExtraction" type="InitialExtractionType"/>
+        <xs:element name="DeltaExtraction"   type="DeltaExtractionType"/>
+        <xs:element name="RebuildFull"       type="RebuildFullType"/>
+      </xs:choice>
+      <xs:element name="Checksum" type="common:SHA256Type"/>
+	</xs:sequence>
+  </xs:complexType>
+
+  <!-- Start the whole extraction flow -->
+  <xs:complexType name="InitialExtractionType">
+    <xs:sequence>
+      <xs:element name="ProjectID" type="xs:string"/>
+      <!-- Full producer output to mine from -->
+      <xs:element name="ProducerOutput" type="common:BinaryArtefactType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Ask for subset/superset relative to a prior manifest -->
+  <xs:complexType name="DeltaExtractionType">
+    <xs:sequence>
+      <xs:element name="ProjectID" type="xs:string"/>
+      <!-- Baseline manifest (previous result) -->
+      <xs:element name="PreviousArtifactManifest" type="common:InlineArtefactType"/>
+      <!-- Same full producer output (source of truth) -->
+      <xs:element name="CurrentProducerOutput" type="common:BinaryArtefactType"/>
+      <!-- replace | append | update -->
+      <xs:element name="DeltaPolicy">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="replace"/>
+            <xs:enumeration value="append"/>
+            <xs:enumeration value="update"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Rebuild the entire successful solution into a final distributable bundle -->
+  <xs:complexType name="RebuildFullType">
+    <xs:sequence>
+      <xs:element name="ProjectID" type="xs:string"/>
+      <xs:element name="ArtifactManifest" type="common:InlineArtefactType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>

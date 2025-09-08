@@ -6,7 +6,7 @@
 	targetNamespace="https://github.com/ARCOS-System/ARCOS/XSD" 
 	elementFormDefault="qualified" 
 	attributeFormDefault="unqualified" 
-	version="0.3.3">
+	version="0.3.1">
 	<!-- ====================================================================
        DomainVocabularyAndRules_RAE_SGD.xsd
        Unified schema that merges:
@@ -419,10 +419,10 @@
 	<xs:element name="DomainVocabularyAndRules">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="DomainSchema" type="common:RefArtifactType"/>
-				<xs:element name="DomainVocabulary" type="common:InlineArtifactType"/>
-				<xs:element name="PredefinedRules" type="common:InlineArtifactType"/>
-				<xs:element name="CurrentProjectRules" type="common:InlineArtifactType"/>
+				<xs:element name="DomainSchema" type="common:RefArtefactType"/>
+				<xs:element name="DomainVocabulary" type="common:InlineArtefactType"/>
+				<xs:element name="PredefinedRules" type="common:InlineArtefactType"/>
+				<xs:element name="CurrentProjectRules" type="common:InlineArtefactType"/>
 			</xs:sequence>
 			<xs:attribute name="name" type="xs:string" use="optional"/>
 			<xs:attribute name="version" type="xs:string" use="optional"/>

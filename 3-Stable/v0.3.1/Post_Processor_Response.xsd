@@ -25,6 +25,7 @@
 				<xs:element name="Success" type="SuccessType"/>
 				<xs:element name="Failure" type="FailureType"/>
 			</xs:choice>
+			<xs:element name="Checksum" type="common:SHA256Type"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -39,15 +40,23 @@
 	<xs:complexType name="FailureType">
 		<xs:sequence>
 			<xs:element name="ProjectID" type="xs:string"/>
-			<xs:element name="Report" type="common:InlineArtifactType"/>
+			<xs:element name="Report" type="common:InlineArtefactType"/>
 			<xs:element name="Summary" type="SummaryType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
   
+	<xs:simpleType name="StatusEnum">
+	  <xs:restriction base="xs:string">
+		<xs:enumeration value="success"/>
+		<xs:enumeration value="failure"/>
+		<xs:enumeration value="warning"/>
+	  </xs:restriction>
+	</xs:simpleType>
+
 	<xs:complexType name="SummaryType">
 		<xs:sequence>
 			<!-- Overall outcome in plain terms -->
-			<xs:element name="Status" type="xs:string" minOccurs="1"/> <!-- e.g., "success" | "failure" -->
+			<xs:element name="Status" type="StatusEnum" minOccurs="1"/> <!-- e.g., "success" | "failure" -->
 			<!-- Domain-agnostic counters -->
 			<xs:element name="IssueCount" type="xs:int" minOccurs="0"/>   <!-- errors, or hard failures -->
 			<xs:element name="NoticeCount" type="xs:int" minOccurs="0"/>  <!-- warnings, infos -->

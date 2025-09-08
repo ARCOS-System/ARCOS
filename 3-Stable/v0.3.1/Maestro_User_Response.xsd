@@ -9,9 +9,9 @@
 
 	<xs:annotation>
 	  <xs:documentation>
-		Defines the response from a Domain Speculus agent, indicating whether
-		domain rules were successfully generated/saved or cancelled, with optional
-		rule statistics and timestamp.
+		Root element for responses sent from Maestro back to the User.
+		On success, contains the generated project ZIP output and metadata;
+		on cancellation, reports the project ID, reason, and timestamp.
 	  </xs:documentation>
 	</xs:annotation>
 
@@ -19,25 +19,22 @@
 		namespace="https://github.com/ARCOS-System/ARCOS/XSD/Common"
         schemaLocation="Common.xsd"/>
 
-  <xs:element name="DomainSpeculusResponse">
+  <xs:element name="MaestroResponse">
     <xs:complexType>
       <xs:sequence>
         <xs:choice>
           <xs:element name="Success" type="SuccessType"/>
           <xs:element name="Cancelled" type="CancelledType"/>
         </xs:choice>
-		<!-- Always last -->
-		<xs:element name="Checksum" type="common:SHA256Type"/>      
       </xs:sequence>
     </xs:complexType>
   </xs:element>
 
   <xs:complexType name="SuccessType">
     <xs:sequence>
+      <xs:element name="ProjectID" type="xs:string"/>
       <xs:element name="ARCOSProject" type="common:InlineArtefactType"/>
-      <!-- Optional: quick stats for UI -->
-      <xs:element name="RuleCount" type="xs:int"/>
-      <xs:element name="IntentCount" type="xs:int"/>
+      <xs:element name="ZipOutput" type="common:BinaryArtefactType"/>
       <xs:element name="Timestamp" type="xs:dateTime"/>
     </xs:sequence>
   </xs:complexType>

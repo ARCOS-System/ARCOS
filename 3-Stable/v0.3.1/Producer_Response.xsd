@@ -11,6 +11,14 @@
 	  <xs:documentation>
 		Defines the response returned by Producer agents, which can include
 		generated output (packaged with checksum) or clarification questions.
+		
+		On success, ZipOutput is delivered as common:BinaryArtifactType 
+		(zip payload; see Common.xsd for checksum/filename details).
+
+		On clarification, includes ProjectID, the current ARCOSProject (inline XML), 
+		and one or more human-readable questions.
+
+		A trailing Checksum (SHA-256) covers the entire payload for transport integrity.
 	  </xs:documentation>
 	</xs:annotation>
 
@@ -22,9 +30,10 @@
     <xs:complexType>
       <xs:sequence>
         <xs:choice>
-  		  <xs:element name="Output" type="common:InlineArtifactType"/>
+  		  <xs:element name="ZipOutput" type="common:BinaryArtifactType"/>
           <xs:element name="Clarification" type="ClarificationType"/>
         </xs:choice>
+		<xs:element name="Checksum" type="common:SHA256Type"/>
       </xs:sequence>
     </xs:complexType>    
   </xs:element>
@@ -32,6 +41,7 @@
   <xs:complexType name="ClarificationType">
     <xs:sequence>
       <xs:element name="ProjectID" type="xs:string"/>
+      <xs:element name="ARCOSProject" type="common:InlineArtifactType"/>
       <xs:element name="Questions" minOccurs="1">
         <xs:complexType>
           <xs:sequence>

@@ -21,20 +21,21 @@
 	<xs:element name="ARCOSDomainAgents">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="ProjectID" type="xs:string" minOccurs="1"/>
-				<xs:element name="DomainAgents" type="DomainAgentsType" minOccurs="0"/> <!-- Only the orchestrator receives it -->
-				<xs:element name="Licensing" type="LicensingType" minOccurs="0"/>		<!-- Only the orchestrator receives it -->
+				<xs:element name="ProjectID" 	type="xs:string" 		minOccurs="1"/>
+				<xs:element name="DomainAgents" type="DomainAgentsType" minOccurs="1"/> <!-- Only the orchestrator receives it -->
+				<xs:element name="Licensing" 	type="LicensingType" 	minOccurs="1"/>		<!-- Only the orchestrator receives it -->
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
     
 	<xs:complexType name="DomainAgentsType">
 	  <xs:sequence>
-		<xs:element name="DomainSpeculus" type="DomainSpeculusAgentType" minOccurs="1" maxOccurs="1"/>
-		<xs:element name="Producer"       type="ProducerAgentType"       minOccurs="1" maxOccurs="1"/>
-		<xs:element name="Validator"      type="ValidatorAgentType"      minOccurs="1" maxOccurs="1"/>
-		<xs:element name="PostProcessor"  type="PostProcessorAgentType"  minOccurs="0" maxOccurs="1"/>
-		<xs:element name="FilterInput"    type="FilterInputAgentType"    minOccurs="0" maxOccurs="1"/>
+		<xs:element name="DomainSpeculus" 		type="DomainSpeculusAgentType" 	minOccurs="1" maxOccurs="1"/>
+		<xs:element name="Producer"       		type="ProducerAgentType"       	minOccurs="1" maxOccurs="1"/>
+		<xs:element name="Validator"      		type="ValidatorAgentType"      	minOccurs="1" maxOccurs="1"/>
+		<xs:element name="PostProcessor"  		type="PostProcessorAgentType"  	minOccurs="0" maxOccurs="1"/>
+		<xs:element name="ArtefactExtractor"    type="ArtefactExtractorType"    minOccurs="0" maxOccurs="1"/>
+		<xs:element name="FocusExtractor"    	type="FocusExtractorType"    	minOccurs="0" maxOccurs="1"/>
 	  </xs:sequence>
 	</xs:complexType>
   
@@ -59,9 +60,14 @@
 		<xs:enumeration value="PostProcessor"/>
 	  </xs:restriction>
 	</xs:simpleType>
-	<xs:simpleType name="FilterInputRoleType">
+	<xs:simpleType name="ArtefactExtractorRoleType">
 	  <xs:restriction base="xs:string">
-		<xs:enumeration value="FilterInput"/>
+		<xs:enumeration value="ArtefactExtractor"/>
+	  </xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="FocusExtractorRoleType">
+	  <xs:restriction base="xs:string">
+		<xs:enumeration value="FocusExtractor"/>
 	  </xs:restriction>
 	</xs:simpleType>
 
@@ -77,16 +83,17 @@
 		<xs:element name="Password" type="xs:string" minOccurs="0"/>
 		<xs:element name="Args" type="xs:string" minOccurs="0"/>
 	  </xs:sequence>
-	  <xs:attribute name="type" use="required">
+	  <xs:attribute name="type" use="required"> <!-- to indicate the choice of type of execution ... -->
 		<xs:simpleType>
 		  <xs:restriction base="xs:string">
-			<xs:enumeration value="app"/>
-			<xs:enumeration value="api"/>
+			<xs:enumeration value="Path"/>
+			<xs:enumeration value="URL"/>
 		  </xs:restriction>
 		</xs:simpleType>
 	  </xs:attribute>
 	</xs:complexType>
-
+	
+	<!-- Agent types -->
 	<xs:complexType name="DomainSpeculusAgentType">
 	  <xs:sequence>
 		<xs:element name="Execution" type="ExecutionType" minOccurs="1"/>
@@ -119,21 +126,28 @@
 	  <xs:attribute name="name" type="xs:string" use="required"/>
 	</xs:complexType>
 	
-	<xs:complexType name="FilterInputAgentType">
+	<xs:complexType name="ArtefactExtractorType">
 	  <xs:sequence>
 		<xs:element name="Execution" type="ExecutionType" minOccurs="1"/>
 	  </xs:sequence>
-	  <xs:attribute name="role" type="FilterInputRoleType" use="required" fixed="FilterInput"/>
+	  <xs:attribute name="role" type="ArtefactExtractorRoleType" use="required" fixed="ArtefactExtractor"/>
 	  <xs:attribute name="name" type="xs:string" use="required"/>
 	</xs:complexType>
 	
+	<xs:complexType name="FocusExtractorType">
+	  <xs:sequence>
+		<xs:element name="Execution" type="ExecutionType" minOccurs="1"/>
+	  </xs:sequence>
+	  <xs:attribute name="role" type="FocusExtractorRoleType" use="required" fixed="FocusExtractor"/>
+	  <xs:attribute name="name" type="xs:string" use="required"/>
+	</xs:complexType>
+
     <xs:complexType name="LicensingType">
 		<xs:sequence>
 			<xs:element name="Mode" type="xs:string"/>
 			<xs:element name="Validation" type="xs:string"/>
 			<xs:element name="LicenseDuration" type="xs:string"/>
 		</xs:sequence>
-		<xs:attribute name="mode" type="xs:string"/>
 	</xs:complexType>
   
 </xs:schema>

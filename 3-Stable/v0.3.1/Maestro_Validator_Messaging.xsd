@@ -22,8 +22,9 @@
   <xs:element name="ValidatorRequest">
     <xs:complexType>
       <xs:sequence>
-        <xs:element name="ARCOSProject" type="common:InlineArtifactType"/>
-        <xs:element name="ProducerOutput" type="common:InlineArtifactType"/>
+        <xs:element name="ARCOSProject" type="common:InlineArtefactType"/>
+        <xs:element name="ProducerOutput" type="common:BinaryArtefactType"/>
+        <xs:element name="Checksum" type="common:SHA256Type"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>

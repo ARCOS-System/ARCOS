@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="https://github.com/ARCOS-System/ARCOS/XSD"
+           xmlns="https://github.com/ARCOS-System/ARCOS/XSD"
+           xmlns:common="https://github.com/ARCOS-System/ARCOS/XSD/Common"
+           elementFormDefault="qualified" attributeFormDefault="unqualified"
+           version="0.3.1">
+
+  <xs:annotation>
+    <xs:documentation>
+      ArtefactExtractor → Maestro responses.
+      - Success: standard extraction result
+      - RebuildSuccess: full rebuild result (manifest required)
+      All end with an envelope checksum.
+    </xs:documentation>
+  </xs:annotation>
+
+  <xs:import namespace="https://github.com/ARCOS-System/ARCOS/XSD/Common" schemaLocation="Common.xsd"/>
+
+  <xs:element name="ArtefactExtractorResponse" type="ArtefactExtractorResponseType"/>
+
+  <xs:complexType name="ArtefactExtractorResponseType">
+	<xs:sequence>
+      <xs:choice>
+        <xs:element name="Success"        type="SuccessType"/>
+        <xs:element name="RebuildSuccess" type="RebuildSuccessType"/>
+        <xs:element name="Failure" type="FailureType"/>
+      </xs:choice>
+      <xs:element name="Checksum" type="common:SHA256Type"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- For InitialExtraction/DeltaExtraction -->
+  <xs:complexType name="SuccessType">
+    <xs:sequence>
+      <xs:element name="ProjectID" type="xs:string"/>
+	  <xs:element name="ArtefactManifest" type="common:InlineArtefactType"/> 	<!-- Your artefact manifest (inline) -->
+	  <xs:element name="Timestamp" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <!-- For InitialExtraction/DeltaExtraction -->
+
+  <xs:complexType name="FailureType">
+    <xs:sequence>
+      <xs:element name="ProjectID" type="xs:string"/>
+      <xs:element name="Reason" type="xs:string" minOccurs="0"/>
+      <xs:element name="Timestamp" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- For RebuildFull: bundle is REQUIRED; manifest optional -->
+  <xs:complexType name="RebuildSuccessType">
+    <xs:sequence>
+      <xs:element name="ProjectID" type="xs:string"/>
+      <xs:element name="ArtefactManifest" type="common:InlineArtefactType" /> 	<!--  for listing bundle contents -->
+      <xs:element name="Bundle" type="common:BinaryArtefactType"/>				<!-- REQUIRED: final distributable bundle -->
+      <xs:element name="Timestamp" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>

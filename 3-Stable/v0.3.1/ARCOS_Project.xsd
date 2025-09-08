@@ -16,6 +16,13 @@
 		Defines the ARCOS project configuration, including project ID, purpose, domain vocabulary, 
 		predefined rules, current rules, domain schema, and optional constraints. 
 		Does not include agent selection or licensing, which are in ARCOS_Domain_Agents.xml.
+		
+		Scope note: This project file intentionally excludes agent selection and licensing; 
+		those live in the separate ARCOS_Domain_Agents artifact and are transported independently 
+		(e.g., in responses) as inline artifacts, not expanded in this schema.
+		
+		DomainReference embeds the domain vocabulary, predefined rules, and current project rules inline, 
+		and references the domain schema externally.
 	  </xs:documentation>
 	</xs:annotation>
 
@@ -41,10 +48,10 @@
   <!-- =================== DomainSchema is a ref the others are inline XML ================== -->
   <xs:complexType name="DomainReferenceType">
     <xs:sequence>
-      <xs:element name="DomainSchema"          		   type="common:RefArtifactType"/>
-      <xs:element name="DomainVocabularyArtifact"      type="common:InlineArtifactType"/>
-      <xs:element name="PredefinedRulesArtifact" 	   type="common:InlineArtifactType"/>
-      <xs:element name="CurrentProjectRulesArtifact"   type="common:InlineArtifactType"/>
+      <xs:element name="DomainSchema"          		   type="common:RefArtefactType"/>
+      <xs:element name="DomainVocabularyArtifact"      type="common:InlineArtefactType"/>
+      <xs:element name="PredefinedRulesArtifact" 	   type="common:InlineArtefactType"/>
+      <xs:element name="CurrentProjectRulesArtifact"   type="common:InlineArtefactType"/>
     </xs:sequence>
   </xs:complexType>
 

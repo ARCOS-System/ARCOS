@@ -12,6 +12,14 @@
 		Outlines requests Maestro sends to Producer agents, supporting initial
 		production and retry production workflows, with associated rules,
 		specifications, and validation/post-processor feedback.
+		
+		InitialProduction and RetryProduction both carry the full ARCOSProject as 
+		common:InlineArtifactType (schema not expanded here).
+
+		RetryProduction additionally includes the previous ZipOutput (binary) and 
+		exactly one feedback report (ValidationReport or PostProcessorReport) as inline XML.
+
+		A trailing Checksum (SHA-256) covers the entire request.
 	  </xs:documentation>
 	</xs:annotation>
 
@@ -33,17 +41,17 @@
   
   <xs:complexType name="InitialProductionType">
     <xs:sequence>
-      <xs:element name="ARCOSProject" type="common:InlineArtifactType"/>
+      <xs:element name="ARCOSProject" type="common:InlineArtefactType"/>
     </xs:sequence>
   </xs:complexType>
   
   <xs:complexType name="RetryProductionType">
     <xs:sequence>
-	  <xs:element name="ARCOSProject" type="common:InlineArtifactType"/>
-	  <xs:element name="OutputZipBase64" type="common:InlineArtifactType"/>      
+	  <xs:element name="ARCOSProject" type="common:InlineArtefactType"/>
+	  <xs:element name="PreviousZipOutput" type="common:BinaryArtefactType"/>      
       <xs:choice>
-        <xs:element name="ValidationReport" type="common:InlineArtifactType"/>
-        <xs:element name="PostProcessorReport" type="common:InlineArtifactType"/>
+        <xs:element name="ValidationReport" type="common:InlineArtefactType"/>
+        <xs:element name="PostProcessorReport" type="common:InlineArtefactType"/>
       </xs:choice>
     </xs:sequence>
   </xs:complexType>

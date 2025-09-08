@@ -1,75 +1,173 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-			targetNamespace="https://github.com/ARCOS-System/ARCOS/XSD"
-			xmlns="https://github.com/ARCOS-System/ARCOS/XSD"
-			xmlns:common="https://github.com/ARCOS-System/ARCOS/XSD/Common"
-            elementFormDefault="qualified"
-			attributeFormDefault="unqualified"
-            version="0.3.1">
+           targetNamespace="https://github.com/ARCOS-System/ARCOS/XSD"
+           xmlns="https://github.com/ARCOS-System/ARCOS/XSD"
+           xmlns:common="https://github.com/ARCOS-System/ARCOS/XSD/Common"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified"
+           version="0.3.1">
 
-	<xs:annotation>
-	  <xs:documentation>
-		Structure of validation reports produced by Validator agents,
-		including overall result, per-part CRUD and rule status,
-		and optional improvement suggestions.
-	  </xs:documentation>
-	</xs:annotation>
+  <xs:annotation>
+    <xs:documentation>
+      Domain-agnostic validation report produced by Validator agents.
+      Neutral envelope with Header, Summary, Findings, and optional domain add-ons.
+      - Domain add-ons are embedded as:
+			DomainReportArtifact (common:InlineArtifactType) for a full domain-specific XML report.
+      This artifact is transported inline by ValidatorResponse.ValidationReport. See Validator messaging. 
+    </xs:documentation>
+  </xs:annotation>
 
+  <xs:import namespace="https://github.com/ARCOS-System/ARCOS/XSD/Common" schemaLocation="Common.xsd"/>
 
-  <xs:element name="ValidatorReport">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element name="ProjectID" type="xs:string"/>
-        <xs:element name="ValidationDate" type="xs:dateTime"/>
-        <xs:element name="OverallSuccess" type="xs:boolean"/>
-        <xs:element name="Parts">
-          <xs:complexType>
-            <xs:sequence>
-              <xs:element name="Part" maxOccurs="unbounded" type="PartType"/>
-            </xs:sequence>
-          </xs:complexType>
-        </xs:element>
-        <xs:element name="Suggestions" minOccurs="0">
-          <xs:complexType>
-            <xs:sequence>
-              <xs:element name="Suggestion" maxOccurs="unbounded">
-                <xs:complexType>
-                  <xs:sequence>
-                    <xs:element name="Message" type="xs:string"/>
-                  </xs:sequence>
-                  <xs:attribute name="Target" type="xs:string" use="required"/>
-                </xs:complexType>
-              </xs:element>
-            </xs:sequence>
-          </xs:complexType>
-        </xs:element>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:complexType name="PartType">
+  <!-- ========================= Root ========================= -->
+  <xs:element name="ValidatorReport" type="ValidatorReportType"/>
+
+  <xs:complexType name="ValidatorReportType">
     <xs:sequence>
-      <xs:element name="CRUD">
+      <xs:element name="Header" type="HeaderType"/>
+      <xs:element name="Summary" type="SummaryType"/>
+      <xs:element name="Findings" type="FindingsType" minOccurs="0"/>
+      <!-- Domain-specific optional payloads -->
+      <xs:element name="DomainReportArtifact" type="common:InlineArtefactType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- ========================= Header ========================= -->
+  <xs:complexType name="HeaderType">
+    <xs:sequence>
+      <xs:element name="ProjectID" type="xs:string"/>
+      <xs:element name="ValidationStartedAt" type="xs:dateTime"/>
+      <xs:element name="ValidationFinishedAt" type="xs:dateTime"/>
+      <xs:element name="OverallStatus" type="OverallStatusType"/>
+      <xs:element name="Inputs" type="InputsType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name="OverallStatusType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="pass"/>
+      <xs:enumeration value="fail"/>
+      <xs:enumeration value="warn"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="InputsType">
+    <xs:sequence>
+      <!-- Checksums of the evaluated inputs (envelope-level integrity, not mandatory) -->
+      <xs:element name="ARCOSProjectChecksum" type="common:SHA256Type"/>
+      <xs:element name="ProducerOutputChecksum" type="common:SHA256Type"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- ========================= Summary ========================= -->
+  <xs:complexType name="SummaryType">
+    <xs:sequence>
+      <xs:element name="FindingCounts" type="FindingCountsType" minOccurs="0"/>
+      <xs:element name="Notes" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="FindingCountsType">
+    <xs:sequence>
+      <xs:element name="Total" type="xs:int"/>
+      <xs:element name="BySeverity" minOccurs="0">
         <xs:complexType>
           <xs:sequence>
-            <xs:element name="Function" maxOccurs="unbounded" type="CRUDType"/>
+            <xs:element name="Severity" maxOccurs="unbounded">
+              <xs:complexType>
+                <xs:attribute name="level" type="SeverityType" use="required"/>
+                <xs:attribute name="count" type="xs:int" use="required"/>
+              </xs:complexType>
+            </xs:element>
           </xs:sequence>
         </xs:complexType>
       </xs:element>
-      <xs:element name="Rules" minOccurs="0">
+      <xs:element name="ByCategory" minOccurs="0">
         <xs:complexType>
           <xs:sequence>
-            <xs:element name="RuleStatus" maxOccurs="unbounded" type="RuleStatusType"/>
+            <xs:element name="Category" maxOccurs="unbounded">
+              <xs:complexType>
+                <xs:attribute name="name" type="CategoryType" use="required"/>
+                <xs:attribute name="count" type="xs:int" use="required"/>
+              </xs:complexType>
+            </xs:element>
           </xs:sequence>
         </xs:complexType>
       </xs:element>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="CRUDType">
-    <xs:attribute name="name" type="xs:string" use="required"/>
-    <xs:attribute name="success" type="xs:boolean" use="required"/>
+
+  <!-- ========================= Findings ========================= -->
+  <xs:complexType name="FindingsType">
+    <xs:sequence>
+      <xs:element name="Finding" type="FindingType" maxOccurs="unbounded"/>
+    </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="RuleStatusType">
-    <xs:attribute name="ruleRef" type="xs:IDREF" use="required"/>
-    <xs:attribute name="success" type="xs:boolean" use="required"/>
+
+  <xs:simpleType name="SeverityType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="error"/>
+      <xs:enumeration value="warning"/>
+      <xs:enumeration value="info"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="CategoryType">
+    <xs:restriction base="xs:string">
+      <!-- neutral buckets; add more if needed -->
+      <xs:enumeration value="schema"/>
+      <xs:enumeration value="rules"/>
+      <xs:enumeration value="structure"/>
+      <xs:enumeration value="naming"/>
+      <xs:enumeration value="checksum"/>
+      <xs:enumeration value="packaging"/>
+      <xs:enumeration value="other"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="FindingType">
+    <xs:sequence>
+      <xs:element name="Message" type="xs:string"/>
+      <xs:element name="Target" type="TargetRefType" minOccurs="0"/>
+      <xs:element name="Location" type="LocationType" minOccurs="0"/>
+      <xs:element name="Evidence" type="xs:string" minOccurs="0"/>
+      <xs:element name="SuggestedFix" type="xs:string" minOccurs="0"/>
+      <!-- Optional domain blob per finding -->
+      <xs:element name="DomainDetail" type="common:InlineArtefactType" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string" use="optional"/>
+    <xs:attribute name="severity" type="SeverityType" use="required"/>
+    <xs:attribute name="category" type="CategoryType" use="required"/>
+    <xs:attribute name="code" type="xs:string" use="optional"/>
   </xs:complexType>
+
+  <xs:complexType name="TargetRefType">
+    <xs:sequence>
+      <!-- High-level pointer to what the finding refers to -->
+      <xs:element name="Artifact" type="ArtifactKindType" minOccurs="0"/>
+      <xs:element name="XPath" type="xs:string" minOccurs="0"/>
+      <xs:element name="RuleId" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name="ArtifactKindType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ARCOSProject"/>
+      <xs:enumeration value="DomainSchema"/>
+      <xs:enumeration value="DomainVocabulary"/>
+      <xs:enumeration value="PredefinedRules"/>
+      <xs:enumeration value="CurrentProjectRules"/>
+      <xs:enumeration value="ProducerOutput"/>
+      <xs:enumeration value="Other"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="LocationType">
+    <xs:sequence>
+      <xs:element name="File" type="xs:string" minOccurs="0"/>
+      <xs:element name="Line" type="xs:int" minOccurs="0"/>
+      <xs:element name="Column" type="xs:int" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
 </xs:schema>

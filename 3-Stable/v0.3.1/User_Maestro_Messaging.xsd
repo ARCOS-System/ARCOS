@@ -6,22 +6,19 @@
 	elementFormDefault="qualified" 
 	attributeFormDefault="unqualified" 
 	version="0.3.1">
-
+	
 	<xs:annotation>
 	  <xs:documentation>
-		Root element for messages sent from Maestro to the ARCOS Speculus agent.
-		Carries new project creation requests or updated project definitions.
-		
-		EditProject carries the entire ARCOSProject as an inline artifact 
-		(common:InlineArtifactType), preserving the project file exactly as authored; 
-		this schema does not expand project internals.
+		Root element for messages sent from the User to the Maestro.
+		Used to request creation of a new ARCOS project or to submit
+		edits to an existing project configuration.
 	  </xs:documentation>
 	</xs:annotation>
-	
+
 	<xs:import namespace="https://github.com/ARCOS-System/ARCOS/XSD/Common" schemaLocation="Common.xsd"/>
   
   <!-- Root message -->
-  <xs:element name="ARCOSSpeculusMessage">
+  <xs:element name="UserMaestroMessage">
     <xs:complexType>
       <xs:sequence>
         <xs:choice>

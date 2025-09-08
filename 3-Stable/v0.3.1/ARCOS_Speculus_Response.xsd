@@ -9,8 +9,16 @@
 
 	<xs:annotation>
 	  <xs:documentation>
-		Specifies the response structure from the ARCOS Speculus agent,
-		supporting success (with saved XML, checksum, summary) or cancellation.
+		Root element for responses returned by the ARCOS Speculus agent to Maestro.
+		On success, includes the validated ARCOSProject and ARCOSDomainAgents
+		artifacts; on cancellation, includes the project ID, reason, and timestamp.
+		
+		Returns producer-validated artifacts as embedded XML documents. In a Success response, 
+		both ARCOSProject and ARCOSDomainAgents are delivered as common:InlineArtifactType, 
+		i.e., serialized XML payloads whose structure is defined by their own schemas 
+		(e.g., ARCOS_Project.xsd, ARCOS_Domain_Agents.xsd). This response schema does not expand 
+		or redefine those artifacts; consumers should extract and validate each artifact against 
+		its native XSD as needed.
 	  </xs:documentation>
 	</xs:annotation>
 
@@ -28,11 +36,16 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-
+  
   <xs:complexType name="SuccessType">
+	<!-- 
+		ARCOSProject: Inline XML artifact (see ARCOS_Project.xsd).
+		ARCOSDomainAgents: Inline XML artifact (see ARCOS_Domain_Agents.xsd).
+		Timestamp: Processing completion time (local system xs:dateTime). 
+	-->
     <xs:sequence>
-      <xs:element name="ARCOSProject" type="common:InlineArtifactType"/>
-      <xs:element name="ARCOSDomainAgents" type="common:InlineArtifactType"/>
+      <xs:element name="ARCOSProject" type="common:InlineArtefactType"/>
+      <xs:element name="ARCOSDomainAgents" type="common:InlineArtefactType"/>
       <xs:element name="Timestamp" type="xs:dateTime"/>
     </xs:sequence>
   </xs:complexType>

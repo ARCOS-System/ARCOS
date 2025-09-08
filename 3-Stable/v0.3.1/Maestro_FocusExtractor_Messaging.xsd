@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="https://github.com/ARCOS-System/ARCOS/XSD"
+           xmlns="https://github.com/ARCOS-System/ARCOS/XSD"
+           xmlns:common="https://github.com/ARCOS-System/ARCOS/XSD/Common"
+           elementFormDefault="qualified" attributeFormDefault="unqualified"
+           version="0.3.1">
+
+  <xs:annotation>
+    <xs:documentation>
+      Maestro → FocusExtractor requests.
+
+      Modes:
+        • BuildFocus: compute a FocusZipForProducer from an ArtifactManifest + FocusSourceReport
+        • Shares the same output directory as the artefact extractor ... it only selects the ones
+          mentioned in the report.        
+
+      Notes:
+        • FocusSourceReport is inline XML (either the validator or post processor report).
+        • ArtifactManifest is the upstream manifest produced by the Artefact Extractor.
+        • Envelope ends with a SHA-256 checksum (Common.SHA256Type).
+    </xs:documentation>
+  </xs:annotation>
+
+  <xs:import namespace="https://github.com/ARCOS-System/ARCOS/XSD/Common" schemaLocation="Common.xsd"/>
+
+  <xs:element name="FocusExtractorRequest" type="FocusExtractorRequestType"/>
+
+  <xs:complexType name="FocusExtractorRequestType">
+    <xs:sequence>
+      <xs:element name="BuildFocus" type="BuildFocusType"/>
+      <xs:element name="Checksum" 	type="common:SHA256Type"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Build a fresh FocusZipForProducer from an upstream ArtifactManifest and a FocusSourceReport -->
+  <xs:complexType name="BuildFocusType">
+    <xs:sequence>
+      <xs:element name="ProjectID"        	type="xs:string"/>
+      <xs:element name="ArtefactManifest" 	type="common:InlineArtefactType"/>
+      <xs:element name="FocusSourceReport"  type="common:InlineArtefactType"/>
+      <!-- Optional behavior -->
+      <xs:element name="FocusOptions" minOccurs="0">
+        <xs:complexType>
+			<xs:sequence>
+				<xs:element name="NormalizePaths"     type="xs:boolean" minOccurs="0" default="true"/>
+			</xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+
+</xs:schema>
