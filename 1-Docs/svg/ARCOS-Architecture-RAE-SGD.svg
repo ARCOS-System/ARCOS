@@ -105,7 +105,7 @@
 			<rect x="0" y="214.351" width="287.719" height="360" class="st2"/>
 		</g>
 		<g id="shape1-7" transform="translate(296.017,-223.409)">
-			<title>ArtefactManifest.xsd</title>
+			<title>Artefact_Manifest.xsd</title>
 			<desc>Artefact Manifest</desc>
 			<LinkPath path="https://raw.githubusercontent.com/ARCOS-System/ARCOS/refs/heads/main/3-Stable/v0.3.1/"/>
 			
@@ -203,8 +203,8 @@
 			<path d="M13.51 579.74 L13.85 579.88 L124.05 623.86 L612.43 596.7 L611.65 589.18" class="st20"/>
 		</g>
 		<g id="shape25-100" transform="translate(226.784,-450.389)">
-			<title>ARCOS_Project.XML</title>
-			<desc>ARCOS_Project.XML</desc>
+			<title>ARCOS_Project.xml</title>
+			<desc>ARCOS_Project.xml</desc>
 			<LinkPath path="https://raw.githubusercontent.com/ARCOS-System/ARCOS/refs/heads/main/SampleDomains/BLEU/v5/"/>
 			
 			<path d="M-0.01 565.03 A3.98881 2.14803 179.39 1 1 7.97 564.94 A3.98881 2.14803 179.39 1 1 -0.01 565.03" class="st22"/>
@@ -212,14 +212,14 @@
 			<text x="9.97" y="570.99" class="st23">ARCOS_Project.XML</text>		</g>
 		<g id="shape30-105" transform="translate(615,-475.139)">
 			<title>bleu_parts_v5.xsd</title>
-			<desc>Domain.XSD</desc>
+			<desc>Domain.xsd</desc>
 			<LinkPath path="https://raw.githubusercontent.com/ARCOS-System/ARCOS/refs/heads/main/SampleDomains/BLEU/v5/"/>
 			
 			<path d="M-0.01 565.03 A3.98881 2.14803 179.39 1 1 7.97 564.94 A3.98881 2.14803 179.39 1 1 -0.01 565.03" class="st24"/>
 			<path d="M7.97 565.06 L7.97 571.94 A3.7945 2.23964 0 0 1 3.98 574.29 A3.78253 2.23257 0 0 1 0 571.94 L0 565.06" class="st24"/>
 			<text x="9.97" y="570.99" class="st25">Domain.XSD</text>		</g>
 		<g id="shape31-110" transform="translate(631.784,-460.379)">
-			<title>bleu_inventory_v5_sample.xml</title>
+			<title>BLEU_inventory_v5_sample.xml</title>
 			<desc>Inventory.XML</desc>
 			<LinkPath path="https://raw.githubusercontent.com/ARCOS-System/ARCOS/refs/heads/main/SampleDomains/BLEU/v5/"/>
 			
@@ -235,32 +235,32 @@
 			<path d="M7.97 565.06 L7.97 571.94 A3.7945 2.23964 0 0 1 3.98 574.29 A3.78253 2.23257 0 0 1 0 571.94 L0 565.06" class="st22"/>
 			<text x="9.97" y="570.99" class="st23">Output.zip</text>		</g>
 		<g id="shape33-120" transform="translate(625.034,-146.909)">
-			<title>Validator_Report.XML</title>
-			<desc>Vallidator_Report.XML</desc>
+			<title>Validator_Report.xml</title>
+			<desc>Vallidator_Report.xml</desc>
 			<LinkPath path="https://raw.githubusercontent.com/ARCOS-System/ARCOS/refs/heads/main/2-Components/Domain-Related/Validator/SampleReport/"/>
 			
 			<path d="M-0.01 565.03 A3.98881 2.14803 179.39 1 1 7.97 564.94 A3.98881 2.14803 179.39 1 1 -0.01 565.03" class="st22"/>
 			<path d="M7.97 565.06 L7.97 571.94 A3.7945 2.23964 0 0 1 3.98 574.29 A3.78253 2.23257 0 0 1 0 571.94 L0 565.06" class="st22"/>
 			<text x="9.97" y="570.99" class="st23">Vallidator_Report.XML</text>		</g>
 		<g id="shape34-125" transform="translate(625.034,-171.389)">
-			<title>Validator_Report.XSD</title>
-			<desc>Validator_Report.XSD</desc>
+			<title>Validator_Report.xsd</title>
+			<desc>Validator_Report.xsd</desc>
 			<LinkPath path="https://raw.githubusercontent.com/ARCOS-System/ARCOS/refs/heads/main/3-Stable/v0.3.1/"/>
 			
 			<path d="M-0.01 565.03 A3.98881 2.14803 179.39 1 1 7.97 564.94 A3.98881 2.14803 179.39 1 1 -0.01 565.03" class="st24"/>
 			<path d="M7.97 565.06 L7.97 571.94 A3.7945 2.23964 0 0 1 3.98 574.29 A3.78253 2.23257 0 0 1 0 571.94 L0 565.06" class="st24"/>
 			<text x="9.97" y="570.99" class="st25">Validator_Report.XSD</text>		</g>
 		<g id="shape35-130" transform="translate(624.236,-45.5676)">
-			<title>PostProcessor_Report.XML</title>
-			<desc>PostProcessor_Report.XML</desc>
+			<title>PostProcessor_Report.xml</title>
+			<desc>PostProcessor_Report.xml</desc>
 			<LinkPath path="https://raw.githubusercontent.com/ARCOS-System/ARCOS/refs/heads/main/2-Components/Domain-Related/Post-Processor/SampleReport/"/>
 			
 			<path d="M-0.01 565.03 A3.98881 2.14803 179.39 1 1 7.97 564.94 A3.98881 2.14803 179.39 1 1 -0.01 565.03" class="st22"/>
 			<path d="M7.97 565.06 L7.97 571.94 A3.7945 2.23964 0 0 1 3.98 574.29 A3.78253 2.23257 0 0 1 0 571.94 L0 565.06" class="st22"/>
 			<text x="9.97" y="570.99" class="st23">PostProcessor_Report.XML</text>		</g>
 		<g id="shape36-135" transform="translate(624.236,-70.0476)">
-			<title>PostProcessor_Report.XSD</title>
-			<desc>PostProcessor_Report.XSD</desc>
+			<title>PostProcessor_Report.xsd</title>
+			<desc>PostProcessor_Report.xsd</desc>
 			<LinkPath path="https://raw.githubusercontent.com/ARCOS-System/ARCOS/refs/heads/main/3-Stable/v0.3.1/"/>
 			
 			<path d="M-0.01 565.03 A3.98881 2.14803 179.39 1 1 7.97 564.94 A3.98881 2.14803 179.39 1 1 -0.01 565.03" class="st24"/>
@@ -286,7 +286,7 @@
 			<text x="9.97" y="570.99" class="st25">Domain_Vocabulary_And_Rules_RAE_SGD.xsd</text>		</g>
 		<g id="shape40-151" transform="translate(578.392,-498.899)">
 			<title>Domain_Vocabulary_And_Rules_RAE_SGD.xml</title>
-			<desc>Domain_Vocabulary_And_Rules_RAE_SGD.XML</desc>
+			<desc>Domain_Vocabulary_And_Rules_RAE_SGD.xml</desc>
 			<LinkPath path="https://raw.githubusercontent.com/ARCOS-System/ARCOS/refs/heads/main/SampleDomains/BLEU/v5/"/>
 			
 			<path d="M-0.01 565.03 A3.98881 2.14803 179.39 1 1 7.97 564.94 A3.98881 2.14803 179.39 1 1 -0.01 565.03" class="st22"/>
@@ -338,31 +338,31 @@
 		</g>
 		<g id="shape49-199" transform="translate(417,-511.139)">
 			<title>ARCOS_Project.xsd</title>
-			<desc>ARCOS_Project.XSD</desc>
+			<desc>ARCOS_Project.xsd</desc>
 			<LinkPath path="https://raw.githubusercontent.com/ARCOS-System/ARCOS/refs/heads/main/3-Stable/v0.3.1/"/>
 			
 			<path d="M-0.01 565.03 A3.98881 2.14803 179.39 1 1 7.97 564.94 A3.98881 2.14803 179.39 1 1 -0.01 565.03" class="st24"/>
 			<path d="M7.97 565.06 L7.97 571.94 A3.7945 2.23964 0 0 1 3.98 574.29 A3.78253 2.23257 0 0 1 0 571.94 L0 565.06" class="st24"/>
 			<text x="9.97" y="570.99" class="st25">ARCOS_Project.XSD</text>		</g>
 		<g id="shape50-204" transform="translate(417,-532.649)">
-			<title>ARCOS_Domain__Agents.XSD</title>
-			<desc>ARCOS_Domain_Agents.XSD</desc>
+			<title>ARCOS_Domain__Agents.xsd</title>
+			<desc>ARCOS_Domain_Agents.xsd</desc>
 			<LinkPath path="https://raw.githubusercontent.com/ARCOS-System/ARCOS/refs/heads/main/3-Stable/v0.3.1/"/>
 			
 			<path d="M-0.01 565.03 A3.98881 2.14803 179.39 1 1 7.97 564.94 A3.98881 2.14803 179.39 1 1 -0.01 565.03" class="st24"/>
 			<path d="M7.97 565.06 L7.97 571.94 A3.7945 2.23964 0 0 1 3.98 574.29 A3.78253 2.23257 0 0 1 0 571.94 L0 565.06" class="st24"/>
 			<text x="9.97" y="570.99" class="st25">ARCOS_Domain_Agents.XSD</text>		</g>
 		<g id="shape51-209" transform="translate(417,-552.899)">
-			<title>Common.XSD</title>
-			<desc>Common.XSD</desc>
+			<title>Common.xsd</title>
+			<desc>Common.xsd</desc>
 			<LinkPath path="https://raw.githubusercontent.com/ARCOS-System/ARCOS/refs/heads/main/XSD/Common/"/>
 			
 			<path d="M-0.01 565.03 A3.98881 2.14803 179.39 1 1 7.97 564.94 A3.98881 2.14803 179.39 1 1 -0.01 565.03" class="st24"/>
 			<path d="M7.97 565.06 L7.97 571.94 A3.7945 2.23964 0 0 1 3.98 574.29 A3.78253 2.23257 0 0 1 0 571.94 L0 565.06" class="st24"/>
-			<text x="9.97" y="570.99" class="st25">Common.XSD</text>		</g>
+			<text x="9.97" y="570.99" class="st25">Common.xsd</text>		</g>
 		<g id="shape53-214" transform="translate(226.784,-466.409)">
-			<title>ARCOS_Domain_Agents.XML</title>
-			<desc>ARCOS_Domain_Agents.XML</desc>
+			<title>ARCOS_Domain_Agents.xml</title>
+			<desc>ARCOS_Domain_Agents.xml</desc>
 			<LinkPath path="https://raw.githubusercontent.com/ARCOS-System/ARCOS/refs/heads/main/SampleDomains/BLEU/v5/"/>
 			
 			<path d="M-0.01 565.03 A3.98881 2.14803 179.39 1 1 7.97 564.94 A3.98881 2.14803 179.39 1 1 -0.01 565.03" class="st22"/>
