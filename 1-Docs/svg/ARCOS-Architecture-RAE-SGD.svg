@@ -345,7 +345,7 @@
 			<path d="M7.97 565.06 L7.97 571.94 A3.7945 2.23964 0 0 1 3.98 574.29 A3.78253 2.23257 0 0 1 0 571.94 L0 565.06" class="st24"/>
 			<text x="9.97" y="570.99" class="st25">ARCOS_Project.XSD</text>		</g>
 		<g id="shape50-204" transform="translate(417,-532.649)">
-			<title>ARCOS_Domain__Agents.xsd</title>
+			<title>ARCOS_Domain_Agents.xsd</title>
 			<desc>ARCOS_Domain_Agents.xsd</desc>
 			<LinkPath path="https://raw.githubusercontent.com/ARCOS-System/ARCOS/refs/heads/main/3-Stable/v0.3.1/"/>
 			
