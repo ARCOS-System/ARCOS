@@ -142,7 +142,7 @@
 			<rect x="0" y="538.351" width="108" height="36" class="st10"/>
 			<text x="5.15" y="560.55" class="st11">Domain Speculus</text>		</g>
 		<g id="shape10-36" transform="translate(-336.735,50.3701) rotate(-68.7236)">
-			<title>Maestro_Arcos_Speculus_Messaging.xsd</title>
+			<title>Maestro_ARCOS_Speculus_Messaging.xsd</title>
 			<LinkPath path="https://raw.githubusercontent.com/ARCOS-System/ARCOS/refs/heads/main/3-Stable/v0.3.1/"/>
 			
 			<path d="M0 574.35 L216.14 490.49 L239.52 550.53" class="st12"/>
