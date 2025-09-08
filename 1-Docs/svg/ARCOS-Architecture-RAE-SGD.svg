@@ -127,7 +127,7 @@
 			<rect x="0" y="538.351" width="108" height="36" class="st2"/>
 			<text x="27.95" y="560.55" class="st7">Validator</text>		</g>
 		<g id="shape7-24" transform="translate(502.219,-45.5676)">
-			<title>PostProcessor</title>
+			<title>Post Processor</title>
 			<desc>Post-Processor</desc>
 			<rect x="0" y="538.351" width="108" height="36" class="st2"/>
 			<text x="11.67" y="560.55" class="st7">Post-Processor</text>		</g>
@@ -251,21 +251,21 @@
 			<path d="M7.97 565.06 L7.97 571.94 A3.7945 2.23964 0 0 1 3.98 574.29 A3.78253 2.23257 0 0 1 0 571.94 L0 565.06" class="st24"/>
 			<text x="9.97" y="570.99" class="st25">Validator_Report.XSD</text>		</g>
 		<g id="shape35-130" transform="translate(624.236,-45.5676)">
-			<title>PostProcessor_Report.xml</title>
-			<desc>PostProcessor_Report.xml</desc>
+			<title>Post_Processor_Report.xml</title>
+			<desc>Post_Processor_Report.xml</desc>
 			<LinkPath path="https://raw.githubusercontent.com/ARCOS-System/ARCOS/refs/heads/main/2-Components/Domain-Related/Post-Processor/SampleReport/"/>
 			
 			<path d="M-0.01 565.03 A3.98881 2.14803 179.39 1 1 7.97 564.94 A3.98881 2.14803 179.39 1 1 -0.01 565.03" class="st22"/>
 			<path d="M7.97 565.06 L7.97 571.94 A3.7945 2.23964 0 0 1 3.98 574.29 A3.78253 2.23257 0 0 1 0 571.94 L0 565.06" class="st22"/>
-			<text x="9.97" y="570.99" class="st23">PostProcessor_Report.XML</text>		</g>
+			<text x="9.97" y="570.99" class="st23">Post_Processor_Report.XML</text>		</g>
 		<g id="shape36-135" transform="translate(624.236,-70.0476)">
-			<title>PostProcessor_Report.xsd</title>
-			<desc>PostProcessor_Report.xsd</desc>
+			<title>Post_Processor_Report.xsd</title>
+			<desc>Post+Processor_Report.xsd</desc>
 			<LinkPath path="https://raw.githubusercontent.com/ARCOS-System/ARCOS/refs/heads/main/3-Stable/v0.3.1/"/>
 			
 			<path d="M-0.01 565.03 A3.98881 2.14803 179.39 1 1 7.97 564.94 A3.98881 2.14803 179.39 1 1 -0.01 565.03" class="st24"/>
 			<path d="M7.97 565.06 L7.97 571.94 A3.7945 2.23964 0 0 1 3.98 574.29 A3.78253 2.23257 0 0 1 0 571.94 L0 565.06" class="st24"/>
-			<text x="9.97" y="570.99" class="st25">PostProcessor_Report.XSD</text>		</g>
+			<text x="9.97" y="570.99" class="st25">Post_Processor_Report.XSD</text>		</g>
 		<g id="shape37-140" transform="translate(531.75,-347.159)">
 			<title>Sheet.37</title>
 			<desc>Domain - Loop</desc>
