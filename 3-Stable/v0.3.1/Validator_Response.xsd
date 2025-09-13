@@ -23,6 +23,7 @@
   <xs:element name="ValidatorResponse">
     <xs:complexType>
       <xs:sequence>
+        <xs:element name="ProjectID" type="xs:string"/>
         <xs:choice>
 			<xs:element name="ValidationReport" type="common:InlineArtefactType"/>
             <xs:element name="Clarification" type="ClarificationType"/>

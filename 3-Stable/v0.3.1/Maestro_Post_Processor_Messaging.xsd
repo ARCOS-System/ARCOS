@@ -22,6 +22,7 @@
   <xs:element name="PostProcessorRequest">
     <xs:complexType>
       <xs:sequence>
+        <xs:element name="ProjectID" type="xs:string"/>
         <xs:element name="ARCOSProject" type="common:InlineArtefactType"/>
         <xs:element name="ProducerOutput" type="common:BinaryArtefactType"/>
         <xs:element name="Checksum" type="common:SHA256Type"/>

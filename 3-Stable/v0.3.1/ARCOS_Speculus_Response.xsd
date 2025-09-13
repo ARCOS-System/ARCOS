@@ -44,6 +44,7 @@
 		Timestamp: Processing completion time (local system xs:dateTime). 
 	-->
     <xs:sequence>
+      <xs:element name="ProjectID" type="xs:string"/>
       <xs:element name="ARCOSProject" type="common:InlineArtefactType"/>
       <xs:element name="ARCOSDomainAgents" type="common:InlineArtefactType"/>
       <xs:element name="Timestamp" type="xs:dateTime"/>

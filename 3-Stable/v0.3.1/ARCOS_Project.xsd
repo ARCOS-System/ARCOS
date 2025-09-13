@@ -48,10 +48,8 @@
   <!-- =================== DomainSchema is a ref the others are inline XML ================== -->
   <xs:complexType name="DomainReferenceType">
     <xs:sequence>
-      <xs:element name="DomainSchema"          		   type="common:RefArtefactType"/>
-      <xs:element name="DomainVocabularyArtifact"      type="common:InlineArtefactType"/>
-      <xs:element name="PredefinedRulesArtifact" 	   type="common:InlineArtefactType"/>
-      <xs:element name="CurrentProjectRulesArtifact"   type="common:InlineArtefactType"/>
+	  <xs:element name="DomainSchema" 						type="common:RefArtefactType"/>
+      <xs:element name="DomainVocabularyAndRulesArtifact" 	type="common:InlineArtefactType"/>
     </xs:sequence>
   </xs:complexType>
 

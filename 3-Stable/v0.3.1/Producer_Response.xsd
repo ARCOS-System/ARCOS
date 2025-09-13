@@ -29,8 +29,9 @@
   <xs:element name="ProducerResponse">
     <xs:complexType>
       <xs:sequence>
+        <xs:element name="ProjectID" type="xs:string"/>
         <xs:choice>
-  		  <xs:element name="ZipOutput" type="common:BinaryArtifactType"/>
+  		  <xs:element name="ZipOutput" type="common:BinaryArtefactType"/>
           <xs:element name="Clarification" type="ClarificationType"/>
         </xs:choice>
 		<xs:element name="Checksum" type="common:SHA256Type"/>
@@ -41,7 +42,7 @@
   <xs:complexType name="ClarificationType">
     <xs:sequence>
       <xs:element name="ProjectID" type="xs:string"/>
-      <xs:element name="ARCOSProject" type="common:InlineArtifactType"/>
+      <xs:element name="ARCOSProject" type="common:InlineArtefactType"/>
       <xs:element name="Questions" minOccurs="1">
         <xs:complexType>
           <xs:sequence>

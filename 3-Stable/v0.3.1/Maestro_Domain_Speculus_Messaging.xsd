@@ -35,18 +35,21 @@
 
 	<xs:complexType name="NewDomainSpecType">
 		<xs:sequence>
+			<xs:element name="ProjectID" type="xs:string"/>
 			<xs:element name="ARCOSProject" type="common:InlineArtefactType"/>
 		</xs:sequence>
 	</xs:complexType>
 
 	<xs:complexType name="EditDomainSpecType">
 		<xs:sequence>
+			<xs:element name="ProjectID" type="xs:string"/>
 			<xs:element name="ARCOSProject" type="common:InlineArtefactType"/>
 		</xs:sequence>
 	</xs:complexType>
 	
 	<xs:complexType name="ClarificationType">
 		<xs:sequence>
+			<xs:element name="ProjectID" type="xs:string"/>
 			<xs:element name="ARCOSProject" type="common:InlineArtefactType"/>
 			<xs:element name="Question" type="xs:string" maxOccurs="unbounded"/>
 		</xs:sequence>
@@ -62,6 +65,7 @@
 	<!-- Max trials reached: provide inputs so ARCOS-Speculus can close the loop with the user -->
     <xs:complexType name="MaxTrialsType">
       <xs:sequence>
+        <xs:element name="ProjectID" type="xs:string"/>
 		<xs:element name="ARCOSProject" type="common:InlineArtefactType"/>
         <!-- Last producer output as Base64 (zip) -->
 		<xs:element name="ProducerOutputZipBase64" type="common:BinaryArtefactType"/>

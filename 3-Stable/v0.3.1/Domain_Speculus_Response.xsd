@@ -34,6 +34,7 @@
 
   <xs:complexType name="SuccessType">
     <xs:sequence>
+      <xs:element name="ProjectID" type="xs:string"/>
       <xs:element name="ARCOSProject" type="common:InlineArtefactType"/>
       <!-- Optional: quick stats for UI -->
       <xs:element name="RuleCount" type="xs:int"/>

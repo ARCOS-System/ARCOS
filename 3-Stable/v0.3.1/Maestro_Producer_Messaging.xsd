@@ -41,12 +41,14 @@
   
   <xs:complexType name="InitialProductionType">
     <xs:sequence>
+      <xs:element name="ProjectID" type="xs:string"/>
       <xs:element name="ARCOSProject" type="common:InlineArtefactType"/>
     </xs:sequence>
   </xs:complexType>
   
   <xs:complexType name="RetryProductionType">
     <xs:sequence>
+	  <xs:element name="ProjectID" type="xs:string"/>
 	  <xs:element name="ARCOSProject" type="common:InlineArtefactType"/>
 	  <xs:element name="PreviousZipOutput" type="common:BinaryArtefactType"/>      
       <xs:choice>
