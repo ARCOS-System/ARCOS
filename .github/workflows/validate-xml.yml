@@ -1,0 +1,50 @@
+name: Validate XML Samples
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate-xml:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Install libxml2-utils
+      run: sudo apt-get update && sudo apt-get install -y libxml2-utils
+
+    - name: Validate XML against local XSD
+      run: |
+        find SampleDomains -type f -name "*.xml" | while read xml_file; do
+          echo "INFO: Processing '$xml_file'"
+
+          # Extract the schema URL from the XML file
+          schema_url=$(grep -o 'xsi:noNamespaceSchemaLocation="[^"]*"' "$xml_file" | cut -d'"' -f2)
+
+          if [ -z "$schema_url" ]; then
+            echo "WARN: No schemaLocation found in '$xml_file'. Skipping."
+            continue
+          fi
+
+          # Convert the GitHub raw URL to a local file path.
+          # This handles different branch names in the URL.
+          schema_file=$(echo "$schema_url" | sed 's|https://raw.githubusercontent.com/ARCOS-System/ARCOS/[^/]\+/\(.*\)|\1|')
+
+          if [ ! -f "$schema_file" ]; then
+            echo "ERROR: Could not find local schema file '$schema_file' referenced in '$xml_file'. Failing the check."
+            exit 1
+          fi
+
+          echo "INFO: Validating '$xml_file' against '$schema_file'..."
+          if xmllint --noout --schema "$schema_file" "$xml_file"; then
+            echo "SUCCESS: '$xml_file' is valid."
+          else
+            echo "ERROR: Validation of '$xml_file' failed."
+            exit 1
+          fi
+          echo ""
+        done
