@@ -32,6 +32,7 @@
         <xs:choice>
           <xs:element name="Success" type="SuccessType"/>
           <xs:element name="Cancelled" type="CancelledType"/>
+          <xs:element name="Error" type="ErrorType"/>
         </xs:choice>
       </xs:sequence>
     </xs:complexType>
@@ -59,4 +60,22 @@
     </xs:sequence>
   </xs:complexType>
 
+	<xs:complexType name="ErrorType">
+	  <xs:sequence>
+		<xs:element name="ProjectID" type="xs:string" minOccurs="0"/>
+		<xs:element name="Code" type="xs:string"/>
+		<xs:element name="Message" type="xs:string"/>
+		<xs:element name="Details" type="xs:string" minOccurs="0"/>
+		<xs:element name="Timestamp" type="xs:dateTime"/>
+	  </xs:sequence>
+	</xs:complexType>
+	<!-- Error Codes
+		MALFORMED_XML - XML parsing failed
+		INVALID_ROOT_ELEMENT - Root element is not ARCOSSpeculusMessage
+		INVALID_NAMESPACE - Namespace mismatch
+		INVALID_VERSION - Schema version not 0.3.1
+		MISSING_REQUIRED_FIELD - Required element missing (e.g., ProjectID)
+		INVALID_MESSAGE_TYPE - Neither NewProject nor EditProject found
+		SCHEMA_VALIDATION_FAILED - Structure doesn't match expected schema	
+	-->
 </xs:schema>
